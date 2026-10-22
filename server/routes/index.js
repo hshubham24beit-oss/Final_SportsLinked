@@ -1,0 +1,48 @@
+const express = require('express');
+const authRoutes = require('./auth.routes');
+const profileRoutes = require('./profile.routes');
+const achievementRoutes = require('./achievement.routes');
+const discoveryRoutes = require('./discovery.routes');
+const opportunityRoutes = require('./opportunity.routes');
+const applicationRoutes = require('./application.routes');
+const notificationRoutes = require('./notification.routes');
+const dashboardRoutes = require('./dashboard.routes');
+const verificationRoutes = require('./verification.routes');
+const reportRoutes = require('./report.routes');
+const blockRoutes = require('./block.routes');
+const adminRoutes = require('./admin.routes');
+const connectionRoutes = require('./connection.routes');
+const followRoutes = require('./follow.routes');
+const postRoutes = require('./post.routes');
+const feedRoutes = require('./feed.routes');
+const messageRoutes = require('./message.routes');
+const eventRoutes = require('./event.routes');
+const teamRoutes = require('./team.routes');
+const aiRoutes = require('./ai.routes');
+const healthRoutes = require('./health.routes');
+
+const router = express.Router();
+
+router.use('/health', healthRoutes);
+router.use('/auth', authRoutes);
+router.use('/profiles', profileRoutes);
+router.use('/achievements', achievementRoutes);
+router.use('/discovery', discoveryRoutes);
+router.use('/opportunities', opportunityRoutes);
+router.use('/applications', applicationRoutes);
+router.use('/notifications', notificationRoutes);
+router.use('/dashboard', dashboardRoutes);
+router.use('/verifications', verificationRoutes);
+router.use('/reports', reportRoutes);
+router.use('/blocks', blockRoutes);
+router.use('/connections', connectionRoutes);
+router.use('/follows', followRoutes);
+router.use('/posts', postRoutes);
+router.use('/feed', feedRoutes);
+router.use('/messages', messageRoutes);
+router.use('/events', eventRoutes);
+router.use('/teams', teamRoutes);
+router.use('/ai', aiRoutes);
+router.use('/admin', adminRoutes);
+
+module.exports = router;
