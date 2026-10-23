@@ -14,6 +14,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 import Dashboard from '../pages/Dashboard';
 import Feed from '../pages/Feed';
+import CreatePost from '../pages/CreatePost';
 import MyNetwork from '../pages/MyNetwork';
 import Messages from '../pages/Messages';
 import Settings from '../pages/Settings';
@@ -80,6 +81,14 @@ export default function AppRoutes() {
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/feed" element={<Feed />} />
+            <Route
+              path="/posts/new"
+              element={
+                <RoleRoute allowedRoles={['athlete', 'coach', 'recruiter']}>
+                  <CreatePost />
+                </RoleRoute>
+              }
+            />
             <Route
               path="/ai"
               element={

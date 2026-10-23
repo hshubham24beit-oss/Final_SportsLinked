@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiRefreshCw, FiRss, FiUserPlus } from 'react-icons/fi';
+import { FiEdit3, FiRefreshCw, FiRss, FiUserPlus } from 'react-icons/fi';
 import Alert from '../components/ui/Alert';
 import Button, { buttonClasses } from '../components/ui/Button';
 import EmptyState from '../components/ui/EmptyState';
 import PostCard from '../components/feed/PostCard';
-import PostComposer from '../components/feed/PostComposer';
 import { postsApi } from '../api/posts.api';
 import { useAuth } from '../context/AuthContext';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -117,7 +116,16 @@ export default function Feed() {
             Updates, achievements, and opportunities from your sporting network.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {user?.role !== 'admin' ? (
+            <Link
+              to="/posts/new"
+              className={buttonClasses({ size: 'sm' })}
+            >
+              <FiEdit3 className="h-4 w-4" aria-hidden="true" />
+              Create post
+            </Link>
+          ) : null}
           <Button
             variant="ghost"
             size="sm"
@@ -137,16 +145,6 @@ export default function Feed() {
             </Link>
           ) : null}
         </div>
-      </div>
-
-      <div className="mt-5">
-        <PostComposer
-          onCreated={(post) => {
-            if (post) {
-              setPosts((current) => [post, ...current]);
-            }
-          }}
-        />
       </div>
 
       {error ? (

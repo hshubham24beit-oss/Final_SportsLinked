@@ -5,6 +5,7 @@ import {
   FiCalendar,
   FiCompass,
   FiCpu,
+  FiEdit3,
   FiFilter,
   FiFlag,
   FiGrid,
@@ -57,6 +58,7 @@ export const ROLE_META = {
     nav: [
       { label: 'Dashboard', to: '/dashboard', icon: FiGrid },
       { label: 'Feed', to: '/feed', icon: FiRss },
+      { label: 'Create post', to: '/posts/new', icon: FiEdit3 },
       { label: 'AI assistant', to: '/ai', icon: FiCpu },
       { label: 'My network', to: '/network', icon: FiUserPlus },
       { label: 'My profile', to: '/profile/edit', icon: FiUser },
@@ -83,6 +85,7 @@ export const ROLE_META = {
     nav: [
       { label: 'Dashboard', to: '/dashboard', icon: FiGrid },
       { label: 'Feed', to: '/feed', icon: FiRss },
+      { label: 'Create post', to: '/posts/new', icon: FiEdit3 },
       { label: 'AI assistant', to: '/ai', icon: FiCpu },
       { label: 'My network', to: '/network', icon: FiUserPlus },
       { label: 'My profile', to: '/profile/edit', icon: FiUser },
@@ -111,6 +114,7 @@ export const ROLE_META = {
     nav: [
       { label: 'Dashboard', to: '/dashboard', icon: FiGrid },
       { label: 'Feed', to: '/feed', icon: FiRss },
+      { label: 'Create post', to: '/posts/new', icon: FiEdit3 },
       { label: 'AI assistant', to: '/ai', icon: FiCpu },
       { label: 'My network', to: '/network', icon: FiUserPlus },
       { label: 'Organisation profile', to: '/profile/edit', icon: FiUser },

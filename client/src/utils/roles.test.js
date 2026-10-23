@@ -46,6 +46,20 @@ describe('role configuration', () => {
     });
   });
 
+  it('keeps post creation separate from the feed', () => {
+    ['athlete', 'coach', 'recruiter'].forEach((role) => {
+      const nav = getRoleMeta(role).nav;
+      const feed = nav.find((item) => item.to === '/feed');
+      const createPost = nav.find((item) => item.to === '/posts/new');
+
+      expect(feed.label).toBe('Feed');
+      expect(createPost.label).toBe('Create post');
+      expect(createPost.to).not.toBe(feed.to);
+    });
+
+    expect(getRoleMeta('admin').nav.some((item) => item.to === '/posts/new')).toBe(false);
+  });
+
   it('marks only the most specific navigation item as active', () => {
     const athleteNav = getRoleMeta('athlete').nav;
     const opportunities = athleteNav.find((item) => item.to === '/opportunities');
