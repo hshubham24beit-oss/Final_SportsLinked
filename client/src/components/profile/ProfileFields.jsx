@@ -25,9 +25,9 @@ function SectionHeading({ title, description, action = null }) {
   return (
     <div className="flex flex-col gap-3 border-b border-line pb-4 sm:flex-row sm:items-start sm:justify-between">
       <div>
-        <h3 className="text-sm font-semibold text-ink">{title}</h3>
+        <h3 className="text-sm font-semibold text-navy">{title}</h3>
         {description ? (
-          <p className="mt-1 text-xs leading-relaxed text-ink-muted">{description}</p>
+          <p className="mt-1 text-xs leading-relaxed text-body">{description}</p>
         ) : null}
       </div>
       {action}
@@ -37,7 +37,7 @@ function SectionHeading({ title, description, action = null }) {
 
 function EmptyEntries({ children }) {
   return (
-    <p className="rounded-lg border border-dashed border-line-strong bg-slate-50/60 px-3.5 py-4 text-center text-xs text-ink-muted">
+    <p className="rounded-tile border border-dashed border-line-strong bg-sand/60 px-3.5 py-4 text-center text-xs text-body">
       {children}
     </p>
   );
@@ -45,13 +45,13 @@ function EmptyEntries({ children }) {
 
 function RepeatCard({ title, onRemove, children }) {
   return (
-    <div className="rounded-lg border border-line bg-slate-50/40 p-4">
+    <div className="rounded-tile border border-line bg-sand/60/40 p-4">
       <div className="mb-3 flex items-center justify-between gap-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">{title}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">{title}</p>
         <button
           type="button"
           onClick={onRemove}
-          className="rounded-md p-1.5 text-ink-subtle transition-colors hover:bg-white hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="rounded-md p-1.5 text-slate transition-colors hover:bg-white hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
           aria-label="Remove entry"
         >
           <FiTrash2 className="h-4 w-4" aria-hidden="true" />
@@ -67,7 +67,7 @@ function AddEntryButton({ children, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-line-strong bg-white px-3 py-2.5 text-xs font-semibold text-brand-700 transition-colors hover:border-brand-300 hover:bg-brand-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+      className="flex w-full items-center justify-center gap-2 rounded-tile border border-dashed border-line-strong bg-white px-3 py-2.5 text-xs font-semibold text-track transition-colors hover:border-track/30 hover:bg-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
     >
       <FiPlus className="h-4 w-4" aria-hidden="true" />
       {children}
@@ -103,13 +103,13 @@ function CoordinatesFields({ form, onChange, errors }) {
   };
 
   return (
-    <div className="rounded-lg border border-line bg-slate-50/60 p-4">
+    <div className="rounded-tile border border-line bg-sand/60 p-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-start gap-2.5">
-          <FiMapPin className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+          <FiMapPin className="mt-0.5 h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
           <div>
-            <p className="text-sm font-medium text-ink">Map coordinates</p>
-            <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">
+            <p className="text-sm font-medium text-navy">Map coordinates</p>
+            <p className="mt-0.5 text-xs leading-relaxed text-body">
               Optional. Coordinates help with location-based discovery later; your city remains
               visible according to your privacy settings.
             </p>
@@ -157,7 +157,7 @@ function CoordinatesFields({ form, onChange, errors }) {
       </div>
 
       {locationMessage ? (
-        <p className="mt-2 text-xs leading-relaxed text-ink-muted" role="status">
+        <p className="mt-2 text-xs leading-relaxed text-body" role="status">
           {locationMessage}
         </p>
       ) : null}
@@ -195,8 +195,8 @@ export function BasicsFields({ form, onChange, errors }) {
 
       <div>
         <div className="mb-3 flex items-center gap-2">
-          <FiMapPin className="h-4 w-4 text-ink-subtle" aria-hidden="true" />
-          <p className="text-sm font-semibold text-ink">Location</p>
+          <FiMapPin className="h-4 w-4 text-slate" aria-hidden="true" />
+          <p className="text-sm font-semibold text-navy">Location</p>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <Input
@@ -236,10 +236,10 @@ export function BasicsFields({ form, onChange, errors }) {
 function OpportunityCheckboxes({ value, onToggle }) {
   return (
     <fieldset>
-      <legend className="mb-1.5 block text-sm font-medium text-ink">
+      <legend className="mb-1.5 block text-sm font-medium text-navy">
         Preferred opportunities
       </legend>
-      <p className="mb-3 text-xs leading-relaxed text-ink-muted">
+      <p className="mb-3 text-xs leading-relaxed text-body">
         Select the kinds of opportunities you want to be considered for. This does not create or
         guarantee any opportunity.
       </p>
@@ -438,8 +438,8 @@ export function RoleFields({ role, form, onChange, onToggleArray, errors }) {
       ) : null}
 
       {role === 'recruiter' ? (
-        <div className="rounded-lg border border-brand-100 bg-brand-50/60 px-4 py-3">
-          <p className="text-xs leading-relaxed text-brand-800">
+        <div className="rounded-tile border border-line bg-sand/70 px-4 py-3">
+          <p className="text-xs leading-relaxed text-track">
             Your organisation name is public. You can add programmes, activities, contact details,
             and photos in the next steps.
           </p>
@@ -774,8 +774,8 @@ export function ContactFields({ form, onChange, errors }) {
 export function VisibilityFields({ form, onChange }) {
   return (
     <div>
-      <div className="rounded-lg border border-brand-100 bg-brand-50/60 px-4 py-3">
-        <p className="text-xs leading-relaxed text-brand-800">
+      <div className="rounded-tile border border-line bg-sand/70 px-4 py-3">
+        <p className="text-xs leading-relaxed text-track">
           Public sections can be viewed by anyone with your profile link. Signed-in members are
           authenticated SportLinked users. Only me keeps a section visible to you alone.
         </p>

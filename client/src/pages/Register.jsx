@@ -101,15 +101,15 @@ export default function Register() {
   if (result) {
     return (
       <div>
-        <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-brand-100 bg-brand-50 text-brand-700">
+        <span className="flex h-12 w-12 items-center justify-center rounded-card border border-line bg-sand text-track">
           <FiMail className="h-6 w-6" aria-hidden="true" />
         </span>
-        <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+        <h1 className="mt-5 font-display text-3xl font-semibold leading-tight text-navy sm:text-[2rem]">
           Check your inbox
         </h1>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+        <p className="mt-2 text-sm leading-relaxed text-body">
           Your {selectedRole.label.toLowerCase()} account has been created. We sent a verification
-          link to <span className="font-medium text-ink">{result.email}</span>.
+          link to <span className="font-medium text-navy">{result.email}</span>.
         </p>
 
         {result.emailSent ? (
@@ -135,18 +135,18 @@ export default function Register() {
           Go to sign in
         </Link>
 
-        <p className="mt-5 text-center text-sm text-ink-muted">
+        <p className="mt-5 text-center text-sm text-body">
           Need help with verification?{' '}
           <Link
             to="/verify-email"
-            className="font-semibold text-brand-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+            className="font-semibold text-track underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
           >
             View verification steps
           </Link>
         </p>
 
-        <div className="mt-6 flex items-start gap-2 rounded-lg bg-slate-50 px-3.5 py-3 text-xs leading-relaxed text-ink-muted">
-          <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
+        <div className="mt-6 flex items-start gap-2 rounded-tile bg-sand/60 px-3.5 py-3 text-xs leading-relaxed text-body">
+          <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
           Email verification confirms ownership of your email address. It does not verify your
           identity, qualifications, or achievements.
         </div>
@@ -170,7 +170,7 @@ export default function Register() {
 
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
         <fieldset>
-          <legend className="mb-2 block text-sm font-medium text-ink">I am joining as</legend>
+          <legend className="mb-2 block text-sm font-medium text-navy">I am joining as</legend>
           <div className="grid gap-2.5 sm:grid-cols-3">
             {ROLE_OPTIONS.map((option) => {
               const Icon = option.icon;
@@ -179,10 +179,10 @@ export default function Register() {
               return (
                 <label
                   key={option.value}
-                  className={`relative flex cursor-pointer flex-col gap-2 rounded-lg border p-3 transition-colors focus-within:ring-2 focus-within:ring-brand-600 focus-within:ring-offset-2 ${
+                  className={`relative flex cursor-pointer flex-col gap-2 rounded-tile border p-3 transition-colors focus-within:ring-2 focus-within:ring-track focus-within:ring-offset-2 ${
                     isSelected
-                      ? 'border-brand-500 bg-brand-50/70'
-                      : 'border-line-strong bg-white hover:border-brand-300'
+                      ? 'border-track bg-track/10'
+                      : 'border-line-strong bg-white hover:border-track/30'
                   }`}
                 >
                   <input
@@ -195,21 +195,21 @@ export default function Register() {
                   />
                   <span className="flex items-center justify-between">
                     <Icon
-                      className={`h-5 w-5 ${isSelected ? 'text-brand-700' : 'text-ink-subtle'}`}
+                      className={`h-5 w-5 ${isSelected ? 'text-track' : 'text-slate'}`}
                       aria-hidden="true"
                     />
                     {isSelected ? (
-                      <FiCheckCircle className="h-4 w-4 text-brand-700" aria-hidden="true" />
+                      <FiCheckCircle className="h-4 w-4 text-track" aria-hidden="true" />
                     ) : null}
                   </span>
-                  <span className="text-sm font-semibold text-ink">{option.label}</span>
-                  <span className="text-[11px] leading-snug text-ink-muted">{option.tagline}</span>
+                  <span className="text-sm font-semibold text-navy">{option.label}</span>
+                  <span className="text-[11px] leading-snug text-body">{option.tagline}</span>
                 </label>
               );
             })}
           </div>
           {errors.role ? <p className="mt-1.5 text-sm text-danger-600">{errors.role}</p> : null}
-          <p className="mt-2 text-xs leading-relaxed text-ink-subtle">{selectedRole.description}</p>
+          <p className="mt-2 text-xs leading-relaxed text-slate">{selectedRole.description}</p>
         </fieldset>
 
         <Input
@@ -264,16 +264,16 @@ export default function Register() {
         </Button>
       </form>
 
-      <p className="mt-3 text-center text-xs leading-relaxed text-ink-subtle">
+      <p className="mt-3 text-center text-xs leading-relaxed text-slate">
         By creating an account you agree to keep your profile information accurate and to use
         SportLinked responsibly.
       </p>
 
-      <p className="mt-6 text-center text-sm text-ink-muted">
+      <p className="mt-6 text-center text-sm text-body">
         Already have an account?{' '}
         <Link
           to="/login"
-          className="font-semibold text-brand-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="font-semibold text-track underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
         >
           Sign in
         </Link>

@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FiArrowLeft, FiExternalLink, FiFileText, FiUser } from 'react-icons/fi';
+import {
+  FiArrowLeft,
+  FiExternalLink,
+  FiFileText,
+  FiMessageCircle,
+  FiUser,
+} from 'react-icons/fi';
 import Alert from '../components/ui/Alert';
 import Badge from '../components/ui/Badge';
 import { buttonClasses } from '../components/ui/Button';
@@ -119,7 +125,7 @@ export default function Applicants() {
     <div>
       <Link
         to="/opportunities/mine"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted hover:text-ink"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-body hover:text-navy"
       >
         <FiArrowLeft className="h-4 w-4" aria-hidden="true" />
         My opportunities
@@ -135,10 +141,10 @@ export default function Applicants() {
               {opportunityStatusLabel(opportunity.status)}
             </Badge>
           </div>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
             Applicants for {opportunity.title}
           </h1>
-          <p className="mt-1.5 text-sm text-ink-muted">
+          <p className="mt-1.5 text-sm text-body">
             {total} application{total === 1 ? '' : 's'} received.
           </p>
         </div>
@@ -167,8 +173,8 @@ export default function Applicants() {
             }}
             className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
               status === option.value
-                ? 'border-brand-300 bg-brand-50 text-brand-800'
-                : 'border-line-strong bg-white text-ink-muted hover:bg-slate-50'
+                ? 'border-line-strong bg-sand text-track'
+                : 'border-line-strong bg-white text-body hover:bg-sand/60'
             }`}
           >
             {option.label} ({statusCounts[option.value] || 0})
@@ -202,22 +208,22 @@ export default function Applicants() {
           return (
             <article
               key={application.id}
-              className="rounded-xl border border-line bg-white p-5 shadow-card"
+              className="rounded-card border border-line bg-white p-5 shadow-card"
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="text-base font-semibold text-ink">
+                    <h2 className="font-display text-xl">
                       {application.athlete?.name || snapshot.name || 'Athlete'}
                     </h2>
                     <Badge variant={applicationStatusVariant(application.status)} size="sm">
                       {applicationStatusLabel(application.status)}
                     </Badge>
                   </div>
-                  <p className="mt-1 text-sm text-ink-muted">
+                  <p className="mt-1 text-sm text-body">
                     {snapshot.headline || 'No headline provided'}
                   </p>
-                  <p className="mt-1 text-xs text-ink-subtle">
+                  <p className="mt-1 text-xs text-slate">
                     Applied {formatDate(application.createdAt)}
                   </p>
                 </div>
@@ -238,6 +244,15 @@ export default function Applicants() {
                       containerClassName="w-44"
                     />
                   ) : null}
+                  {application.athlete?.id ? (
+                    <Link
+                      to={`/messages?user=${encodeURIComponent(application.athlete.id)}`}
+                      className={buttonClasses({ variant: 'secondary', size: 'sm' })}
+                    >
+                      Message
+                      <FiMessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                    </Link>
+                  ) : null}
                   <Link
                     to={`/applications/${application.id}`}
                     className={buttonClasses({ variant: 'secondary', size: 'sm' })}
@@ -248,26 +263,26 @@ export default function Applicants() {
                 </div>
               </div>
 
-              <dl className="mt-4 grid gap-3 border-t border-line pt-4 text-xs text-ink-muted sm:grid-cols-3">
+              <dl className="mt-4 grid gap-3 border-t border-line pt-4 text-xs text-body sm:grid-cols-3">
                 <div>
-                  <dt className="font-medium text-ink-subtle">Sports</dt>
+                  <dt className="font-medium text-slate">Sports</dt>
                   <dd className="mt-0.5">{(snapshot.sports || []).join(', ') || '-'}</dd>
                 </div>
                 <div>
-                  <dt className="font-medium text-ink-subtle">Level</dt>
+                  <dt className="font-medium text-slate">Level</dt>
                   <dd className="mt-0.5">
                     {(snapshot.level || '-').replace(/_/g, ' ')} /{' '}
                     {(snapshot.experienceYears ?? '-')} years
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-medium text-ink-subtle">Verified achievements</dt>
+                  <dt className="font-medium text-slate">Verified achievements</dt>
                   <dd className="mt-0.5">{snapshot.verifiedAchievementCount || 0}</dd>
                 </div>
               </dl>
 
               {application.coverNote ? (
-                <p className="mt-3 rounded-lg bg-slate-50 p-3 text-sm leading-relaxed text-ink-muted">
+                <p className="mt-3 rounded-tile bg-sand/60 p-3 text-sm leading-relaxed text-body">
                   {application.coverNote}
                 </p>
               ) : null}
@@ -280,7 +295,7 @@ export default function Applicants() {
                       href={document.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-medium text-ink-muted hover:text-ink"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-medium text-body hover:text-navy"
                     >
                       <FiFileText className="h-3 w-3" aria-hidden="true" />
                       {document.label}

@@ -15,17 +15,14 @@ export default function OpportunityCard({
     .join(', ');
 
   return (
-    <article className="flex h-full flex-col rounded-xl border border-line bg-white p-5 shadow-card transition hover:border-brand-200">
+    <article className="flex h-full flex-col rounded-card border border-line bg-white p-5 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-track/25 hover:shadow-lift">
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-wrap gap-1.5">
           <Badge size="sm" variant="brand">
             {opportunityTypeLabel(opportunity.type)}
           </Badge>
           {showStatus ? (
-            <Badge
-              size="sm"
-              variant={opportunityStatusVariant(opportunity.status)}
-            >
+            <Badge size="sm" variant={opportunityStatusVariant(opportunity.status)}>
               {opportunityStatusLabel(opportunity.status)}
             </Badge>
           ) : null}
@@ -43,10 +40,10 @@ export default function OpportunityCard({
             disabled={isSaving}
             aria-label={opportunity.saved ? 'Remove from saved opportunities' : 'Save opportunity'}
             aria-pressed={Boolean(opportunity.saved)}
-            className={`rounded-lg p-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 disabled:opacity-50 ${
+            className={`rounded-full p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track disabled:opacity-50 ${
               opportunity.saved
-                ? 'bg-brand-50 text-brand-700'
-                : 'text-ink-subtle hover:bg-slate-100 hover:text-ink'
+                ? 'bg-track/10 text-track'
+                : 'text-slate hover:bg-sand hover:text-track'
             }`}
           >
             <FiBookmark
@@ -58,31 +55,31 @@ export default function OpportunityCard({
         ) : null}
       </div>
 
-      <h2 className="mt-3 text-base font-semibold text-ink">
+      <h2 className="mt-4 font-display text-xl leading-snug">
         <Link
           to={`/opportunities/${opportunity.id}`}
-          className="underline-offset-4 hover:text-brand-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="underline-offset-4 transition-colors hover:text-track hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
         >
           {opportunity.title}
         </Link>
       </h2>
-      <p className="mt-1 text-sm text-ink-muted">{opportunity.publisherName}</p>
+      <p className="mt-1 text-sm font-semibold text-slate">{opportunity.publisherName}</p>
 
-      <dl className="mt-4 space-y-2 text-xs text-ink-muted">
+      <dl className="mt-4 space-y-2 text-xs text-slate">
         <div className="flex items-center gap-2">
-          <FiCalendar className="h-3.5 w-3.5 text-ink-subtle" aria-hidden="true" />
+          <FiCalendar className="h-3.5 w-3.5 text-track" aria-hidden="true" />
           <dt className="sr-only">Deadline</dt>
           <dd>Apply by {formatDeadline(opportunity.deadline)}</dd>
         </div>
         {location ? (
           <div className="flex items-center gap-2">
-            <FiMapPin className="h-3.5 w-3.5 text-ink-subtle" aria-hidden="true" />
+            <FiMapPin className="h-3.5 w-3.5 text-track" aria-hidden="true" />
             <dt className="sr-only">Location</dt>
             <dd>{location}</dd>
           </div>
         ) : null}
         <div className="flex items-center gap-2">
-          <FiUsers className="h-3.5 w-3.5 text-ink-subtle" aria-hidden="true" />
+          <FiUsers className="h-3.5 w-3.5 text-track" aria-hidden="true" />
           <dt className="sr-only">Sport</dt>
           <dd>
             {opportunity.sport}
@@ -93,8 +90,8 @@ export default function OpportunityCard({
         </div>
       </dl>
 
-      <div className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4">
-        <span className="text-xs text-ink-subtle">
+      <div className="mt-auto flex items-center justify-between gap-3 border-t border-line pt-4">
+        <span className="text-xs font-semibold text-slate">
           {opportunity.positionsAvailable || 1} place
           {(opportunity.positionsAvailable || 1) === 1 ? '' : 's'}
         </span>

@@ -129,14 +129,14 @@ export default function EventForm() {
     <div className="mx-auto max-w-4xl">
       <Link
         to={isEdit ? `/events/${id}` : '/events/mine'}
-        className="text-sm font-medium text-ink-muted hover:text-ink"
+        className="text-sm font-medium text-body hover:text-navy"
       >
         Back
       </Link>
-      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+      <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">
         {isEdit ? 'Edit event' : 'Create an event'}
       </h1>
-      <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+      <p className="mt-1.5 text-sm leading-relaxed text-body">
         Share accurate schedule, venue, capacity, and registration details so attendees know exactly
         what to expect.
       </p>
@@ -159,8 +159,8 @@ export default function EventForm() {
           submit(false);
         }}
       >
-        <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-          <h2 className="text-base font-semibold text-ink">Event details</h2>
+        <section className="rounded-card border border-line bg-white p-5 shadow-card">
+          <h2 className="font-display text-xl">Event details</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Select
               label="Type"
@@ -196,8 +196,8 @@ export default function EventForm() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-          <h2 className="text-base font-semibold text-ink">Schedule and registration</h2>
+        <section className="rounded-card border border-line bg-white p-5 shadow-card">
+          <h2 className="font-display text-xl">Schedule and registration</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Input
               label="Starts at"
@@ -241,8 +241,8 @@ export default function EventForm() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-          <h2 className="text-base font-semibold text-ink">Venue</h2>
+        <section className="rounded-card border border-line bg-white p-5 shadow-card">
+          <h2 className="font-display text-xl">Venue</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Input
               label="Venue name"

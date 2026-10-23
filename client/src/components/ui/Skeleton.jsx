@@ -1,10 +1,5 @@
 export default function Skeleton({ className = '', rounded = 'rounded-md' }) {
-  return (
-    <div
-      aria-hidden="true"
-      className={`animate-pulse bg-slate-200/80 ${rounded} ${className}`}
-    />
-  );
+  return <div aria-hidden="true" className={`animate-pulse bg-line ${rounded} ${className}`} />;
 }
 
 export function SkeletonText({ lines = 3, className = '' }) {
@@ -22,7 +17,7 @@ export function SkeletonText({ lines = 3, className = '' }) {
 
 export function SkeletonCard({ className = '' }) {
   return (
-    <div className={`rounded-xl border border-line bg-white p-5 shadow-card ${className}`}>
+    <div className={`surface-card p-5 ${className}`}>
       <div className="flex items-center gap-3">
         <Skeleton className="h-10 w-10" rounded="rounded-full" />
         <div className="flex-1 space-y-2">

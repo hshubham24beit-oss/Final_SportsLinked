@@ -29,6 +29,10 @@ const PRIORITY_LABELS = {
   connection: 'From your network',
   following: 'From someone you follow',
   sport: 'Shared sport',
+  'Your post': 'Your post',
+  Connection: 'From your network',
+  Following: 'From someone you follow',
+  'Shared sport': 'Shared sport',
 };
 
 function PostMedia({ media, authorName, compact = false }) {
@@ -38,7 +42,7 @@ function PostMedia({ media, authorName, compact = false }) {
 
   return (
     <div
-      className={`mt-3 grid gap-1.5 overflow-hidden rounded-lg ${
+      className={`mt-3 grid gap-1.5 overflow-hidden rounded-tile ${
         media.length === 1 ? 'grid-cols-1' : 'grid-cols-2'
       }`}
     >
@@ -48,7 +52,7 @@ function PostMedia({ media, authorName, compact = false }) {
           href={image.url}
           target="_blank"
           rel="noreferrer"
-          className={`group relative overflow-hidden bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 ${
+          className={`group relative overflow-hidden bg-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track ${
             media.length === 1
               ? compact
                 ? 'aspect-video'
@@ -71,14 +75,14 @@ function PostMedia({ media, authorName, compact = false }) {
 function SharedPostPreview({ sharedPost, authorName }) {
   if (!sharedPost) {
     return (
-      <div className="mt-3 rounded-lg border border-dashed border-line-strong bg-slate-50 p-4 text-sm text-ink-subtle">
+      <div className="mt-3 rounded-tile border border-dashed border-line-strong bg-sand/60 p-4 text-sm text-slate">
         The original post is no longer available.
       </div>
     );
   }
 
   return (
-    <div className="mt-3 rounded-lg border border-line bg-slate-50/70 p-3.5">
+    <div className="mt-3 rounded-tile border border-line bg-sand/70 p-3.5">
       <div className="flex items-center gap-2.5">
         <Avatar
           name={sharedPost.author?.name}
@@ -89,22 +93,22 @@ function SharedPostPreview({ sharedPost, authorName }) {
           {sharedPost.author?.slug ? (
             <Link
               to={`/p/${sharedPost.author.slug}`}
-              className="truncate text-xs font-semibold text-ink hover:text-brand-800"
+              className="truncate text-xs font-semibold text-navy hover:text-track"
             >
               {sharedPost.author.name}
             </Link>
           ) : (
-            <span className="truncate text-xs font-semibold text-ink">
+            <span className="truncate text-xs font-semibold text-navy">
               {sharedPost.author?.name || authorName}
             </span>
           )}
-          <p className="text-[11px] text-ink-subtle">
+          <p className="text-[11px] text-slate">
             {formatRelativeTime(sharedPost.createdAt)}
           </p>
         </div>
       </div>
       {sharedPost.text ? (
-        <p className="mt-2 line-clamp-4 whitespace-pre-line text-sm leading-relaxed text-ink-muted">
+        <p className="mt-2 line-clamp-4 whitespace-pre-line text-sm leading-relaxed text-body">
           {sharedPost.text}
         </p>
       ) : null}
@@ -143,7 +147,7 @@ export default function PostCard({ post, onUpdate, onRemove, onShared, onBlocked
         ? await postsApi.unlike(post.id)
         : await postsApi.like(post.id);
       onUpdate?.({
-        likedByMe: response.data.data.likedByMe,
+        likedByMe: response.data.data.liked,
         likeCount: response.data.data.likeCount,
       });
     } catch (requestError) {
@@ -193,13 +197,13 @@ export default function PostCard({ post, onUpdate, onRemove, onShared, onBlocked
   return (
     <article
       id={`post-${post.id}`}
-      className="overflow-hidden rounded-xl border border-line bg-white shadow-card"
+      className="overflow-hidden rounded-card border border-line bg-white shadow-card"
     >
       <div className="p-4 sm:p-5">
         <div className="flex items-start gap-3">
           <Link
             to={author.slug ? `/p/${author.slug}` : '/discovery'}
-            className="shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+            className="shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track focus-visible:ring-offset-2"
             aria-label={`View ${author.name || 'member'} profile`}
           >
             <Avatar name={author.name} src={author.avatarUrl} size="md" />
@@ -210,25 +214,25 @@ export default function PostCard({ post, onUpdate, onRemove, onShared, onBlocked
               {author.slug ? (
                 <Link
                   to={`/p/${author.slug}`}
-                  className="truncate text-sm font-semibold text-ink hover:text-brand-800"
+                  className="truncate text-sm font-semibold text-navy hover:text-track"
                 >
                   {author.name || 'SportLinked member'}
                 </Link>
               ) : (
-                <span className="truncate text-sm font-semibold text-ink">
+                <span className="truncate text-sm font-semibold text-navy">
                   {author.name || 'SportLinked member'}
                 </span>
               )}
               {author.role ? (
-                <span className="text-[11px] font-medium text-ink-subtle">
+                <span className="text-[11px] font-medium text-slate">
                   {getRoleLabel(author.role)}
                 </span>
               ) : null}
               {post.type === 'share' ? (
-                <span className="text-[11px] text-ink-subtle">shared a post</span>
+                <span className="text-[11px] text-slate">shared a post</span>
               ) : null}
             </div>
-            <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-ink-subtle">
+            <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-slate">
               <span>{formatRelativeTime(post.createdAt)}</span>
               <span aria-hidden="true">·</span>
               <span className="inline-flex items-center gap-1">
@@ -275,7 +279,7 @@ export default function PostCard({ post, onUpdate, onRemove, onShared, onBlocked
         ) : null}
 
         {post.text ? (
-          <p className="mt-3 whitespace-pre-line break-words text-sm leading-6 text-ink">
+          <p className="mt-3 whitespace-pre-line break-words text-sm leading-6 text-navy">
             {post.text}
           </p>
         ) : null}
@@ -292,10 +296,10 @@ export default function PostCard({ post, onUpdate, onRemove, onShared, onBlocked
               onClick={toggleLike}
               disabled={!canInteract || isLiking}
               aria-pressed={Boolean(post.likedByMe)}
-              className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 disabled:opacity-60 ${
+              className={`inline-flex items-center gap-1.5 rounded-tile px-2.5 py-1.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track disabled:opacity-60 ${
                 post.likedByMe
                   ? 'text-danger-600 hover:bg-danger-50'
-                  : 'text-ink-muted hover:bg-slate-100 hover:text-ink'
+                  : 'text-body hover:bg-sand hover:text-navy'
               }`}
             >
               <FiHeart
@@ -310,7 +314,7 @@ export default function PostCard({ post, onUpdate, onRemove, onShared, onBlocked
               type="button"
               onClick={() => setCommentsOpen((current) => !current)}
               aria-expanded={commentsOpen}
-              className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-ink-muted transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+              className="inline-flex items-center gap-1.5 rounded-tile px-2.5 py-1.5 text-xs font-semibold text-body transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
             >
               <FiMessageCircle className="h-4 w-4" aria-hidden="true" />
               {post.commentCount || 0}
@@ -321,14 +325,14 @@ export default function PostCard({ post, onUpdate, onRemove, onShared, onBlocked
               <button
                 type="button"
                 onClick={() => setShareOpen(true)}
-                className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-ink-muted transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                className="inline-flex items-center gap-1.5 rounded-tile px-2.5 py-1.5 text-xs font-semibold text-body transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
               >
                 <FiRepeat className="h-4 w-4" aria-hidden="true" />
                 {post.shareCount || 0}
                 <span className="sr-only">shares</span>
               </button>
             ) : (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-ink-subtle">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-slate">
                 <FiLock className="h-3.5 w-3.5" aria-hidden="true" />
                 {post.shareCount || 0}
               </span>
@@ -339,7 +343,7 @@ export default function PostCard({ post, onUpdate, onRemove, onShared, onBlocked
             <button
               type="button"
               onClick={() => setDeleteOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-ink-subtle transition-colors hover:bg-danger-50 hover:text-danger-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+              className="inline-flex items-center gap-1.5 rounded-tile px-2.5 py-1.5 text-xs font-medium text-slate transition-colors hover:bg-danger-50 hover:text-danger-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
             >
               <FiTrash2 className="h-3.5 w-3.5" aria-hidden="true" />
               Delete

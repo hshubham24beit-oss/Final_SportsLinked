@@ -60,26 +60,26 @@ export default function EventRegistrants() {
     <div className="mx-auto max-w-5xl">
       <Link
         to={`/events/${id}`}
-        className="text-sm font-medium text-ink-muted hover:text-ink"
+        className="text-sm font-medium text-body hover:text-navy"
       >
         Back to event
       </Link>
-      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+      <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">
         Registrants
       </h1>
       {event ? (
-        <p className="mt-1.5 text-sm text-ink-muted">
+        <p className="mt-1.5 text-sm text-body">
           {event.title} - {event.capacity} places
         </p>
       ) : null}
 
       <div className="mt-5 grid gap-3 sm:grid-cols-4">
         {['registered', 'waitlisted', 'interested', 'cancelled'].map((key) => (
-          <div key={key} className="rounded-xl border border-line bg-white p-4 shadow-card">
-            <p className="text-xs font-medium uppercase tracking-wide text-ink-subtle">
+          <div key={key} className="rounded-card border border-line bg-white p-4 shadow-card">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate">
               {EVENT_REGISTRATION_STATUS_LABELS[key]}
             </p>
-            <p className="mt-1 text-2xl font-semibold text-ink">{statusCounts[key] || 0}</p>
+            <p className="mt-1 text-2xl font-semibold text-navy">{statusCounts[key] || 0}</p>
           </div>
         ))}
       </div>
@@ -116,7 +116,7 @@ export default function EventRegistrants() {
 
       {registrants.length > 0 ? (
         <>
-          <div className="mt-5 overflow-hidden rounded-xl border border-line bg-white shadow-card">
+          <div className="mt-5 overflow-hidden rounded-card border border-line bg-white shadow-card">
             <ul className="divide-y divide-line">
               {registrants.map((entry) => (
                 <li
@@ -124,10 +124,10 @@ export default function EventRegistrants() {
                   className="flex flex-wrap items-center justify-between gap-3 px-4 py-3"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-ink">
+                    <p className="truncate text-sm font-medium text-navy">
                       {entry.user?.name || 'Deleted member'}
                     </p>
-                    <p className="truncate text-xs text-ink-subtle">
+                    <p className="truncate text-xs text-slate">
                       {entry.user?.email || 'Unavailable'} - joined{' '}
                       {formatDateTime(entry.registeredAt)}
                     </p>

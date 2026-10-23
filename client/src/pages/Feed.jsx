@@ -109,8 +109,11 @@ export default function Feed() {
     <div className="mx-auto max-w-2xl">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Feed</h1>
-          <p className="mt-1.5 text-sm text-ink-muted">
+          <p className="eyebrow">Your network</p>
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+            The <span className="display-emphasis">feed.</span>
+          </h1>
+          <p className="mt-1.5 text-sm text-body">
             Updates, achievements, and opportunities from your sporting network.
           </p>
         </div>
@@ -162,18 +165,18 @@ export default function Feed() {
           {[0, 1, 2].map((item) => (
             <div
               key={item}
-              className="animate-pulse rounded-xl border border-line bg-white p-5 shadow-card"
+              className="animate-pulse rounded-card border border-line bg-white p-5 shadow-card"
             >
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-slate-200" />
+                <div className="h-10 w-10 rounded-full bg-line" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-3 w-1/3 rounded bg-slate-200" />
-                  <div className="h-2.5 w-1/4 rounded bg-slate-100" />
+                  <div className="h-3 w-1/3 rounded bg-line" />
+                  <div className="h-2.5 w-1/4 rounded bg-sand" />
                 </div>
               </div>
               <div className="mt-4 space-y-2">
-                <div className="h-3 w-full rounded bg-slate-100" />
-                <div className="h-3 w-4/5 rounded bg-slate-100" />
+                <div className="h-3 w-full rounded bg-sand" />
+                <div className="h-3 w-4/5 rounded bg-sand" />
               </div>
             </div>
           ))}
@@ -223,7 +226,7 @@ export default function Feed() {
       ) : null}
 
       {!isInitialLoading && posts.length > 0 && !hasMore ? (
-        <p className="mt-6 text-center text-xs text-ink-subtle">
+        <p className="mt-6 text-center text-xs text-slate">
           You are all caught up.
         </p>
       ) : null}

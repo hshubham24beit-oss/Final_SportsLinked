@@ -113,7 +113,7 @@ export default function ProfileSafetyActions({ ownerId, ownerName, isOwner }) {
       >
         <form id="profile-report-form" onSubmit={submitReport} className="space-y-4">
           {error ? (
-            <p className="rounded-lg border border-red-200 bg-danger-50 p-3 text-sm text-danger-700" role="alert">
+            <p className="rounded-tile border border-red-200 bg-danger-50 p-3 text-sm text-danger-700" role="alert">
               {error}
             </p>
           ) : null}
@@ -158,7 +158,7 @@ export default function ProfileSafetyActions({ ownerId, ownerName, isOwner }) {
       >
         <form id="profile-block-form" onSubmit={submitBlock} className="space-y-4">
           {error ? (
-            <p className="rounded-lg border border-red-200 bg-danger-50 p-3 text-sm text-danger-700" role="alert">
+            <p className="rounded-tile border border-red-200 bg-danger-50 p-3 text-sm text-danger-700" role="alert">
               {error}
             </p>
           ) : null}

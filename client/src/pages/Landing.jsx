@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FiArrowRight,
@@ -7,240 +6,173 @@ import {
   FiCheck,
   FiCheckCircle,
   FiCompass,
-  FiMenu,
   FiShield,
-  FiUser,
-  FiUsers,
-  FiX,
 } from 'react-icons/fi';
-import Logo from '../components/Logo';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 import Badge from '../components/ui/Badge';
-import { Card } from '../components/ui/Card';
 import { buttonClasses } from '../components/ui/Button';
-import { ROLE_OPTIONS } from '../utils/roles';
+import { useAuth } from '../context/AuthContext';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { ROLE_OPTIONS } from '../utils/roles';
 
 const priorities = [
   {
     icon: FiCompass,
+    number: '01',
     title: 'Athlete discovery',
     description:
-      'Find athletes by sport, position, location, and evidence-backed credentials — not just by follower count.',
+      'Find athletes by sport, position, location, and evidence-backed credentials, not follower count.',
   },
   {
     icon: FiAward,
+    number: '02',
     title: 'Credible achievements',
     description:
       'Every profile separates self-reported information from what has actually been reviewed and verified.',
   },
   {
     icon: FiBriefcase,
-    title: 'Opportunity recruitment',
+    number: '03',
+    title: 'Real opportunity',
     description:
-      'Recruiters and sports organisations share real opportunities with athletes who are ready to be found.',
+      'Recruiters and sports organisations share genuine opportunities with athletes who are ready to be found.',
   },
 ];
 
 const credibilityRows = [
-  { label: 'Identity', detail: 'Reviewed separately' },
-  { label: 'Qualifications', detail: 'Reviewed separately' },
-  { label: 'Achievements', detail: 'Reviewed separately' },
+  { label: 'Identity', detail: 'Separate status' },
+  { label: 'Qualifications', detail: 'Separate status' },
+  { label: 'Achievements', detail: 'Separate status' },
+];
+
+const howItWorks = [
+  {
+    number: '01',
+    title: 'Build your profile',
+    description:
+      'Add your role, sport or organisation, location, and the record you want to be known for.',
+  },
+  {
+    number: '02',
+    title: 'Submit evidence',
+    description:
+      'Identity, qualifications, and achievements are reviewed as separate claims, each with its own status.',
+  },
+  {
+    number: '03',
+    title: 'Find the right fit',
+    description:
+      'Discover athletes, join teams, or publish opportunities through a role-based workspace.',
+  },
 ];
 
 export default function Landing() {
   useDocumentTitle('Where sporting careers connect');
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const closeMenu = () => setMenuOpen(false);
+  const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-white">
-      <header className="sticky top-0 z-40 border-b border-line bg-white/90 backdrop-blur">
-        <div className="page-shell flex h-16 items-center justify-between gap-4">
-          <Link to="/" className="focus-ring rounded-lg" aria-label="SportLinked home">
-            <Logo size="md" />
-          </Link>
-
-          <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
-            <a
-              href="#priorities"
-              className="text-sm font-medium text-ink-muted transition-colors hover:text-ink"
-            >
-              Why SportLinked
-            </a>
-            <a
-              href="#roles"
-              className="text-sm font-medium text-ink-muted transition-colors hover:text-ink"
-            >
-              For your role
-            </a>
-            <a
-              href="#verification"
-              className="text-sm font-medium text-ink-muted transition-colors hover:text-ink"
-            >
-              Verification
-            </a>
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <Link
-              to="/login"
-              className={buttonClasses({ variant: 'ghost', size: 'sm', className: 'hidden sm:inline-flex' })}
-            >
-              Sign in
-            </Link>
-            <Link to="/register" className={buttonClasses({ size: 'sm' })}>
-              Join SportLinked
-            </Link>
-            <button
-              type="button"
-              onClick={() => setMenuOpen((open) => !open)}
-              className="ml-1 rounded-lg p-2 text-ink-muted transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 md:hidden"
-              aria-expanded={menuOpen}
-              aria-controls="mobile-navigation"
-              aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
-            >
-              {menuOpen ? (
-                <FiX className="h-5 w-5" aria-hidden="true" />
-              ) : (
-                <FiMenu className="h-5 w-5" aria-hidden="true" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {menuOpen ? (
-          <nav
-            id="mobile-navigation"
-            aria-label="Mobile navigation"
-            className="border-t border-line bg-white px-4 py-3 md:hidden"
-          >
-            <div className="flex flex-col gap-1">
-              <a
-                href="#priorities"
-                onClick={closeMenu}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-slate-50 hover:text-ink"
-              >
-                Why SportLinked
-              </a>
-              <a
-                href="#roles"
-                onClick={closeMenu}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-slate-50 hover:text-ink"
-              >
-                For your role
-              </a>
-              <a
-                href="#verification"
-                onClick={closeMenu}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-slate-50 hover:text-ink"
-              >
-                Verification
-              </a>
-              <Link
-                to="/login"
-                onClick={closeMenu}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-slate-50 hover:text-ink sm:hidden"
-              >
-                Sign in
-              </Link>
-            </div>
-          </nav>
-        ) : null}
-      </header>
+    <div className="min-h-screen bg-ivory">
+      <Navbar />
 
       <main>
-        <section className="border-b border-line bg-white">
-          <div className="page-shell grid items-center gap-12 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16 lg:py-24">
+        <section className="relative overflow-hidden border-b border-line">
+          <div className="lane-circles pointer-events-none absolute -right-64 -top-52 h-[760px] w-[760px] rounded-full opacity-70" />
+          <div className="page-shell relative grid items-center gap-12 py-14 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16 lg:py-24">
             <div>
-              <Badge variant="brand">The professional network for sport</Badge>
-              <h1 className="mt-5 max-w-2xl text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-5xl lg:text-[3.4rem]">
-                Credible sporting careers start with the right connections.
+              <p className="eyebrow">The professional network for sport</p>
+              <h1 className="mt-5 max-w-2xl text-4xl leading-[1.04] sm:text-5xl lg:text-[4.1rem]">
+                Credible careers start with the{' '}
+                <span className="display-emphasis">right connections.</span>
               </h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-                SportLinked connects athletes, coaches, and recruiters around verified achievements,
-                genuine discovery, and real opportunities — not empty follower counts.
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-body">
+                SportLinked brings athletes, coaches, and recruiters together around verified
+                achievements, genuine discovery, and real opportunity.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  to="/register"
+                  to={user ? '/dashboard' : '/register'}
                   className={buttonClasses({ size: 'lg', className: 'w-full sm:w-auto' })}
                 >
-                  Create your profile
+                  {user ? 'Go to dashboard' : 'Create your profile'}
                   <FiArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
                 <Link
-                  to="/login"
+                  to={user ? '/feed' : '/login'}
                   className={buttonClasses({
                     variant: 'secondary',
                     size: 'lg',
                     className: 'w-full sm:w-auto',
                   })}
                 >
-                  Sign in
+                  {user ? 'Open your feed' : 'Sign in'}
                 </Link>
               </div>
 
-              <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2.5 text-sm text-ink-muted">
-                {['Role-based workspace', 'Separate verification status', 'Private evidence handling'].map(
-                  (item) => (
-                    <li key={item} className="inline-flex items-center gap-2">
-                      <FiCheck className="h-4 w-4 text-brand-600" aria-hidden="true" />
-                      {item}
-                    </li>
-                  ),
-                )}
+              <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2.5 text-sm font-semibold text-body">
+                {[
+                  'Role-based workspace',
+                  'Separate verification status',
+                  'Private evidence handling',
+                ].map((item) => (
+                  <li key={item} className="inline-flex items-center gap-2">
+                    <FiCheck className="h-4 w-4 text-track" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
 
-            <div className="mx-auto w-full max-w-md">
-              <Card className="overflow-hidden">
-                <div className="flex items-center justify-between gap-3 border-b border-line bg-slate-50/70 px-5 py-4">
+            <div className="relative mx-auto w-full max-w-md">
+              <div className="surface-card overflow-hidden">
+                <div className="flex items-center justify-between gap-3 border-b border-line bg-sand px-5 py-4">
                   <div className="flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white text-ink-muted">
-                      <FiUser className="h-5 w-5" aria-hidden="true" />
+                    <span className="flex h-11 w-11 items-center justify-center rounded-full border border-line-strong bg-white text-track">
+                      <FiAward className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <div>
-                      <p className="text-sm font-semibold text-ink">Athlete profile</p>
-                      <p className="text-xs text-ink-subtle">Credibility at a glance</p>
+                      <p className="font-display font-display text-xl">
+                        Athlete profile
+                      </p>
+                      <p className="text-xs font-semibold text-slate">Credibility at a glance</p>
                     </div>
                   </div>
-                  <Badge variant="brand">Verified separately</Badge>
+                  <Badge variant="brand">Separate status</Badge>
                 </div>
 
                 <div className="space-y-2.5 px-5 py-5">
                   {credibilityRows.map((row) => (
                     <div
                       key={row.label}
-                      className="flex items-center justify-between gap-3 rounded-lg border border-line px-3.5 py-3"
+                      className="flex items-center justify-between gap-3 rounded-tile border border-line px-3.5 py-3"
                     >
                       <div className="flex items-center gap-2.5">
-                        <FiShield className="h-4 w-4 text-brand-600" aria-hidden="true" />
-                        <span className="text-sm font-medium text-ink">{row.label}</span>
+                        <FiShield className="h-4 w-4 text-track" aria-hidden="true" />
+                        <span className="text-sm font-bold text-navy">{row.label}</span>
                       </div>
-                      <span className="text-xs text-ink-subtle">{row.detail}</span>
+                      <span className="text-xs font-semibold text-slate">{row.detail}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="border-t border-brand-100 bg-brand-50 px-5 py-4">
-                  <p className="flex items-start gap-2 text-xs leading-relaxed text-brand-800">
-                    <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                <div className="border-t border-line bg-sand px-5 py-4">
+                  <p className="flex items-start gap-2 text-xs leading-relaxed text-body">
+                    <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-verified" aria-hidden="true" />
                     Uploading a document never verifies a claim automatically. Each item shows
                     exactly what was reviewed.
                   </p>
                 </div>
-              </Card>
+              </div>
 
-              <div className="mt-4 flex items-start gap-3 rounded-xl border border-line bg-white p-4 shadow-card">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-ink-muted">
+              <div className="mt-4 flex items-start gap-3 rounded-tile border border-line bg-white p-4 shadow-card">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-ivory">
                   <FiCompass className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-ink">Discovery that respects evidence</p>
-                  <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">
-                    Athletes are found for what they have shown, not only for who they know.
+                  <p className="text-sm font-extrabold text-navy">Discovery that respects evidence</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-slate">
+                    Found for what you have shown, not only for who you know.
                   </p>
                 </div>
               </div>
@@ -248,16 +180,15 @@ export default function Landing() {
           </div>
         </section>
 
-        <section id="priorities" className="scroll-mt-20 border-b border-line bg-canvas">
+        <section id="priorities" className="scroll-mt-24 border-b border-line bg-sand/45">
           <div className="page-shell py-16 lg:py-20">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">
-                Three priorities
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-                Everything supports discovery, credibility, and opportunity.
+              <p className="eyebrow">Three priorities</p>
+              <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
+                Everything supports discovery, credibility, and{' '}
+                <span className="display-emphasis">opportunity.</span>
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-ink-muted">
+              <p className="mt-4 text-base leading-relaxed text-body">
                 SportLinked is not another general social feed. Its core is helping the right people
                 find each other with information they can trust.
               </p>
@@ -267,41 +198,44 @@ export default function Landing() {
               {priorities.map((priority) => {
                 const Icon = priority.icon;
                 return (
-                  <Card key={priority.title} className="p-6">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand-100 bg-brand-50 text-brand-700">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <h3 className="mt-5 text-base font-semibold text-ink">{priority.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-                      {priority.description}
-                    </p>
-                  </Card>
+                  <article key={priority.title} className="surface-card p-6">
+                    <div className="flex items-center justify-between">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-track/10 text-track">
+                        <Icon className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                      <span className="font-display text-2xl font-semibold text-line-strong">
+                        {priority.number}
+                      </span>
+                    </div>
+                    <h3 className="mt-5 text-xl">{priority.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate">{priority.description}</p>
+                  </article>
                 );
               })}
             </div>
           </div>
         </section>
 
-        <section id="roles" className="scroll-mt-20 border-b border-line bg-white">
+        <section id="roles" className="scroll-mt-24 border-b border-line bg-ivory">
           <div className="page-shell py-16 lg:py-20">
             <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">
-                  One network, clear roles
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-                  A workspace built around what you do.
+                <p className="eyebrow">One network, clear roles</p>
+                <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
+                  A workspace built around what{' '}
+                  <span className="display-emphasis">you do.</span>
                 </h2>
-                <p className="mt-4 text-base leading-relaxed text-ink-muted">
-                  Sign up with your role and only see the tools that matter to you. Role and
-                  ownership checks are enforced in the product, not just hidden in the interface.
+                <p className="mt-4 text-base leading-relaxed text-body">
+                  {user
+                    ? 'Your workspace is shaped by your role, with ownership checks enforced in the product, not just hidden in the interface.'
+                    : 'Join with your role and see only the tools that matter to you. Role and ownership checks are enforced in the product, not just hidden in the interface.'}
                 </p>
               </div>
               <Link
-                to="/register"
+                to={user ? '/dashboard' : '/register'}
                 className={buttonClasses({ variant: 'secondary', size: 'md' })}
               >
-                Choose your role
+                {user ? 'Go to dashboard' : 'Choose your role'}
                 <FiArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
@@ -310,55 +244,87 @@ export default function Landing() {
               {ROLE_OPTIONS.map((role) => {
                 const Icon = role.icon;
                 return (
-                  <Card key={role.value} className="flex flex-col p-6">
+                  <article key={role.value} className="surface-card flex flex-col p-6">
                     <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-slate-50 text-ink-muted">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-tile border border-line bg-sand text-navy">
                         <Icon className="h-5 w-5" aria-hidden="true" />
                       </span>
                       <div>
-                        <h3 className="text-base font-semibold text-ink">{role.label}</h3>
-                        <p className="text-xs font-medium text-brand-700">{role.tagline}</p>
+                        <h3 className="text-xl">{role.label}</h3>
+                        <p className="text-xs font-extrabold uppercase tracking-[0.08em] text-track">
+                          {role.tagline}
+                        </p>
                       </div>
                     </div>
-                    <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-muted">
+                    <p className="mt-4 flex-1 text-sm leading-relaxed text-slate">
                       {role.description}
                     </p>
                     <Link
-                      to={`/register?role=${role.value}`}
-                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 transition-colors hover:text-brand-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                      to={user ? '/dashboard' : `/register?role=${role.value}`}
+                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-extrabold text-track transition-colors hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                     >
-                      Join as {role.label.toLowerCase()}
+                      {user ? 'Open your workspace' : `Join as ${role.label.toLowerCase()}`}
                       <FiArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
-                  </Card>
+                  </article>
                 );
               })}
             </div>
           </div>
         </section>
 
-        <section id="verification" className="scroll-mt-20 border-b border-line bg-canvas">
+        <section id="how-it-works" className="scroll-mt-24 border-b border-line bg-ivory">
+          <div className="page-shell py-16 lg:py-20">
+            <div className="max-w-2xl">
+              <p className="eyebrow">How it works</p>
+              <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
+                From profile to opportunity in{' '}
+                <span className="display-emphasis">three steps.</span>
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-body">
+                A clear record makes it easier for the right people to find each other without
+                guessing what has actually been reviewed.
+              </p>
+            </div>
+
+            <ol className="mt-10 grid gap-4 md:grid-cols-3">
+              {howItWorks.map((step) => (
+                <li
+                  key={step.number}
+                  className="rounded-card border border-line bg-white p-6 shadow-card"
+                >
+                  <span className="font-display text-4xl font-semibold text-line-strong">
+                    {step.number}
+                  </span>
+                  <h3 className="mt-4 text-xl">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate">{step.description}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section id="verification" className="scroll-mt-24 border-b border-line bg-sand/45">
           <div className="page-shell grid gap-10 py-16 lg:grid-cols-2 lg:items-center lg:py-20">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">
-                A higher standard
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-                Verification you can actually read.
+              <p className="eyebrow">A higher standard</p>
+              <h2 className="mt-3 text-3xl leading-tight sm:text-4xl">
+                Verification you can actually{' '}
+                <span className="display-emphasis">read.</span>
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-ink-muted">
+              <p className="mt-4 text-base leading-relaxed text-body">
                 A single generic “verified” tick hides too much. SportLinked treats identity,
                 qualifications, and achievements as separate claims, each with its own status.
               </p>
-              <ul className="mt-6 space-y-3 text-sm text-ink-muted">
+              <ul className="mt-6 space-y-3 text-sm text-body">
                 {[
-                  'Private evidence stays private — accessed through short-lived signed links.',
+                  'Private evidence stays private, accessed through short-lived signed links.',
                   'Uploading a document starts a review; it never verifies a claim by itself.',
-                  'Generated or assisted content must be reviewed and approved by the user before it is published.',
+                  'Assisted content must be reviewed and approved before it is published.',
                 ].map((item) => (
                   <li key={item} className="flex gap-2.5">
                     <FiCheckCircle
-                      className="mt-0.5 h-4 w-4 shrink-0 text-brand-600"
+                      className="mt-0.5 h-4 w-4 shrink-0 text-verified"
                       aria-hidden="true"
                     />
                     <span className="leading-relaxed">{item}</span>
@@ -367,149 +333,84 @@ export default function Landing() {
               </ul>
             </div>
 
-            <Card className="p-6">
-              <div className="flex items-center gap-3 border-b border-line pb-5">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ink text-white">
+            <div className="relative overflow-hidden rounded-card bg-navy p-6 shadow-card sm:p-8">
+              <div className="lane-circles-gold pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full" />
+              <div className="relative flex items-center gap-3 border-b border-ivory/15 pb-5">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ivory text-navy">
                   <FiShield className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-ink">Verification record</h3>
-                  <p className="text-sm text-ink-muted">Each item stands on its own.</p>
+                  <h3 className="text-xl text-ivory">Verification record</h3>
+                  <p className="text-sm text-ivory/65">Each item stands on its own.</p>
                 </div>
               </div>
 
-              <div className="mt-5 space-y-3">
+              <div className="relative mt-5 space-y-3">
                 {credibilityRows.map((row) => (
                   <div
                     key={row.label}
-                    className="flex items-center justify-between gap-4 rounded-lg border border-line bg-slate-50/60 px-4 py-3"
+                    className="flex items-center justify-between gap-4 rounded-tile border border-ivory/15 bg-ivory/5 px-4 py-3"
                   >
-                    <span className="text-sm font-medium text-ink">{row.label}</span>
+                    <span className="text-sm font-bold text-ivory">{row.label}</span>
                     <Badge variant="warning">Review required</Badge>
                   </div>
                 ))}
               </div>
 
-              <p className="mt-5 flex items-start gap-2 rounded-lg bg-brand-50 px-4 py-3 text-xs leading-relaxed text-brand-800">
-                <FiUsers className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+              <p className="relative mt-5 flex items-start gap-2 rounded-tile border border-gold/25 bg-gold/10 px-4 py-3 text-xs leading-relaxed text-ivory/85">
+                <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
                 Reviewers see only the evidence needed for the specific claim they are assessing.
               </p>
-            </Card>
+            </div>
           </div>
         </section>
 
-        <section className="bg-white">
+        <section className="bg-ivory">
           <div className="page-shell py-16 lg:py-20">
-            <div className="rounded-2xl border border-line bg-brand-50/60 px-6 py-10 text-center sm:px-12">
-              <h2 className="mx-auto max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-                Start with a profile that means something.
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-muted">
-                Join as an athlete, coach, or recruiter and help raise the standard for how sporting
-                careers connect.
-              </p>
-              <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-                <Link
-                  to="/register"
-                  className={buttonClasses({ size: 'lg', className: 'w-full sm:w-auto' })}
-                >
-                  Create your account
-                  <FiArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <Link
-                  to="/login"
-                  className={buttonClasses({
-                    variant: 'secondary',
-                    size: 'lg',
-                    className: 'w-full sm:w-auto',
-                  })}
-                >
-                  Sign in
-                </Link>
+            <div className="relative overflow-hidden rounded-card bg-navy px-6 py-12 text-center sm:px-12">
+              <div className="lane-circles-gold pointer-events-none absolute -bottom-56 -left-36 h-[520px] w-[520px] rounded-full opacity-80" />
+              <div className="relative">
+                <p className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-gold">
+                  Start with substance
+                </p>
+                <h2 className="mx-auto mt-3 max-w-2xl text-3xl leading-tight text-ivory sm:text-4xl">
+                  Build a profile that <span className="italic text-gold">means something.</span>
+                </h2>
+                <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ivory/70">
+                  {user
+                    ? 'Return to your workspace to keep building credible connections and finding the right opportunities.'
+                    : 'Join as an athlete, coach, or recruiter and help raise the standard for how sporting careers connect.'}
+                </p>
+                <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+                  <Link
+                    to={user ? '/dashboard' : '/register'}
+                    className={buttonClasses({
+                      variant: 'gold',
+                      size: 'lg',
+                      className: 'w-full sm:w-auto',
+                    })}
+                  >
+                    {user ? 'Go to dashboard' : 'Create your account'}
+                    <FiArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                  <Link
+                    to={user ? '/opportunities' : '/login'}
+                    className={buttonClasses({
+                      variant: 'onDark',
+                      size: 'lg',
+                      className: 'w-full sm:w-auto',
+                    })}
+                  >
+                    {user ? 'Browse opportunities' : 'Sign in'}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-line bg-white">
-        <div className="page-shell grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="sm:col-span-2">
-            <Logo size="md" />
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-muted">
-              Professional networking and talent discovery for athletes, coaches, recruiters, and
-              sports organisations.
-            </p>
-          </div>
-
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink-subtle">
-              Platform
-            </p>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              <li>
-                <a href="#priorities" className="text-ink-muted transition-colors hover:text-ink">
-                  Why SportLinked
-                </a>
-              </li>
-              <li>
-                <a href="#roles" className="text-ink-muted transition-colors hover:text-ink">
-                  For your role
-                </a>
-              </li>
-              <li>
-                <a href="#verification" className="text-ink-muted transition-colors hover:text-ink">
-                  Verification
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink-subtle">
-              Get started
-            </p>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              <li>
-                <Link
-                  to="/register?role=athlete"
-                  className="text-ink-muted transition-colors hover:text-ink"
-                >
-                  Athlete sign-up
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/register?role=coach"
-                  className="text-ink-muted transition-colors hover:text-ink"
-                >
-                  Coach sign-up
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/register?role=recruiter"
-                  className="text-ink-muted transition-colors hover:text-ink"
-                >
-                  Recruiter sign-up
-                </Link>
-              </li>
-              <li>
-                <Link to="/login" className="text-ink-muted transition-colors hover:text-ink">
-                  Sign in
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-line">
-          <div className="page-shell flex flex-col gap-2 py-5 text-xs text-ink-subtle sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} SportLinked. All rights reserved.</p>
-            <p>Built for credible sporting careers.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

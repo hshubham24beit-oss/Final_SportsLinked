@@ -6,6 +6,7 @@ import {
   FiClock,
   FiFileText,
   FiMapPin,
+  FiMessageCircle,
   FiXCircle,
 } from 'react-icons/fi';
 import Alert from '../components/ui/Alert';
@@ -112,7 +113,7 @@ export default function ApplicationDetail() {
     <div>
       <Link
         to={isPublisher ? `/opportunities/${application.opportunity?.id}/applicants` : '/applications'}
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted hover:text-ink"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-body hover:text-navy"
       >
         <FiArrowLeft className="h-4 w-4" aria-hidden="true" />
         {isPublisher ? 'Applicants' : 'My applications'}
@@ -128,10 +129,10 @@ export default function ApplicationDetail() {
               {applicationStatusLabel(application.status)}
             </Badge>
           </div>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
             {application.opportunity?.title || 'Application'}
           </h1>
-          <p className="mt-1.5 text-sm text-ink-muted">
+          <p className="mt-1.5 text-sm text-body">
             Applied {formatDate(application.createdAt)} to {application.opportunity?.publisherName}
           </p>
         </div>
@@ -147,6 +148,15 @@ export default function ApplicationDetail() {
               onChange={(event) => updateStatus(event.target.value)}
               containerClassName="w-44"
             />
+          ) : null}
+          {isPublisher && application.athlete?.id ? (
+            <Link
+              to={`/messages?user=${encodeURIComponent(application.athlete.id)}`}
+              className={buttonClasses({ variant: 'secondary', size: 'sm' })}
+            >
+              <FiMessageCircle className="h-4 w-4" aria-hidden="true" />
+              Message applicant
+            </Link>
           ) : null}
           {application.canWithdraw ? (
             <Button
@@ -164,19 +174,19 @@ export default function ApplicationDetail() {
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <div className="space-y-6">
-          <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-            <h2 className="text-base font-semibold text-ink">
+          <section className="rounded-card border border-line bg-white p-5 shadow-card">
+            <h2 className="font-display text-xl">
               {isPublisher ? 'Applicant snapshot' : 'Submitted profile snapshot'}
             </h2>
-            <p className="mt-1 text-xs text-ink-subtle">
+            <p className="mt-1 text-xs text-slate">
               Captured {formatDate(snapshot.capturedAt)} and does not change with later profile edits.
             </p>
 
             <div className="mt-4">
-              <h3 className="text-sm font-semibold text-ink">{snapshot.name}</h3>
-              <p className="mt-0.5 text-sm text-ink-muted">{snapshot.headline || 'No headline'}</p>
+              <h3 className="text-sm font-semibold text-navy">{snapshot.name}</h3>
+              <p className="mt-0.5 text-sm text-body">{snapshot.headline || 'No headline'}</p>
               {location ? (
-                <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-ink-subtle">
+                <p className="mt-1 inline-flex items-center gap-1.5 text-xs text-slate">
                   <FiMapPin className="h-3.5 w-3.5" aria-hidden="true" />
                   {location}
                 </p>
@@ -185,54 +195,54 @@ export default function ApplicationDetail() {
 
             <dl className="mt-4 grid gap-3 border-t border-line pt-4 text-sm sm:grid-cols-2">
               <div>
-                <dt className="text-xs font-medium uppercase tracking-wide text-ink-subtle">
+                <dt className="text-xs font-medium uppercase tracking-wide text-slate">
                   Sports
                 </dt>
-                <dd className="mt-0.5 text-ink">{(snapshot.sports || []).join(', ') || '-'}</dd>
+                <dd className="mt-0.5 text-navy">{(snapshot.sports || []).join(', ') || '-'}</dd>
               </div>
               <div>
-                <dt className="text-xs font-medium uppercase tracking-wide text-ink-subtle">
+                <dt className="text-xs font-medium uppercase tracking-wide text-slate">
                   Positions
                 </dt>
-                <dd className="mt-0.5 text-ink">{(snapshot.positions || []).join(', ') || '-'}</dd>
+                <dd className="mt-0.5 text-navy">{(snapshot.positions || []).join(', ') || '-'}</dd>
               </div>
               <div>
-                <dt className="text-xs font-medium uppercase tracking-wide text-ink-subtle">
+                <dt className="text-xs font-medium uppercase tracking-wide text-slate">
                   Level
                 </dt>
-                <dd className="mt-0.5 text-ink">
+                <dd className="mt-0.5 text-navy">
                   {(snapshot.level || '-').replace(/_/g, ' ')} /{' '}
                   {(snapshot.experienceYears ?? '-')} years
                 </dd>
               </div>
               <div>
-                <dt className="text-xs font-medium uppercase tracking-wide text-ink-subtle">
+                <dt className="text-xs font-medium uppercase tracking-wide text-slate">
                   Verified achievements
                 </dt>
-                <dd className="mt-0.5 text-ink">{snapshot.verifiedAchievementCount || 0}</dd>
+                <dd className="mt-0.5 text-navy">{snapshot.verifiedAchievementCount || 0}</dd>
               </div>
             </dl>
           </section>
 
           {application.coverNote ? (
-            <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-              <h2 className="text-base font-semibold text-ink">Cover note</h2>
-              <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-ink-muted">
+            <section className="rounded-card border border-line bg-white p-5 shadow-card">
+              <h2 className="font-display text-xl">Cover note</h2>
+              <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-body">
                 {application.coverNote}
               </p>
             </section>
           ) : null}
 
           {snapshot.verifiedAchievements?.length > 0 ? (
-            <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-              <h2 className="text-base font-semibold text-ink">Verified achievements</h2>
+            <section className="rounded-card border border-line bg-white p-5 shadow-card">
+              <h2 className="font-display text-xl">Verified achievements</h2>
               <ul className="mt-3 space-y-3">
                 {snapshot.verifiedAchievements.map((achievement, index) => (
                   <li key={`${achievement.title}-${index}`} className="flex items-start gap-2.5">
-                    <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-success-600" aria-hidden="true" />
+                    <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-verified" aria-hidden="true" />
                     <div>
-                      <p className="text-sm font-medium text-ink">{achievement.title}</p>
-                      <p className="text-xs text-ink-muted">
+                      <p className="text-sm font-medium text-navy">{achievement.title}</p>
+                      <p className="text-xs text-body">
                         {[achievement.competition, achievement.result].filter(Boolean).join(' - ')}
                       </p>
                     </div>
@@ -243,8 +253,8 @@ export default function ApplicationDetail() {
           ) : null}
 
           {application.documents?.length > 0 ? (
-            <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-              <h2 className="text-base font-semibold text-ink">Documents</h2>
+            <section className="rounded-card border border-line bg-white p-5 shadow-card">
+              <h2 className="font-display text-xl">Documents</h2>
               <div className="mt-3 flex flex-wrap gap-2">
                 {application.documents.map((document) => (
                   <a
@@ -252,7 +262,7 @@ export default function ApplicationDetail() {
                     href={document.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-3 py-1.5 text-xs font-medium text-ink-muted hover:text-ink"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-3 py-1.5 text-xs font-medium text-body hover:text-navy"
                   >
                     <FiFileText className="h-3.5 w-3.5" aria-hidden="true" />
                     {document.label}
@@ -264,21 +274,21 @@ export default function ApplicationDetail() {
         </div>
 
         <aside className="space-y-4">
-          <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-            <h2 className="text-base font-semibold text-ink">Status history</h2>
+          <section className="rounded-card border border-line bg-white p-5 shadow-card">
+            <h2 className="font-display text-xl">Status history</h2>
             <ol className="mt-4 space-y-4">
               {(application.statusHistory || []).map((entry, index) => (
                 <li key={`${entry.status}-${index}`} className="flex gap-3">
-                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-sand text-track">
                     <FiClock className="h-3 w-3" aria-hidden="true" />
                   </span>
                   <div>
-                    <p className="text-sm font-medium text-ink">
+                    <p className="text-sm font-medium text-navy">
                       {applicationStatusLabel(entry.status)}
                     </p>
-                    <p className="text-xs text-ink-subtle">{formatDate(entry.changedAt)}</p>
+                    <p className="text-xs text-slate">{formatDate(entry.changedAt)}</p>
                     {entry.note ? (
-                      <p className="mt-1 text-xs leading-relaxed text-ink-muted">{entry.note}</p>
+                      <p className="mt-1 text-xs leading-relaxed text-body">{entry.note}</p>
                     ) : null}
                   </div>
                 </li>

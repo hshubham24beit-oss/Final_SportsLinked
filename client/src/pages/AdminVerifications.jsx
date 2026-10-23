@@ -45,18 +45,18 @@ function RequestSummary({ request }) {
   return (
     <div className="min-w-0">
       <div className="flex flex-wrap items-center gap-2">
-        <p className="truncate text-sm font-semibold text-ink">
+        <p className="truncate text-sm font-semibold text-navy">
           {request.user?.name || 'Unknown user'}
         </p>
         <Badge variant={verificationStatusVariant(request.status)} size="sm">
           {verificationStatusLabel(request.status)}
         </Badge>
       </div>
-      <p className="mt-0.5 truncate text-xs text-ink-muted">
+      <p className="mt-0.5 truncate text-xs text-body">
         {verificationTypeLabel(request.type)}
         {target ? ` - ${target}` : ''}
       </p>
-      <p className="mt-0.5 text-xs text-ink-subtle">
+      <p className="mt-0.5 text-xs text-slate">
         {request.user?.email || ''} - submitted {formatDate(request.submittedAt)}
       </p>
     </div>
@@ -103,9 +103,9 @@ function DecisionForm({ request, onDecided }) {
   }
 
   return (
-    <form onSubmit={submit} className="rounded-xl border border-line bg-slate-50/60 p-4">
-      <h3 className="text-sm font-semibold text-ink">Approve or reject this request</h3>
-      <p className="mt-1 text-xs leading-relaxed text-ink-muted">
+    <form onSubmit={submit} className="rounded-card border border-line bg-sand/60 p-4">
+      <h3 className="text-sm font-semibold text-navy">Approve or reject this request</h3>
+      <p className="mt-1 text-xs leading-relaxed text-body">
         Approving marks the user or achievement as verified and sends a notification.
       </p>
       <div className="mt-3 grid gap-4 sm:grid-cols-2">
@@ -252,8 +252,11 @@ export default function AdminVerifications() {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-ink">Verification queue</h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+        <p className="eyebrow">Admin</p>
+        <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+          Verification <span className="display-emphasis">queue.</span>
+        </h1>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-body">
           Review identity, qualification, and achievement evidence. Every access and decision is
           recorded in the audit trail.
         </p>
@@ -291,7 +294,7 @@ export default function AdminVerifications() {
             </div>
           </form>
           {data?.statusCounts ? (
-            <p className="mt-3 text-xs text-ink-subtle">
+            <p className="mt-3 text-xs text-slate">
               {STATUS_OPTIONS.map(
                 (option) => `${option.label}: ${data.statusCounts[option.value] || 0}`,
               ).join('  |  ')}
@@ -319,7 +322,7 @@ export default function AdminVerifications() {
               {data.requests.map((request) => (
                 <div
                   key={request.id}
-                  className="flex flex-col gap-3 rounded-lg border border-line p-3.5 sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-3 rounded-tile border border-line p-3.5 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <RequestSummary request={request} />
                   <div className="flex shrink-0 flex-wrap items-center gap-2">
@@ -389,10 +392,10 @@ export default function AdminVerifications() {
             />
 
             {detail.achievement ? (
-              <div className="rounded-lg border border-line p-3">
-                <p className="text-xs uppercase tracking-wide text-ink-subtle">Achievement</p>
-                <p className="mt-1 text-sm font-semibold text-ink">{detail.achievement.title}</p>
-                <p className="text-xs text-ink-muted">
+              <div className="rounded-tile border border-line p-3">
+                <p className="text-xs uppercase tracking-wide text-slate">Achievement</p>
+                <p className="mt-1 text-sm font-semibold text-navy">{detail.achievement.title}</p>
+                <p className="text-xs text-body">
                   {[detail.achievement.sport, detail.achievement.competition, detail.achievement.result]
                     .filter(Boolean)
                     .join(' - ')}
@@ -401,12 +404,12 @@ export default function AdminVerifications() {
             ) : null}
 
             {detail.qualification?.name ? (
-              <div className="rounded-lg border border-line p-3">
-                <p className="text-xs uppercase tracking-wide text-ink-subtle">Qualification</p>
-                <p className="mt-1 text-sm font-semibold text-ink">
+              <div className="rounded-tile border border-line p-3">
+                <p className="text-xs uppercase tracking-wide text-slate">Qualification</p>
+                <p className="mt-1 text-sm font-semibold text-navy">
                   {detail.qualification.name}
                 </p>
-                <p className="text-xs text-ink-muted">
+                <p className="text-xs text-body">
                   {[detail.qualification.issuer, detail.qualification.year]
                     .filter(Boolean)
                     .join(' - ')}
@@ -416,17 +419,17 @@ export default function AdminVerifications() {
 
             {detail.statement ? (
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-ink-subtle">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate">
                   Applicant statement
                 </p>
-                <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-ink-muted">
+                <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-body">
                   {detail.statement}
                 </p>
               </div>
             ) : null}
 
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-ink-subtle">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate">
                 Private evidence
               </p>
               {detail.evidence.length ? (
@@ -436,7 +439,7 @@ export default function AdminVerifications() {
                       key={evidence.id}
                       type="button"
                       onClick={() => openEvidence(evidence)}
-                      className="inline-flex items-center gap-1.5 rounded-md border border-line bg-white px-2.5 py-1.5 text-xs font-medium text-ink-muted hover:bg-slate-50"
+                      className="inline-flex items-center gap-1.5 rounded-tile border border-line bg-white px-2.5 py-1.5 text-xs font-medium text-body hover:bg-sand/60"
                     >
                       <FiExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                       {evidence.originalName}
@@ -444,7 +447,7 @@ export default function AdminVerifications() {
                   ))}
                 </div>
               ) : (
-                <p className="mt-1 text-sm text-ink-subtle">No uploaded evidence.</p>
+                <p className="mt-1 text-sm text-slate">No uploaded evidence.</p>
               )}
               {detail.officialLinks?.length ? (
                 <div className="mt-2 space-y-1">
@@ -454,7 +457,7 @@ export default function AdminVerifications() {
                       href={link.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="block truncate text-xs font-medium text-brand-700 hover:underline"
+                      className="block truncate text-xs font-medium text-track hover:underline"
                     >
                       {link.label || 'Official verification link'}
                     </a>
@@ -464,7 +467,7 @@ export default function AdminVerifications() {
             </div>
 
             {detail.reviewer ? (
-              <p className="text-xs text-ink-subtle">
+              <p className="text-xs text-slate">
                 Reviewer: {detail.reviewer.name} - claimed{' '}
                 {detail.claimedAt ? formatDateTime(detail.claimedAt) : 'not recorded'}
               </p>
@@ -481,15 +484,15 @@ export default function AdminVerifications() {
 
             {detail.audit?.length ? (
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-ink-subtle">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate">
                   Audit trail
                 </p>
                 <ol className="mt-2 space-y-2 border-l border-line pl-3">
                   {detail.audit.map((entry) => (
-                    <li key={entry.id} className="text-xs text-ink-muted">
-                      <span className="font-medium text-ink">{entry.action.replace('_', ' ')}</span>
+                    <li key={entry.id} className="text-xs text-body">
+                      <span className="font-medium text-navy">{entry.action.replace('_', ' ')}</span>
                       {entry.actor?.name ? ` by ${entry.actor.name}` : ''}
-                      <span className="text-ink-subtle"> - {formatDateTime(entry.createdAt)}</span>
+                      <span className="text-slate"> - {formatDateTime(entry.createdAt)}</span>
                       {entry.reason ? <p className="mt-0.5">{entry.reason}</p> : null}
                     </li>
                   ))}

@@ -83,13 +83,13 @@ export default function VerifyEmail() {
     if (status === 'verifying') {
       return (
         <div className="text-center" role="status" aria-live="polite">
-          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-line bg-white text-brand-700">
+          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-card border border-line bg-white text-track">
             <Spinner size="lg" />
           </span>
-          <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+          <h1 className="mt-5 font-display text-3xl font-semibold leading-tight text-navy sm:text-[2rem]">
             Verifying your email
           </h1>
-          <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+          <p className="mt-2 text-sm leading-relaxed text-body">
             Please wait while we confirm your verification link.
           </p>
         </div>
@@ -99,13 +99,13 @@ export default function VerifyEmail() {
     if (status === 'success') {
       return (
         <div aria-live="polite">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-success-100 bg-success-50 text-success-600">
+          <span className="flex h-12 w-12 items-center justify-center rounded-card border border-verified/20 bg-verified-soft text-verified">
             <FiCheckCircle className="h-6 w-6" aria-hidden="true" />
           </span>
-          <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+          <h1 className="mt-5 font-display text-3xl font-semibold leading-tight text-navy sm:text-[2rem]">
             Email verified
           </h1>
-          <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+          <p className="mt-2 text-sm leading-relaxed text-body">
             {message || 'Your email address has been verified.'}
           </p>
 
@@ -129,13 +129,13 @@ export default function VerifyEmail() {
 
       return (
         <div aria-live="polite">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-danger-100 bg-danger-50 text-danger-600">
+          <span className="flex h-12 w-12 items-center justify-center rounded-card border border-danger-100 bg-danger-50 text-danger-600">
             <FiAlertCircle className="h-6 w-6" aria-hidden="true" />
           </span>
-          <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+          <h1 className="mt-5 font-display text-3xl font-semibold leading-tight text-navy sm:text-[2rem]">
             {alreadyVerified ? 'Already verified' : 'This link could not be used'}
           </h1>
-          <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+          <p className="mt-2 text-sm leading-relaxed text-body">
             {message || 'The verification link is invalid or has expired.'}
           </p>
 
@@ -154,7 +154,7 @@ export default function VerifyEmail() {
           </Link>
 
           {!user ? (
-            <p className="mt-4 text-center text-xs leading-relaxed text-ink-subtle">
+            <p className="mt-4 text-center text-xs leading-relaxed text-slate">
               Sign in to request a new verification link from your account settings.
             </p>
           ) : null}
@@ -164,17 +164,17 @@ export default function VerifyEmail() {
 
     return (
       <div>
-        <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-brand-100 bg-brand-50 text-brand-700">
+        <span className="flex h-12 w-12 items-center justify-center rounded-card border border-line bg-sand text-track">
           <FiMail className="h-6 w-6" aria-hidden="true" />
         </span>
-        <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+        <h1 className="mt-5 font-display text-3xl font-semibold leading-tight text-navy sm:text-[2rem]">
           {user && user.isEmailVerified ? 'Your email is verified' : 'Verify your email address'}
         </h1>
 
         {user ? (
           user.isEmailVerified ? (
             <>
-              <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+              <p className="mt-2 text-sm leading-relaxed text-body">
                 {user.email} already has verified email status. No further action is needed.
               </p>
               <Link
@@ -186,9 +186,9 @@ export default function VerifyEmail() {
             </>
           ) : (
             <>
-              <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+              <p className="mt-2 text-sm leading-relaxed text-body">
                 We can send a fresh verification link to{' '}
-                <span className="font-medium text-ink">{user.email}</span>. The newest link replaces
+                <span className="font-medium text-navy">{user.email}</span>. The newest link replaces
                 any earlier one.
               </p>
               {renderResendButton()}
@@ -207,7 +207,7 @@ export default function VerifyEmail() {
           )
         ) : (
           <>
-            <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+            <p className="mt-2 text-sm leading-relaxed text-body">
               Open the verification link we sent to your email. If you are already signed in, you
               can request a fresh link from this page.
             </p>
@@ -231,12 +231,12 @@ export default function VerifyEmail() {
           </>
         )}
 
-        <div className="mt-7 rounded-lg border border-line bg-slate-50 px-4 py-3">
+        <div className="mt-7 rounded-tile border border-line bg-sand/60 px-4 py-3">
           <div className="flex items-center gap-2">
             <Logo size="sm" showWordmark={false} />
-            <p className="text-xs font-semibold text-ink">About email verification</p>
+            <p className="text-xs font-semibold text-navy">About email verification</p>
           </div>
-          <p className="mt-2 text-xs leading-relaxed text-ink-muted">
+          <p className="mt-2 text-xs leading-relaxed text-body">
             Verification links expire after 24 hours. Uploading a document never verifies an
             account automatically.
           </p>

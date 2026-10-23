@@ -16,7 +16,7 @@ export default function Checkbox({
   return (
     <label
       htmlFor={id}
-      className={`flex cursor-pointer items-start gap-3 rounded-lg border border-line bg-white px-3.5 py-3 transition-colors hover:bg-slate-50 ${
+      className={`flex cursor-pointer items-start gap-3 rounded-tile border border-line bg-white px-3.5 py-3 transition-colors hover:bg-sand ${
         disabled ? 'cursor-not-allowed opacity-60' : ''
       } ${className}`}
     >
@@ -28,12 +28,12 @@ export default function Checkbox({
         checked={checked}
         disabled={disabled}
         onChange={onChange}
-        className="mt-0.5 h-4 w-4 shrink-0 rounded border-line-strong text-brand-600 accent-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+        className="mt-0.5 h-4 w-4 shrink-0 rounded border-line-strong text-track accent-track focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track focus-visible:ring-offset-2"
       />
       <span className="min-w-0">
-        <span className="block text-sm font-medium text-ink">{label}</span>
+        <span className="block text-sm font-bold text-navy">{label}</span>
         {description ? (
-          <span className="mt-0.5 block text-xs leading-relaxed text-ink-muted">{description}</span>
+          <span className="mt-0.5 block text-xs leading-relaxed text-slate">{description}</span>
         ) : null}
       </span>
     </label>

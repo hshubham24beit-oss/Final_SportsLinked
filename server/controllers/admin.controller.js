@@ -22,6 +22,22 @@ async function getUser(req, res) {
   return success(res, { data, message: 'User retrieved.' });
 }
 
+async function listOrganizations(req, res) {
+  const result = await adminService.adminListOrganizations(req.query);
+  return paginated(res, {
+    data: { organizations: result.organizations },
+    page: result.meta.page,
+    limit: result.meta.limit,
+    total: result.meta.total,
+    message: 'Organisations retrieved.',
+  });
+}
+
+async function getOrganization(req, res) {
+  const data = await adminService.adminGetOrganization(req.params.id);
+  return success(res, { data, message: 'Organisation retrieved.' });
+}
+
 async function updateUserStatus(req, res) {
   const user = await adminService.adminUpdateUserStatus(
     req.user,
@@ -42,4 +58,12 @@ async function activity(req, res) {
   });
 }
 
-module.exports = { overview, listUsers, getUser, updateUserStatus, activity };
+module.exports = {
+  overview,
+  listUsers,
+  getUser,
+  updateUserStatus,
+  activity,
+  listOrganizations,
+  getOrganization,
+};

@@ -36,12 +36,12 @@ import {
 function DetailRow({ icon: Icon, label, value }) {
   return (
     <div className="flex items-start gap-3">
-      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-tile bg-sand text-track">
         <Icon className="h-4 w-4" aria-hidden="true" />
       </span>
       <div className="min-w-0">
-        <p className="text-xs font-medium uppercase tracking-wide text-ink-subtle">{label}</p>
-        <p className="mt-0.5 text-sm text-ink">{value}</p>
+        <p className="text-xs font-medium uppercase tracking-wide text-slate">{label}</p>
+        <p className="mt-0.5 text-sm text-navy">{value}</p>
       </div>
     </div>
   );
@@ -158,7 +158,7 @@ export default function EventDetail() {
   if (error || !event) {
     return (
       <div>
-        <Link to="/events" className="text-sm font-medium text-ink-muted hover:text-ink">
+        <Link to="/events" className="text-sm font-medium text-body hover:text-navy">
           Back to events
         </Link>
         <Alert variant="error" title="Event could not be loaded" className="mt-4">
@@ -178,7 +178,7 @@ export default function EventDetail() {
     <div className="mx-auto max-w-5xl">
       <Link
         to={event.isOwner ? '/events/mine' : '/events'}
-        className="text-sm font-medium text-ink-muted hover:text-ink"
+        className="text-sm font-medium text-body hover:text-navy"
       >
         Back
       </Link>
@@ -197,10 +197,10 @@ export default function EventDetail() {
               </Badge>
             ) : null}
           </div>
-          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+          <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">
             {event.title}
           </h1>
-          <p className="mt-1.5 text-sm text-ink-muted">
+          <p className="mt-1.5 text-sm text-body">
             Organized by {event.organizerName}
           </p>
         </div>
@@ -271,7 +271,7 @@ export default function EventDetail() {
               <CardTitle>About this event</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="whitespace-pre-line text-sm leading-relaxed text-ink-muted">
+              <p className="whitespace-pre-line text-sm leading-relaxed text-body">
                 {event.description}
               </p>
             </CardContent>
@@ -318,14 +318,14 @@ export default function EventDetail() {
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between text-sm">
-                <span className="font-medium text-ink">
+                <span className="font-medium text-navy">
                   {event.registrationCount} of {event.capacity} confirmed
                 </span>
-                <span className="text-ink-subtle">{capacityPercent}%</span>
+                <span className="text-slate">{capacityPercent}%</span>
               </div>
               <ProgressBar value={capacityPercent} className="mt-2" />
               {event.waitlistCount > 0 ? (
-                <p className="mt-2 text-xs text-ink-subtle">
+                <p className="mt-2 text-xs text-slate">
                   {event.waitlistCount} on the waitlist
                 </p>
               ) : null}
@@ -366,12 +366,12 @@ export default function EventDetail() {
                 !event.canExpressInterest &&
                 !event.canCancelRegistration &&
                 !event.isOwner ? (
-                  <p className="text-sm text-ink-muted">
+                  <p className="text-sm text-body">
                     Registration is not open for this event.
                   </p>
                 ) : null}
                 {event.isOwner ? (
-                  <p className="text-sm text-ink-muted">
+                  <p className="text-sm text-body">
                     You are the organizer of this event.
                   </p>
                 ) : null}
@@ -384,7 +384,7 @@ export default function EventDetail() {
               <CardHeader>
                 <CardTitle>Good to know</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2 text-sm text-ink-muted">
+              <CardContent className="space-y-2 text-sm text-body">
                 <p>If the event is full you can join the waitlist.</p>
                 <p>
                   You will be notified if a place opens up and your registration is confirmed.
@@ -440,7 +440,7 @@ export default function EventDetail() {
           </div>
         }
       >
-        <p className="text-sm text-ink-muted">
+        <p className="text-sm text-body">
           {event.title} will be removed for everyone.
         </p>
       </Modal>

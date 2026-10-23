@@ -39,10 +39,10 @@ function DetailRow({ icon: Icon, label, value }) {
   if (!value) return null;
   return (
     <div className="flex items-start gap-2.5">
-      <Icon className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+      <Icon className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
       <div>
-        <dt className="text-xs font-medium uppercase tracking-wide text-ink-subtle">{label}</dt>
-        <dd className="mt-0.5 text-sm text-ink">{value}</dd>
+        <dt className="text-[11px] font-extrabold uppercase tracking-[0.1em] text-slate">{label}</dt>
+        <dd className="mt-0.5 text-sm text-navy">{value}</dd>
       </div>
     </div>
   );
@@ -152,21 +152,21 @@ function ApplyDialog({ open, onClose, opportunity, onApplied }) {
         />
 
         {opportunity?.requiredDocuments?.length > 0 ? (
-          <div className="rounded-lg border border-brand-100 bg-brand-50/60 p-3.5">
-            <p className="text-sm font-semibold text-brand-900">Required documents</p>
-            <ul className="mt-1.5 space-y-1 text-xs text-brand-800">
+          <div className="rounded-tile border border-line bg-sand/70 p-3.5">
+            <p className="text-sm font-semibold text-navy">Required documents</p>
+            <ul className="mt-1.5 space-y-1 text-xs text-track">
               {opportunity.requiredDocuments.map((label) => (
                 <li key={label}>- {label}</li>
               ))}
             </ul>
-            <p className="mt-2 text-xs text-brand-800">
+            <p className="mt-2 text-xs text-track">
               Upload each document and set its label to match the required name exactly.
             </p>
           </div>
         ) : null}
 
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-ink" htmlFor="application-files">
+          <label className="mb-1.5 block text-sm font-medium text-navy" htmlFor="application-files">
             Documents
           </label>
           <input
@@ -176,21 +176,21 @@ function ApplyDialog({ open, onClose, opportunity, onApplied }) {
             accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={handleFiles}
             disabled={isUploading}
-            className="block w-full rounded-lg border border-line-strong bg-white px-3 py-2 text-sm text-ink file:mr-3 file:rounded-md file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-brand-700"
+            className="block w-full rounded-tile border border-line-strong bg-white px-3 py-2 text-sm text-navy file:mr-3 file:rounded-tile file:border-0 file:bg-sand file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-track"
           />
-          <p className="mt-1.5 text-xs text-ink-subtle">PDF, DOC, or DOCX. Up to 10 MB each.</p>
+          <p className="mt-1.5 text-xs text-slate">PDF, DOC, or DOCX. Up to 10 MB each.</p>
         </div>
 
-        {isUploading ? <p className="text-sm text-ink-muted">Uploading document...</p> : null}
+        {isUploading ? <p className="text-sm text-body">Uploading document...</p> : null}
 
         {documents.length > 0 ? (
           <div className="space-y-2">
             {documents.map((document, index) => (
               <div
                 key={`${document.url}-${index}`}
-                className="flex items-start gap-2 rounded-lg border border-line p-3"
+                className="flex items-start gap-2 rounded-tile border border-line p-3"
               >
-                <FiFileText className="mt-2 h-4 w-4 shrink-0 text-brand-700" aria-hidden="true" />
+                <FiFileText className="mt-2 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
                 <Input
                   label="Document label"
                   value={document.label}
@@ -316,7 +316,7 @@ export default function OpportunityDetail() {
     <div>
       <Link
         to="/opportunities"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted hover:text-ink"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-body hover:text-navy"
       >
         <FiArrowLeft className="h-4 w-4" aria-hidden="true" />
         Back to opportunities
@@ -324,7 +324,7 @@ export default function OpportunityDetail() {
 
       <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <div className="space-y-6">
-          <section className="rounded-xl border border-line bg-white p-6 shadow-card">
+          <section className="rounded-card border border-line bg-white p-6 shadow-card">
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="brand">{opportunityTypeLabel(opportunity.type)}</Badge>
               <Badge variant={opportunityStatusVariant(opportunity.status)}>
@@ -336,11 +336,11 @@ export default function OpportunityDetail() {
                 </Badge>
               ) : null}
             </div>
-            <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+            <h1 className="mt-4 text-3xl leading-tight sm:text-4xl">
               {opportunity.title}
             </h1>
-            <p className="mt-1.5 text-sm text-ink-muted">
-              Published by <span className="font-medium text-ink">{opportunity.publisherName}</span>
+            <p className="mt-1.5 text-sm text-body">
+              Published by <span className="font-medium text-navy">{opportunity.publisherName}</span>
             </p>
 
             <dl className="mt-6 grid gap-4 border-t border-line pt-5 sm:grid-cols-2">
@@ -376,21 +376,21 @@ export default function OpportunityDetail() {
             </dl>
           </section>
 
-          <section className="rounded-xl border border-line bg-white p-6 shadow-card">
-            <h2 className="text-base font-semibold text-ink">About this opportunity</h2>
-            <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-ink-muted">
+          <section className="rounded-card border border-line bg-white p-6 shadow-card">
+            <h2 className="font-display text-xl">About this opportunity</h2>
+            <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-body">
               {opportunity.description}
             </p>
           </section>
 
-          <section className="rounded-xl border border-line bg-white p-6 shadow-card">
-            <h2 className="text-base font-semibold text-ink">Eligibility</h2>
+          <section className="rounded-card border border-line bg-white p-6 shadow-card">
+            <h2 className="font-display text-xl">Eligibility</h2>
             {opportunity.eligibility?.notes ? (
-              <p className="mt-2 whitespace-pre-line text-sm text-ink-muted">
+              <p className="mt-2 whitespace-pre-line text-sm text-body">
                 {opportunity.eligibility.notes}
               </p>
             ) : null}
-            <ul className="mt-3 space-y-2 text-sm text-ink-muted">
+            <ul className="mt-3 space-y-2 text-sm text-body">
               {opportunity.eligibility?.levels?.length ? (
                 <li>Athlete levels: {opportunity.eligibility.levels.join(', ')}</li>
               ) : null}
@@ -422,8 +422,8 @@ export default function OpportunityDetail() {
 
             {opportunity.requiredDocuments?.length > 0 ? (
               <>
-                <h3 className="mt-5 text-sm font-semibold text-ink">Required documents</h3>
-                <ul className="mt-2 space-y-1 text-sm text-ink-muted">
+                <h3 className="mt-5 text-sm font-semibold text-navy">Required documents</h3>
+                <ul className="mt-2 space-y-1 text-sm text-body">
                   {opportunity.requiredDocuments.map((label) => (
                     <li key={label}>- {label}</li>
                   ))}
@@ -433,20 +433,20 @@ export default function OpportunityDetail() {
           </section>
 
           {opportunity.contactInstructions ? (
-            <section className="rounded-xl border border-line bg-white p-6 shadow-card">
-              <h2 className="text-base font-semibold text-ink">Contact instructions</h2>
-              <p className="mt-2 whitespace-pre-line text-sm text-ink-muted">
+            <section className="rounded-card border border-line bg-white p-6 shadow-card">
+              <h2 className="font-display text-xl">Contact instructions</h2>
+              <p className="mt-2 whitespace-pre-line text-sm text-body">
                 {opportunity.contactInstructions}
               </p>
             </section>
           ) : null}
         </div>
 
-        <aside className="space-y-4">
-          <div className="rounded-xl border border-line bg-white p-5 shadow-card">
+        <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+          <div className="rounded-card border border-line bg-white p-5 shadow-card">
             {opportunity.isOwner ? (
               <div className="space-y-2">
-                <p className="text-sm font-semibold text-ink">Manage this opportunity</p>
+                <p className="text-sm font-semibold text-navy">Manage this opportunity</p>
                 {opportunity.canEdit ? (
                   <Link
                     to={`/opportunities/${opportunity.id}/edit`}
@@ -493,7 +493,7 @@ export default function OpportunityDetail() {
                 ) : null}
                 {opportunity.myApplicationStatus ? (
                   <div>
-                    <p className="text-sm text-ink-muted">Your application status</p>
+                    <p className="text-sm text-body">Your application status</p>
                     <div className="mt-1.5">
                       <Badge variant={applicationStatusVariant(opportunity.myApplicationStatus)}>
                         {applicationStatusLabel(opportunity.myApplicationStatus)}
@@ -508,7 +508,7 @@ export default function OpportunityDetail() {
                   </div>
                 ) : null}
                 {!isOpen && !opportunity.myApplicationStatus ? (
-                  <p className="text-sm text-ink-muted">
+                  <p className="text-sm text-body">
                     This opportunity is no longer accepting applications.
                   </p>
                 ) : null}
@@ -525,9 +525,9 @@ export default function OpportunityDetail() {
             )}
           </div>
 
-          <div className="rounded-xl border border-brand-100 bg-brand-50/60 p-5 text-sm text-brand-900">
+          <div className="rounded-card border border-line bg-sand/70 p-5 text-sm text-navy">
             <p className="font-semibold">What gets submitted</p>
-            <p className="mt-1.5 text-xs leading-relaxed text-brand-800">
+            <p className="mt-1.5 text-xs leading-relaxed text-track">
               Your profile snapshot is captured at submission time. Later profile edits do not
               change an application already under review.
             </p>

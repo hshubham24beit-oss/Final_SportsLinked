@@ -51,8 +51,8 @@ function SummaryCard({ title, status, description, actionLabel, onAction }) {
       <CardContent className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-sm font-semibold text-ink">{title}</p>
-            <p className="mt-1 text-xs leading-relaxed text-ink-muted">{description}</p>
+            <p className="text-sm font-semibold text-navy">{title}</p>
+            <p className="mt-1 text-xs leading-relaxed text-body">{description}</p>
           </div>
           <Badge variant={verificationStatusVariant(status)}>
             {verificationStatusLabel(status)}
@@ -221,10 +221,10 @@ function VerificationFormModal({
             required
           />
         ) : (
-          <div className="rounded-lg border border-line bg-slate-50 p-3 text-sm">
-            <span className="font-medium text-ink">{verificationTypeLabel(request.type)}</span>
+          <div className="rounded-tile border border-line bg-sand/60 p-3 text-sm">
+            <span className="font-medium text-navy">{verificationTypeLabel(request.type)}</span>
             {request.achievement?.title ? (
-              <span className="text-ink-muted"> - {request.achievement.title}</span>
+              <span className="text-body"> - {request.achievement.title}</span>
             ) : null}
           </div>
         )}
@@ -286,7 +286,7 @@ function VerificationFormModal({
         />
 
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-ink" htmlFor="verification-evidence">
+          <label className="mb-1.5 block text-sm font-medium text-navy" htmlFor="verification-evidence">
             Private evidence
           </label>
           <input
@@ -294,9 +294,9 @@ function VerificationFormModal({
             type="file"
             accept="image/jpeg,image/png,image/webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={(event) => setFile(event.target.files?.[0] || null)}
-            className="block w-full rounded-lg border border-line-strong bg-white p-2 text-sm text-ink file:mr-3 file:rounded-md file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-brand-700"
+            className="block w-full rounded-tile border border-line-strong bg-white p-2 text-sm text-navy file:mr-3 file:rounded-tile file:border-0 file:bg-sand file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-track"
           />
-          <p className="mt-1.5 text-xs text-ink-subtle">
+          <p className="mt-1.5 text-xs text-slate">
             One image, PDF, DOC, or DOCX file up to 10 MB. Existing evidence stays attached when
             resubmitting.
           </p>
@@ -377,8 +377,11 @@ export default function Verification() {
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink">Verification</h1>
-          <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+          <p className="eyebrow">Trust centre</p>
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+            <span className="display-emphasis">Verification.</span>
+          </h1>
+          <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-body">
             Request identity, qualification, or achievement verification. Each approved item is
             shown separately on your profile, and private evidence is never publicly exposed.
           </p>
@@ -420,10 +423,10 @@ export default function Verification() {
           </CardHeader>
           <CardContent className="space-y-2.5">
             {summary.identity ? (
-              <div className="flex items-center justify-between gap-3 rounded-lg border border-line p-3">
+              <div className="flex items-center justify-between gap-3 rounded-tile border border-line p-3">
                 <div>
-                  <p className="text-sm font-medium text-ink">Identity</p>
-                  <p className="text-xs text-ink-subtle">
+                  <p className="text-sm font-medium text-navy">Identity</p>
+                  <p className="text-xs text-slate">
                     Verified {formatDate(summary.identity.verifiedAt)}
                   </p>
                 </div>
@@ -436,11 +439,11 @@ export default function Verification() {
             {summary.qualifications.map((qualification) => (
               <div
                 key={qualification.requestId}
-                className="flex items-center justify-between gap-3 rounded-lg border border-line p-3"
+                className="flex items-center justify-between gap-3 rounded-tile border border-line p-3"
               >
                 <div>
-                  <p className="text-sm font-medium text-ink">{qualification.name}</p>
-                  <p className="text-xs text-ink-subtle">
+                  <p className="text-sm font-medium text-navy">{qualification.name}</p>
+                  <p className="text-xs text-slate">
                     {[qualification.issuer, qualification.year].filter(Boolean).join(' - ')}
                   </p>
                 </div>
@@ -483,11 +486,11 @@ export default function Verification() {
                   return (
                     <div
                       key={achievement.id}
-                      className="flex flex-col gap-2 rounded-lg border border-line p-3 sm:flex-row sm:items-center sm:justify-between"
+                      className="flex flex-col gap-2 rounded-tile border border-line p-3 sm:flex-row sm:items-center sm:justify-between"
                     >
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-medium text-ink">{achievement.title}</p>
-                        <p className="truncate text-xs text-ink-subtle">
+                        <p className="truncate text-sm font-medium text-navy">{achievement.title}</p>
+                        <p className="truncate text-xs text-slate">
                           {[achievement.sport, achievement.date && formatDate(achievement.date)]
                             .filter(Boolean)
                             .join(' - ')}
@@ -549,15 +552,15 @@ export default function Verification() {
             ) : (
               <div className="space-y-3">
                 {requests.map((request) => (
-                  <article key={request.id} className="rounded-lg border border-line p-3.5">
+                  <article key={request.id} className="rounded-tile border border-line p-3.5">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div>
-                        <p className="text-sm font-medium text-ink">
+                        <p className="text-sm font-medium text-navy">
                           {verificationTypeLabel(request.type)}
                           {request.achievement?.title ? ` - ${request.achievement.title}` : ''}
                           {request.qualification?.name ? ` - ${request.qualification.name}` : ''}
                         </p>
-                        <p className="mt-0.5 text-xs text-ink-subtle">
+                        <p className="mt-0.5 text-xs text-slate">
                           Submitted {formatDate(request.submittedAt)}
                         </p>
                       </div>
@@ -567,7 +570,7 @@ export default function Verification() {
                     </div>
 
                     {request.reason ? (
-                      <p className="mt-2 rounded-md bg-slate-50 p-2 text-xs leading-relaxed text-ink-muted">
+                      <p className="mt-2 rounded-tile bg-sand/60 p-2 text-xs leading-relaxed text-body">
                         Reviewer note: {request.reason}
                       </p>
                     ) : null}
@@ -578,7 +581,7 @@ export default function Verification() {
                           key={evidence.id}
                           type="button"
                           onClick={() => openEvidence(request, evidence)}
-                          className="inline-flex items-center gap-1.5 rounded-md border border-line bg-white px-2 py-1 text-xs font-medium text-ink-muted hover:bg-slate-50"
+                          className="inline-flex items-center gap-1.5 rounded-tile border border-line bg-white px-2 py-1 text-xs font-medium text-body hover:bg-sand/60"
                         >
                           <FiExternalLink className="h-3 w-3" aria-hidden="true" />
                           {evidence.originalName}

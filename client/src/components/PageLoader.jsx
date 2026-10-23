@@ -6,7 +6,7 @@ export default function PageLoader({ message = 'Loading your workspace…' }) {
     <div className="flex min-h-[70vh] flex-col items-center justify-center px-6 py-16">
       <Logo size="lg" />
       <div
-        className="mt-8 flex items-center gap-2.5 text-sm text-ink-muted"
+        className="mt-8 flex items-center gap-2.5 text-sm font-semibold text-slate"
         role="status"
         aria-live="polite"
       >

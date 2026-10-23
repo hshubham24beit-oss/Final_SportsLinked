@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiBriefcase, FiSearch } from 'react-icons/fi';
+import { FiArrowRight, FiBookmark, FiBriefcase, FiSearch, FiTarget } from 'react-icons/fi';
 import Alert from '../components/ui/Alert';
 import { buttonClasses } from '../components/ui/Button';
+import Chip from '../components/ui/Chip';
 import EmptyState from '../components/ui/EmptyState';
 import Input from '../components/ui/Input';
 import Pagination from '../components/ui/Pagination';
@@ -129,10 +130,14 @@ export default function Opportunities({ savedOnly = false }) {
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            {savedOnly ? 'Saved opportunities' : 'Opportunities'}
+          <p className="eyebrow">Opportunity board</p>
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+            {savedOnly ? 'Saved ' : 'Find your next '}
+            <span className="display-emphasis">
+              {savedOnly ? 'opportunities.' : 'opportunity.'}
+            </span>
           </h1>
-          <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-body">
             {savedOnly
               ? 'Opportunities you bookmarked. Closed or expired listings are removed automatically.'
               : 'Trials, teams, scholarships, camps, and roles published by coaches and organisations.'}
@@ -147,36 +152,45 @@ export default function Opportunities({ savedOnly = false }) {
       </div>
 
       {!savedOnly ? (
-        <div className="mt-6 grid gap-3 rounded-xl border border-line bg-white p-4 shadow-card sm:grid-cols-2 lg:grid-cols-4">
-          <Input
-            label="Search"
-            value={keyword}
-            onChange={(event) => {
-              setKeyword(event.target.value);
-              setPage(1);
-            }}
-            placeholder="Title, sport, or publisher"
-            startIcon={<FiSearch className="h-4 w-4" aria-hidden="true" />}
-          />
-          <Select
-            label="Type"
-            placeholder="All types"
-            value={type}
-            onChange={(event) => updateFilter(setType, event.target.value)}
-            options={OPPORTUNITY_TYPE_OPTIONS}
-          />
-          <Input
-            label="Sport"
-            value={sport}
-            onChange={(event) => updateFilter(setSport, event.target.value)}
-            placeholder="Any sport"
-          />
-          <Select
-            label="Sort"
-            value={sort}
-            onChange={(event) => updateFilter(setSort, event.target.value)}
-            options={OPPORTUNITY_SORT_OPTIONS}
-          />
+        <div className="mt-6 rounded-card border border-line bg-white p-4 shadow-card sm:p-5">
+          <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_180px_160px]">
+            <Input
+              label="Search"
+              value={keyword}
+              onChange={(event) => {
+                setKeyword(event.target.value);
+                setPage(1);
+              }}
+              placeholder="Title, sport, or publisher"
+              startIcon={<FiSearch className="h-4 w-4" aria-hidden="true" />}
+            />
+            <Input
+              label="Sport"
+              value={sport}
+              onChange={(event) => updateFilter(setSport, event.target.value)}
+              placeholder="Any sport"
+            />
+            <Select
+              label="Sort"
+              value={sort}
+              onChange={(event) => updateFilter(setSort, event.target.value)}
+              options={OPPORTUNITY_SORT_OPTIONS}
+            />
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2 border-t border-line pt-4">
+            <Chip active={!type} onClick={() => updateFilter(setType, '')}>
+              All types
+            </Chip>
+            {OPPORTUNITY_TYPE_OPTIONS.map((option) => (
+              <Chip
+                key={option.value}
+                active={type === option.value}
+                onClick={() => updateFilter(setType, option.value)}
+              >
+                {option.label}
+              </Chip>
+            ))}
+          </div>
         </div>
       ) : null}
 
@@ -215,20 +229,62 @@ export default function Opportunities({ savedOnly = false }) {
       ) : null}
 
       {!isLoading && opportunities.length > 0 ? (
-        <>
-          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {opportunities.map((opportunity) => (
-              <OpportunityCard
-                key={opportunity.id}
-                opportunity={opportunity}
-                onSaveToggle={toggleSave}
-                isSaving={savingId === opportunity.id}
-                showStatus={savedOnly && canPublish}
-              />
-            ))}
+        <div
+          className={`mt-6 grid gap-6 ${
+            savedOnly ? '' : 'xl:grid-cols-[minmax(0,1fr)_260px]'
+          }`}
+        >
+          <div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {opportunities.map((opportunity) => (
+                <OpportunityCard
+                  key={opportunity.id}
+                  opportunity={opportunity}
+                  onSaveToggle={toggleSave}
+                  isSaving={savingId === opportunity.id}
+                  showStatus={savedOnly && canPublish}
+                />
+              ))}
+            </div>
+            <Pagination page={meta.page} totalPages={meta.totalPages} onChange={setPage} />
           </div>
-          <Pagination page={meta.page} totalPages={meta.totalPages} onChange={setPage} />
-        </>
+
+          <aside className={`hidden space-y-4 xl:block ${savedOnly ? '!hidden' : ''}`}>
+            <div className="sticky top-24 space-y-4">
+              <div className="surface-card p-5">
+                <p className="eyebrow">Tracker</p>
+                <h2 className="mt-2 font-display text-xl">Keep your search moving.</h2>
+                <div className="mt-4 space-y-2">
+                  <Link
+                    to={canPublish ? '/opportunities/mine' : '/applications'}
+                    className="flex items-center gap-3 rounded-tile border border-line p-3 text-sm font-bold text-navy transition-colors hover:border-track/25 hover:bg-sand"
+                  >
+                    <FiTarget className="h-4 w-4 shrink-0 text-track" aria-hidden="true" />
+                    <span className="min-w-0 flex-1">
+                      {canPublish ? 'Your listings' : 'Applications'}
+                    </span>
+                    <FiArrowRight className="h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
+                  </Link>
+                  <Link
+                    to="/opportunities/saved"
+                    className="flex items-center gap-3 rounded-tile border border-line p-3 text-sm font-bold text-navy transition-colors hover:border-track/25 hover:bg-sand"
+                  >
+                    <FiBookmark className="h-4 w-4 shrink-0 text-track" aria-hidden="true" />
+                    <span className="min-w-0 flex-1">Saved opportunities</span>
+                    <FiArrowRight className="h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
+              <div className="rounded-card bg-navy p-5 text-ivory">
+                <FiBriefcase className="h-5 w-5 text-gold" aria-hidden="true" />
+                <p className="mt-3 font-display text-lg">Published by real organisations.</p>
+                <p className="mt-1.5 text-xs leading-relaxed text-ivory/65">
+                  Listings come from coaches, recruiters, and sports organisations on SportLinked.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
       ) : null}
     </div>
   );

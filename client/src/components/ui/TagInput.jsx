@@ -36,7 +36,7 @@ export default function TagInput({
   return (
     <div>
       {label ? (
-        <label htmlFor={inputId} className="mb-1.5 block text-sm font-medium text-ink">
+        <label htmlFor={inputId} className="form-label">
           {label}
           {required ? (
             <span className="ml-0.5 text-danger-600" aria-hidden="true">
@@ -47,10 +47,10 @@ export default function TagInput({
       ) : null}
 
       <div
-        className={`rounded-lg border bg-white px-3 py-2 shadow-sm transition focus-within:ring-2 ${
+        className={`rounded-tile border bg-white px-3 py-2 shadow-sm transition focus-within:ring-2 ${
           error
             ? 'border-danger-500 focus-within:border-danger-500 focus-within:ring-danger-500/20'
-            : 'border-line-strong focus-within:border-brand-500 focus-within:ring-brand-600/20'
+            : 'border-line-strong focus-within:border-track focus-within:ring-track/15'
         }`}
       >
         {value.length > 0 ? (
@@ -58,13 +58,13 @@ export default function TagInput({
             {value.map((item, index) => (
               <span
                 key={`${item}-${index}`}
-                className="inline-flex max-w-full items-center gap-1 rounded-full border border-brand-200 bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-800"
+                className="inline-flex max-w-full items-center gap-1 rounded-full border border-track/20 bg-track/10 px-2.5 py-1 text-xs font-bold text-track"
               >
                 <span className="truncate">{item}</span>
                 <button
                   type="button"
                   onClick={() => removeAt(index)}
-                  className="rounded-full p-0.5 text-brand-600 transition-colors hover:bg-brand-100 hover:text-brand-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                  className="rounded-full p-0.5 text-track transition-colors hover:bg-track/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                   aria-label={`Remove ${item}`}
                 >
                   <FiX className="h-3 w-3" aria-hidden="true" />
@@ -95,14 +95,14 @@ export default function TagInput({
             placeholder={value.length >= max ? `Limit of ${max} reached` : placeholder}
             aria-describedby={[hintId, errorId].filter(Boolean).join(' ') || undefined}
             aria-invalid={error ? 'true' : undefined}
-            className="min-w-0 flex-1 border-0 bg-transparent px-0.5 py-1 text-base text-ink placeholder:text-ink-subtle focus:outline-none focus:ring-0 sm:text-sm"
+            className="min-w-0 flex-1 border-0 bg-transparent px-0.5 py-1 text-base text-navy placeholder:text-slate/70 focus:outline-none focus:ring-0 sm:text-sm"
           />
           <button
             type="button"
             onClick={addDraft}
             onMouseDown={(event) => event.preventDefault()}
             disabled={!draft.trim() || value.length >= max}
-            className="rounded-md p-1.5 text-brand-700 transition-colors hover:bg-brand-50 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+            className="rounded-full p-1.5 text-track transition-colors hover:bg-track/10 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
             aria-label="Add item"
           >
             <FiPlus className="h-4 w-4" aria-hidden="true" />
@@ -111,12 +111,12 @@ export default function TagInput({
       </div>
 
       {hint && !error ? (
-        <p id={hintId} className="mt-1.5 text-xs leading-relaxed text-ink-subtle">
+        <p id={hintId} className="mt-1.5 text-xs leading-relaxed text-slate">
           {hint}
         </p>
       ) : null}
       {error ? (
-        <p id={errorId} className="mt-1.5 text-sm text-danger-600">
+        <p id={errorId} className="mt-1.5 text-sm font-semibold text-danger-600">
           {error}
         </p>
       ) : null}

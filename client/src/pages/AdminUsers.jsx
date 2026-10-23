@@ -97,9 +97,9 @@ function ModerationModal({ user, onClose, onUpdated }) {
             {error}
           </Alert>
         ) : null}
-        <div className="rounded-lg border border-line bg-slate-50 p-3 text-sm">
-          <p className="font-medium text-ink">{user.email}</p>
-          <p className="mt-0.5 text-xs text-ink-subtle">
+        <div className="rounded-tile border border-line bg-sand/60 p-3 text-sm">
+          <p className="font-medium text-navy">{user.email}</p>
+          <p className="mt-0.5 text-xs text-slate">
             {getRoleLabel(user.role)} - joined {formatDate(user.createdAt)}
           </p>
         </div>
@@ -167,8 +167,11 @@ export default function AdminUsers() {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-ink">User management</h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+        <p className="eyebrow">Admin</p>
+        <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+          User <span className="display-emphasis">management.</span>
+        </h1>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-body">
           Search accounts, inspect moderation history, and restrict or reinstate access.
         </p>
       </div>
@@ -226,11 +229,11 @@ export default function AdminUsers() {
               {data.users.map((user) => (
                 <div
                   key={user.id}
-                  className="flex flex-col gap-3 rounded-lg border border-line p-3.5 sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-3 rounded-tile border border-line p-3.5 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="truncate text-sm font-semibold text-ink">{user.name}</p>
+                      <p className="truncate text-sm font-semibold text-navy">{user.name}</p>
                       <Badge variant="brand" size="sm">
                         {getRoleLabel(user.role)}
                       </Badge>
@@ -238,15 +241,15 @@ export default function AdminUsers() {
                         {user.status}
                       </Badge>
                     </div>
-                    <p className="mt-0.5 truncate text-xs text-ink-muted">{user.email}</p>
-                    <p className="mt-0.5 text-xs text-ink-subtle">
+                    <p className="mt-0.5 truncate text-xs text-body">{user.email}</p>
+                    <p className="mt-0.5 text-xs text-slate">
                       Joined {formatDate(user.createdAt)}
                       {user.lastLoginAt
                         ? ` - last active ${formatDateTime(user.lastLoginAt)}`
                         : ''}
                     </p>
                     {user.moderationReason ? (
-                      <p className="mt-1 text-xs text-ink-muted">
+                      <p className="mt-1 text-xs text-body">
                         Moderation note: {user.moderationReason}
                       </p>
                     ) : null}

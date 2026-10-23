@@ -2,20 +2,23 @@ import { forwardRef } from 'react';
 import Spinner from './Spinner';
 
 const baseStyles =
-  'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60';
+  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 font-extrabold tracking-[-0.01em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track focus-visible:ring-offset-2 focus-visible:ring-offset-ivory disabled:cursor-not-allowed disabled:opacity-55';
 
 const variantStyles = {
-  primary: 'bg-brand-600 text-white hover:bg-brand-700',
-  secondary: 'border border-line-strong bg-white text-ink hover:bg-slate-50',
-  ghost: 'text-ink-muted hover:bg-slate-100 hover:text-ink',
+  primary: 'bg-track text-white shadow-sm hover:bg-track/90 active:translate-y-px',
+  dark: 'bg-navy text-ivory hover:bg-navy/90 active:translate-y-px',
+  secondary: 'border border-line-strong bg-white text-navy hover:border-track/40 hover:bg-sand',
+  ghost: 'text-body hover:bg-sand hover:text-navy',
+  gold: 'bg-gold text-navy hover:bg-gold/90 active:translate-y-px',
+  onDark: 'border border-ivory/30 bg-transparent text-ivory hover:bg-ivory/10',
   danger: 'bg-danger-600 text-white hover:bg-danger-700',
-  link: 'text-brand-700 underline-offset-4 hover:underline',
+  link: 'min-h-0 px-0 text-track underline-offset-4 hover:underline',
 };
 
 const sizeStyles = {
-  sm: 'h-9 px-3 text-sm',
-  md: 'h-11 px-4 text-sm',
-  lg: 'h-12 px-5 text-base',
+  sm: 'min-h-11 px-4 text-sm',
+  md: 'min-h-11 px-5 text-sm',
+  lg: 'min-h-12 px-6 text-base',
 };
 
 export function buttonClasses({

@@ -75,8 +75,11 @@ export default function Safety() {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-ink">Safety</h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+        <p className="eyebrow">Trust and safety</p>
+        <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+          Safety <span className="display-emphasis">centre.</span>
+        </h1>
+        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-body">
           Manage accounts you have blocked and follow the reports you have submitted.
         </p>
       </div>
@@ -107,15 +110,15 @@ export default function Safety() {
                 {blocked.map((entry) => (
                   <div
                     key={entry.id}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-line p-3"
+                    className="flex items-center justify-between gap-3 rounded-tile border border-line p-3"
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-ink">{entry.user.name}</p>
-                      <p className="text-xs text-ink-subtle">
+                      <p className="truncate text-sm font-medium text-navy">{entry.user.name}</p>
+                      <p className="text-xs text-slate">
                         {getRoleLabel(entry.user.role)} - blocked {formatDate(entry.createdAt)}
                       </p>
                       {entry.reason ? (
-                        <p className="mt-1 text-xs text-ink-muted">{entry.reason}</p>
+                        <p className="mt-1 text-xs text-body">{entry.reason}</p>
                       ) : null}
                     </div>
                     <Button
@@ -148,20 +151,20 @@ export default function Safety() {
             ) : (
               <div className="space-y-2.5">
                 {reports.map((report) => (
-                  <div key={report.id} className="rounded-lg border border-line p-3">
+                  <div key={report.id} className="rounded-tile border border-line p-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <p className="text-sm font-medium text-ink">
+                      <p className="text-sm font-medium text-navy">
                         {reportReasonLabel(report.reason)}
                       </p>
                       <Badge variant={reportStatusVariant(report.status)} size="sm">
                         {reportStatusLabel(report.status)}
                       </Badge>
                     </div>
-                    <p className="mt-0.5 text-xs text-ink-subtle">
+                    <p className="mt-0.5 text-xs text-slate">
                       {report.targetType} - submitted {formatDateTime(report.createdAt)}
                     </p>
                     {report.resolution ? (
-                      <p className="mt-2 rounded-md bg-slate-50 p-2 text-xs leading-relaxed text-ink-muted">
+                      <p className="mt-2 rounded-tile bg-sand/60 p-2 text-xs leading-relaxed text-body">
                         Moderator note: {report.resolution}
                       </p>
                     ) : null}

@@ -58,14 +58,14 @@ function SuggestionNotice({ suggestion }) {
   }
 
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-2 rounded-lg border border-line bg-slate-50 px-3 py-2.5">
+    <div className="mt-4 flex flex-wrap items-center gap-2 rounded-tile border border-line bg-sand/60 px-3 py-2.5">
       <Badge size="sm" variant={suggestionVariant(suggestion)}>
         {suggestion.label || 'Suggestion'}
       </Badge>
       <Badge size="sm" variant="neutral">
         Not verified
       </Badge>
-      <span className="text-xs text-ink-muted">{generatedByLabel(suggestion.generatedBy)}</span>
+      <span className="text-xs text-body">{generatedByLabel(suggestion.generatedBy)}</span>
     </div>
   );
 }
@@ -78,12 +78,12 @@ function CriteriaList({ criteria = [] }) {
   return (
     <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
       {criteria.map((item) => (
-        <div key={item.key} className="rounded-lg border border-line bg-white px-3 py-2.5">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+        <div key={item.key} className="rounded-tile border border-line bg-white px-3 py-2.5">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate">
             {item.label}
           </p>
-          <p className="mt-1 text-sm text-ink">{item.value}</p>
-          {item.source ? <p className="mt-0.5 text-[11px] text-ink-subtle">{item.source}</p> : null}
+          <p className="mt-1 text-sm text-navy">{item.value}</p>
+          {item.source ? <p className="mt-0.5 text-[11px] text-slate">{item.source}</p> : null}
         </div>
       ))}
     </div>
@@ -105,26 +105,26 @@ function RecommendationCard({ item, groupKey }) {
         <Avatar name={item.name} src={item.avatarUrl} size="sm" />
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <p className="truncate text-sm font-semibold text-ink">{item.name}</p>
+            <p className="truncate text-sm font-semibold text-navy">{item.name}</p>
             <Badge size="sm" variant="brand">
               {item.matchScore}% match
             </Badge>
           </div>
-          <p className="mt-0.5 line-clamp-2 text-xs text-ink-muted">{subtitle}</p>
+          <p className="mt-0.5 line-clamp-2 text-xs text-body">{subtitle}</p>
         </div>
       </div>
       <div className="mt-3 flex flex-wrap gap-1.5">
         {item.reasons?.slice(0, 3).map((reason) => (
           <span
             key={reason}
-            className="rounded-full bg-brand-50 px-2 py-0.5 text-[11px] font-medium text-brand-800"
+            className="rounded-full bg-sand px-2 py-0.5 text-[11px] font-medium text-track"
           >
             {reason}
           </span>
         ))}
       </div>
       {item.connectionStatus ? (
-        <p className="mt-2 text-[11px] text-ink-subtle">
+        <p className="mt-2 text-[11px] text-slate">
           Connection: {item.connectionStatus.replaceAll('_', ' ')}
         </p>
       ) : null}
@@ -132,13 +132,13 @@ function RecommendationCard({ item, groupKey }) {
   );
 
   if (!href) {
-    return <div className="rounded-xl border border-line bg-white p-4">{body}</div>;
+    return <div className="rounded-card border border-line bg-white p-4">{body}</div>;
   }
 
   return (
     <Link
       to={href}
-      className="block rounded-xl border border-line bg-white p-4 transition-colors hover:border-brand-200 hover:bg-brand-50/30"
+      className="block rounded-card border border-line bg-white p-4 transition-colors hover:border-track/25 hover:bg-sand/30"
     >
       {body}
     </Link>
@@ -499,15 +499,15 @@ export default function AiAssistant() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+            <span className="flex h-9 w-9 items-center justify-center rounded-tile bg-sand text-track">
               <FiCpu className="h-5 w-5" aria-hidden="true" />
             </span>
             <Badge variant="brand">AI assistance</Badge>
           </div>
-          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            AI assistant
+          <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">
+            AI <span className="display-emphasis">assistant</span>
           </h1>
-          <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-ink-muted">
+          <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-body">
             Generate suggestions for your profile, posts, achievements, opportunities, and
             performance records. Every result is editable and nothing is saved or published
             without your action.
@@ -515,7 +515,7 @@ export default function AiAssistant() {
         </div>
       </div>
 
-      <div className="mt-5 rounded-xl border border-brand-100 bg-brand-50 px-4 py-3 text-sm text-brand-900">
+      <div className="mt-5 rounded-card border border-line bg-sand px-4 py-3 text-sm text-navy">
         AI output is a suggestion, not a verification. Private evidence and document links are
         never sent to an external provider, and rule-based matching uses only the criteria shown.
       </div>
@@ -529,10 +529,10 @@ export default function AiAssistant() {
               type="button"
               onClick={() => selectTab(tab.key)}
               className={[
-                'inline-flex shrink-0 items-center gap-2 rounded-t-lg px-3.5 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600',
+                'inline-flex shrink-0 items-center gap-2 rounded-t-lg px-3.5 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track',
                 activeTab === tab.key
-                  ? 'border-b-2 border-brand-600 text-brand-800'
-                  : 'text-ink-muted hover:bg-slate-50 hover:text-ink',
+                  ? 'border-b-2 border-track text-track'
+                  : 'text-body hover:bg-sand/60 hover:text-navy',
               ].join(' ')}
             >
               <Icon className="h-4 w-4" aria-hidden="true" />
@@ -649,7 +649,7 @@ export default function AiAssistant() {
                     Generate suggestion
                   </Button>
                   {!profileLoaded ? (
-                    <span className="self-center text-xs text-ink-subtle">Loading profile details...</span>
+                    <span className="self-center text-xs text-slate">Loading profile details...</span>
                   ) : null}
                 </div>
               </form>
@@ -674,7 +674,7 @@ export default function AiAssistant() {
                 <div>
                   <SuggestionNotice suggestion={profileSuggestion} />
                   {profileSuggestion.notice ? (
-                    <p className="mt-3 text-xs leading-relaxed text-ink-muted">
+                    <p className="mt-3 text-xs leading-relaxed text-body">
                       {profileSuggestion.notice}
                     </p>
                   ) : null}
@@ -722,7 +722,7 @@ export default function AiAssistant() {
                   </div>
                   <Link
                     to="/profile/edit"
-                    className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-brand-700 hover:underline"
+                    className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-track hover:underline"
                   >
                     Open the full profile editor
                     <FiArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -869,7 +869,7 @@ export default function AiAssistant() {
                 <div>
                   <SuggestionNotice suggestion={contentDraft} />
                   {contentDraft.notice ? (
-                    <p className="mt-3 text-xs leading-relaxed text-ink-muted">{contentDraft.notice}</p>
+                    <p className="mt-3 text-xs leading-relaxed text-body">{contentDraft.notice}</p>
                   ) : null}
                   <Textarea
                     label="Editable preview"
@@ -879,7 +879,7 @@ export default function AiAssistant() {
                     value={contentText}
                     onChange={(event) => setContentText(event.target.value)}
                   />
-                  <p className="mt-1 text-right text-[11px] text-ink-subtle">
+                  <p className="mt-1 text-right text-[11px] text-slate">
                     {contentText.length}/{contentKind === 'post' ? 3000 : 2000}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -1013,8 +1013,8 @@ export default function AiAssistant() {
           {matchResult ? (
             <div className="space-y-4">
               <div>
-                <h2 className="text-base font-semibold text-ink">Criteria used</h2>
-                <p className="mt-1 text-xs text-ink-muted">{matchResult.notice}</p>
+                <h2 className="font-display text-xl">Criteria used</h2>
+                <p className="mt-1 text-xs text-body">{matchResult.notice}</p>
                 <div className="mt-3">
                   <CriteriaList criteria={matchResult.criteria} />
                 </div>
@@ -1025,7 +1025,7 @@ export default function AiAssistant() {
                   title="No published opportunities matched"
                   description="Try widening the sport, location, or eligibility criteria."
                   action={
-                    <Link to="/opportunities" className="text-sm font-semibold text-brand-700 hover:underline">
+                    <Link to="/opportunities" className="text-sm font-semibold text-track hover:underline">
                       Browse all opportunities
                     </Link>
                   }
@@ -1036,12 +1036,12 @@ export default function AiAssistant() {
                     <Link
                       key={match.id}
                       to={`/opportunities/${match.id}`}
-                      className="rounded-xl border border-line bg-white p-4 transition-colors hover:border-brand-200 hover:bg-brand-50/30"
+                      className="rounded-card border border-line bg-white p-4 transition-colors hover:border-track/25 hover:bg-sand/30"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <p className="truncate text-sm font-semibold text-ink">{match.title}</p>
-                          <p className="mt-0.5 text-xs text-ink-subtle">
+                          <p className="truncate text-sm font-semibold text-navy">{match.title}</p>
+                          <p className="mt-0.5 text-xs text-slate">
                             {match.publisherName} - closes {formatDate(match.deadline)}
                           </p>
                         </div>
@@ -1051,8 +1051,8 @@ export default function AiAssistant() {
                       </div>
                       <div className="mt-3 space-y-1">
                         {match.reasons.map((reason) => (
-                          <p key={reason} className="flex items-start gap-1.5 text-xs text-ink-muted">
-                            <FiCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-600" aria-hidden="true" />
+                          <p key={reason} className="flex items-start gap-1.5 text-xs text-body">
+                            <FiCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-track" aria-hidden="true" />
                             {reason}
                           </p>
                         ))}
@@ -1085,7 +1085,7 @@ export default function AiAssistant() {
                 {recommendations ? 'Refresh recommendations' : 'Load recommendations'}
               </Button>
               {recommendations ? (
-                <p className="mt-3 text-xs leading-relaxed text-ink-muted">
+                <p className="mt-3 text-xs leading-relaxed text-body">
                   {recommendations.notice}
                 </p>
               ) : null}
@@ -1095,7 +1095,7 @@ export default function AiAssistant() {
           {recommendations ? (
             <>
               <div>
-                <h2 className="text-base font-semibold text-ink">Criteria used</h2>
+                <h2 className="font-display text-xl">Criteria used</h2>
                 <div className="mt-3">
                   <CriteriaList criteria={recommendations.criteria} />
                 </div>
@@ -1106,7 +1106,7 @@ export default function AiAssistant() {
                   title="No recommendations yet"
                   description="Add sports and a location to your profile to improve suggestions."
                   action={
-                    <Link to="/profile/edit" className="text-sm font-semibold text-brand-700 hover:underline">
+                    <Link to="/profile/edit" className="text-sm font-semibold text-track hover:underline">
                       Update your profile
                     </Link>
                   }
@@ -1116,8 +1116,8 @@ export default function AiAssistant() {
                   <section key={group.key}>
                     <div className="flex items-end justify-between gap-3">
                       <div>
-                        <h2 className="text-base font-semibold text-ink">{group.title}</h2>
-                        <p className="mt-0.5 text-xs text-ink-muted">{group.description}</p>
+                        <h2 className="font-display text-xl">{group.title}</h2>
+                        <p className="mt-0.5 text-xs text-body">{group.description}</p>
                       </div>
                       <Badge variant="neutral" size="sm">
                         {group.recommendations.length}
@@ -1168,7 +1168,7 @@ export default function AiAssistant() {
                   title="No performance records yet"
                   description="Add statistics or personal bests to your profile to see descriptive trends."
                   action={
-                    <Link to="/profile/edit" className="text-sm font-semibold text-brand-700 hover:underline">
+                    <Link to="/profile/edit" className="text-sm font-semibold text-track hover:underline">
                       Add performance records
                     </Link>
                   }
@@ -1193,10 +1193,10 @@ export default function AiAssistant() {
                           {group.records.map((record) => (
                             <div
                               key={`${record.date}-${record.value}`}
-                              className="flex items-center justify-between gap-3 rounded-lg border border-line px-3 py-2 text-sm"
+                              className="flex items-center justify-between gap-3 rounded-tile border border-line px-3 py-2 text-sm"
                             >
-                              <span className="text-ink-muted">{formatDate(record.date)}</span>
-                              <span className="font-semibold text-ink">
+                              <span className="text-body">{formatDate(record.date)}</span>
+                              <span className="font-semibold text-navy">
                                 {record.value} {record.unit}
                               </span>
                             </div>
@@ -1219,17 +1219,17 @@ export default function AiAssistant() {
                           {insights.personalBests.map((entry) => (
                             <div
                               key={`${entry.event}-${entry.result}-${entry.date}`}
-                              className="flex items-center justify-between gap-3 rounded-lg border border-line px-3 py-2 text-sm"
+                              className="flex items-center justify-between gap-3 rounded-tile border border-line px-3 py-2 text-sm"
                             >
                               <div className="min-w-0">
-                                <p className="truncate font-medium text-ink">{entry.event}</p>
-                                <p className="truncate text-xs text-ink-subtle">
+                                <p className="truncate font-medium text-navy">{entry.event}</p>
+                                <p className="truncate text-xs text-slate">
                                   {[entry.competition, formatDate(entry.date)]
                                     .filter((value) => value && value !== '--')
                                     .join(' - ')}
                                 </p>
                               </div>
-                              <span className="shrink-0 font-semibold text-ink">
+                              <span className="shrink-0 font-semibold text-navy">
                                 {entry.result} {entry.unit}
                               </span>
                             </div>
@@ -1240,7 +1240,7 @@ export default function AiAssistant() {
                   ) : null}
                 </div>
               )}
-              <p className="text-xs leading-relaxed text-ink-muted">{insights.notice}</p>
+              <p className="text-xs leading-relaxed text-body">{insights.notice}</p>
             </>
           ) : null}
         </div>

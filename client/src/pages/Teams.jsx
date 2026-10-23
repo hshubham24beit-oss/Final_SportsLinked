@@ -89,10 +89,12 @@ export default function Teams({ mineOnly = false }) {
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            {mineOnly ? 'My teams' : 'Teams and groups'}
+          <p className="eyebrow">Clubs and groups</p>
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+            {mineOnly ? 'My ' : 'Find your '}
+            <span className="display-emphasis">{mineOnly ? 'teams.' : 'team.'}</span>
           </h1>
-          <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+          <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-body">
             {mineOnly
               ? 'Teams and groups you own, manage, coach, or belong to.'
               : 'Find public local teams and training groups, and manage your own.'}
@@ -116,7 +118,7 @@ export default function Teams({ mineOnly = false }) {
       </div>
 
       {!mineOnly ? (
-        <div className="mt-6 grid gap-3 rounded-xl border border-line bg-white p-4 shadow-card sm:grid-cols-3">
+        <div className="mt-6 grid gap-3 rounded-card border border-line bg-white p-4 shadow-card sm:grid-cols-3">
           <Input
             label="Search"
             value={keyword}

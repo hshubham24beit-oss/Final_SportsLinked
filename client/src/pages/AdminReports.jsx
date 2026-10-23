@@ -94,19 +94,19 @@ function ReportModal({ report, onClose, onUpdated }) {
           </Alert>
         ) : null}
 
-        <div className="rounded-lg border border-line bg-slate-50 p-3 text-sm">
-          <p className="font-medium text-ink">{reportReasonLabel(report.reason)}</p>
-          <p className="mt-1 text-xs text-ink-subtle">
+        <div className="rounded-tile border border-line bg-sand/60 p-3 text-sm">
+          <p className="font-medium text-navy">{reportReasonLabel(report.reason)}</p>
+          <p className="mt-1 text-xs text-slate">
             Reported by {report.reporter?.name || 'Unknown user'}
             {report.reporter?.email ? ` (${report.reporter.email})` : ''} on{' '}
             {formatDateTime(report.createdAt)}
           </p>
           {report.targetUser ? (
-            <p className="mt-1 text-xs text-ink-subtle">
+            <p className="mt-1 text-xs text-slate">
               Target account: {report.targetUser.name} ({report.targetUser.email})
             </p>
           ) : (
-            <p className="mt-1 break-all text-xs text-ink-subtle">
+            <p className="mt-1 break-all text-xs text-slate">
               Target ID: {report.targetId}
             </p>
           )}
@@ -114,10 +114,10 @@ function ReportModal({ report, onClose, onUpdated }) {
 
         {report.details ? (
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-ink-subtle">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate">
               Reporter details
             </p>
-            <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-ink-muted">
+            <p className="mt-1 whitespace-pre-line text-sm leading-relaxed text-body">
               {report.details}
             </p>
           </div>
@@ -187,8 +187,11 @@ export default function AdminReports() {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-ink">Reports</h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+        <p className="eyebrow">Admin</p>
+        <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+          Reports <span className="display-emphasis">queue.</span>
+        </h1>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-body">
           Triage user reports, review the details, and record a moderation outcome.
         </p>
       </div>
@@ -257,11 +260,11 @@ export default function AdminReports() {
               {data.reports.map((report) => (
                 <div
                   key={report.id}
-                  className="flex flex-col gap-3 rounded-lg border border-line p-3.5 sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-3 rounded-tile border border-line p-3.5 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-sm font-semibold text-ink">
+                      <p className="text-sm font-semibold text-navy">
                         {reportReasonLabel(report.reason)}
                       </p>
                       <Badge variant={reportStatusVariant(report.status)} size="sm">
@@ -271,11 +274,11 @@ export default function AdminReports() {
                         {report.targetType}
                       </Badge>
                     </div>
-                    <p className="mt-0.5 truncate text-xs text-ink-muted">
+                    <p className="mt-0.5 truncate text-xs text-body">
                       By {report.reporter?.name || 'Unknown user'}
                       {report.targetUser ? ` - target: ${report.targetUser.name}` : ''}
                     </p>
-                    <p className="mt-0.5 text-xs text-ink-subtle">
+                    <p className="mt-0.5 text-xs text-slate">
                       {formatDateTime(report.createdAt)}
                     </p>
                   </div>

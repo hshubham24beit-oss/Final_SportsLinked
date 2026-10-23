@@ -7,6 +7,7 @@ const sizeStyles = {
   md: 'h-10 w-10 text-sm',
   lg: 'h-12 w-12 text-base',
   xl: 'h-16 w-16 text-xl',
+  '2xl': 'h-[120px] w-[120px] text-3xl',
 };
 
 export default function Avatar({ name = '', src = null, size = 'md', className = '' }) {
@@ -24,7 +25,7 @@ export default function Avatar({ name = '', src = null, size = 'md', className =
         src={src}
         alt={name ? `${name}'s avatar` : 'User avatar'}
         onError={() => setImageFailed(true)}
-        className={`${dimensions} shrink-0 rounded-full border border-line object-cover ${className}`}
+        className={`${dimensions} shrink-0 rounded-full border-[3px] border-white object-cover shadow-sm ${className}`}
       />
     );
   }
@@ -32,7 +33,7 @@ export default function Avatar({ name = '', src = null, size = 'md', className =
   return (
     <span
       aria-hidden="true"
-      className={`${dimensions} inline-flex shrink-0 items-center justify-center rounded-full border border-brand-200 bg-brand-50 font-semibold uppercase tracking-wide text-brand-700 ${className}`}
+      className={`${dimensions} inline-flex shrink-0 items-center justify-center rounded-full border border-line-strong bg-sand-deep font-display font-semibold uppercase tracking-wide text-navy ${className}`}
     >
       {getInitials(name)}
     </span>

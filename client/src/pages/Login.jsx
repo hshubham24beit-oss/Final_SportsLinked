@@ -92,12 +92,12 @@ export default function Login() {
 
         <div>
           <div className="mb-1.5 flex items-center justify-between gap-3">
-            <label htmlFor="login-password" className="text-sm font-medium text-ink">
+            <label htmlFor="login-password" className="text-sm font-medium text-navy">
               Password<span className="ml-0.5 text-danger-600" aria-hidden="true">*</span>
             </label>
             <Link
               to="/forgot-password"
-              className="text-xs font-semibold text-brand-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+              className="text-xs font-semibold text-track underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
             >
               Forgot password?
             </Link>
@@ -119,17 +119,17 @@ export default function Login() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-ink-muted">
+      <p className="mt-6 text-center text-sm text-body">
         New to SportLinked?{' '}
         <Link
           to="/register"
-          className="font-semibold text-brand-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="font-semibold text-track underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
         >
           Create an account
         </Link>
       </p>
 
-      <div className="mt-7 rounded-lg border border-line bg-slate-50 px-4 py-3 text-xs leading-relaxed text-ink-muted">
+      <div className="mt-7 rounded-tile border border-line bg-sand/60 px-4 py-3 text-xs leading-relaxed text-body">
         Your sign-in session uses a short-lived access token and a secure, httpOnly refresh cookie.
         Signing out ends the session on this device.
       </div>

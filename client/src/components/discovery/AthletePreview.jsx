@@ -75,9 +75,7 @@ export default function AthletePreview({
         <Avatar name={athlete.name} src={athlete.avatarUrl} size="lg" />
         <div className="flex flex-wrap gap-1.5">
           {athlete.level ? (
-            <Badge variant="brand">
-              {optionLabel(ATHLETE_LEVEL_OPTIONS, athlete.level)}
-            </Badge>
+            <Badge variant="brand">{optionLabel(ATHLETE_LEVEL_OPTIONS, athlete.level)}</Badge>
           ) : null}
           {athlete.competitionLevel ? (
             <Badge variant="neutral">
@@ -98,63 +96,61 @@ export default function AthletePreview({
       </div>
 
       {athlete.bio ? (
-        <p className="mt-5 whitespace-pre-line text-sm leading-7 text-ink-muted">
-          {athlete.bio}
-        </p>
+        <p className="mt-5 whitespace-pre-line text-sm leading-7 text-body">{athlete.bio}</p>
       ) : null}
 
       <dl className="mt-5 grid gap-4 border-t border-line pt-5 text-sm sm:grid-cols-2">
         {athlete.sports?.length > 0 ? (
           <div className="flex items-start gap-2.5">
-            <FiTarget className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <FiTarget className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-ink-subtle">Sport</dt>
-              <dd className="font-medium text-ink">{athlete.sports.join(', ')}</dd>
+              <dt className="text-xs font-bold text-slate">Sport</dt>
+              <dd className="font-bold text-navy">{athlete.sports.join(', ')}</dd>
             </div>
           </div>
         ) : null}
         {athlete.positions?.length > 0 ? (
           <div className="flex items-start gap-2.5">
-            <FiAward className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <FiAward className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-ink-subtle">Positions and events</dt>
-              <dd className="font-medium text-ink">{athlete.positions.join(', ')}</dd>
+              <dt className="text-xs font-bold text-slate">Positions and events</dt>
+              <dd className="font-bold text-navy">{athlete.positions.join(', ')}</dd>
             </div>
           </div>
         ) : null}
         {athlete.currentTeam ? (
           <div className="flex items-start gap-2.5">
-            <FiBriefcase className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <FiBriefcase className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-ink-subtle">Current team</dt>
-              <dd className="font-medium text-ink">{athlete.currentTeam}</dd>
+              <dt className="text-xs font-bold text-slate">Current team</dt>
+              <dd className="font-bold text-navy">{athlete.currentTeam}</dd>
             </div>
           </div>
         ) : null}
         {location ? (
           <div className="flex items-start gap-2.5">
-            <FiMapPin className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <FiMapPin className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-ink-subtle">Location</dt>
-              <dd className="font-medium text-ink">{location}</dd>
+              <dt className="text-xs font-bold text-slate">Location</dt>
+              <dd className="font-bold text-navy">{location}</dd>
             </div>
           </div>
         ) : null}
         {typeof athlete.experienceYears === 'number' ? (
           <div className="flex items-start gap-2.5">
-            <FiAward className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <FiAward className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-ink-subtle">Experience</dt>
-              <dd className="font-medium text-ink">{athlete.experienceYears} years</dd>
+              <dt className="text-xs font-bold text-slate">Experience</dt>
+              <dd className="font-bold text-navy">{athlete.experienceYears} years</dd>
             </div>
           </div>
         ) : null}
         {athlete.verifiedAchievements > 0 ? (
           <div className="flex items-start gap-2.5">
-            <FiShield className="mt-0.5 h-4 w-4 shrink-0 text-success-600" aria-hidden="true" />
+            <FiShield className="mt-0.5 h-4 w-4 shrink-0 text-verified" aria-hidden="true" />
             <div>
-              <dt className="text-xs text-ink-subtle">Verified achievements</dt>
-              <dd className="font-medium text-ink">{athlete.verifiedAchievements}</dd>
+              <dt className="text-xs font-bold text-slate">Verified achievements</dt>
+              <dd className="font-bold text-verified">{athlete.verifiedAchievements}</dd>
             </div>
           </div>
         ) : null}
@@ -162,9 +158,7 @@ export default function AthletePreview({
 
       {athlete.skills?.length > 0 ? (
         <div className="mt-5 border-t border-line pt-5">
-          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
-            Skills and qualifications
-          </p>
+          <p className="eyebrow">Skills and qualifications</p>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {athlete.skills.map((skill) => (
               <Badge key={skill} variant="neutral" size="sm">

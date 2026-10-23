@@ -279,6 +279,52 @@ describe('Phase 8 events and teams', () => {
     expect(closed.body.code).toBe('EVENT_REGISTRATION_CLOSED');
   });
 
+  it('allows deleting events with only interest and hides editing after the deadline', async () => {
+    const organizer = await registerAndLogin({ name: 'Interest Host', role: 'coach' });
+    const athlete = await registerAndLogin({ name: 'Interested Athlete', role: 'athlete' });
+    const event = await createPublishedEvent(organizer);
+
+    const interest = await request(app)
+      .post(`${API}/events/${event.id}/interest`)
+      .set(authHeader(athlete.accessToken));
+    expect(interest.status).toBe(201);
+
+    const ownerView = await request(app)
+      .get(`${API}/events/${event.id}`)
+      .set(authHeader(organizer.accessToken));
+    expect(ownerView.body.data.event.canDelete).toBe(true);
+    expect(ownerView.body.data.event.canEdit).toBe(true);
+
+    const deleted = await request(app)
+      .delete(`${API}/events/${event.id}`)
+      .set(authHeader(organizer.accessToken));
+    expect(deleted.status).toBe(200);
+    expect(await EventRegistration.exists({ event: event.id })).toBeNull();
+
+    const pastDeadlineEvent = await Event.create({
+      organizer: userId(organizer),
+      organizerName: 'Interest Host',
+      organizerRole: 'coach',
+      title: 'Closed event editing check',
+      description: 'An event whose registration deadline has already passed.',
+      sport: 'Athletics',
+      type: 'community',
+      startAt: futureDate(4),
+      endAt: futureDate(4, 12),
+      registrationDeadline: futureDate(-1),
+      capacity: 10,
+      allowWaitlist: true,
+      status: 'published',
+      publishedAt: new Date(),
+    });
+
+    const pastDeadlineView = await request(app)
+      .get(`${API}/events/${pastDeadlineEvent.id}`)
+      .set(authHeader(organizer.accessToken));
+    expect(pastDeadlineView.status).toBe(200);
+    expect(pastDeadlineView.body.data.event.canEdit).toBe(false);
+  });
+
   it('notifies registered and waitlisted attendees when an organizer cancels', async () => {
     const organizer = await registerAndLogin({ name: 'Cancel Coach', role: 'coach' });
     const registered = await registerAndLogin({ name: 'Cancel Registered', role: 'athlete' });

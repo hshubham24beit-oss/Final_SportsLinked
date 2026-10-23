@@ -189,8 +189,8 @@ export default function AchievementsManager({ achievements, setAchievements }) {
     <div>
       <div className="flex flex-col gap-3 border-b border-line pb-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h2 className="text-base font-semibold text-ink">Achievements</h2>
-          <p className="mt-1 max-w-xl text-xs leading-relaxed text-ink-muted">
+          <h2 className="text-base font-semibold text-navy">Achievements</h2>
+          <p className="mt-1 max-w-xl text-xs leading-relaxed text-body">
             Add results, competitions, and awards. Evidence links stay private, and only
             achievements marked verified by SportLinked show a verified badge.
           </p>
@@ -198,7 +198,7 @@ export default function AchievementsManager({ achievements, setAchievements }) {
         <div className="flex flex-wrap gap-2">
           <Link
             to="/ai?tab=content&kind=achievement"
-            className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-line-strong bg-white px-3 text-sm font-semibold text-ink transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+            className="inline-flex h-9 items-center gap-1.5 rounded-tile border border-line-strong bg-white px-3 text-sm font-semibold text-navy transition-colors hover:bg-sand/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
           >
             <FiCpu className="h-4 w-4" aria-hidden="true" />
             Draft with AI
@@ -234,23 +234,23 @@ export default function AchievementsManager({ achievements, setAchievements }) {
               return (
                 <article
                   key={achievement.id}
-                  className="rounded-xl border border-line bg-white p-4"
+                  className="rounded-card border border-line bg-white p-4"
                 >
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="text-sm font-semibold text-ink">{achievement.title}</h3>
+                        <h3 className="text-sm font-semibold text-navy">{achievement.title}</h3>
                         <Badge size="sm" variant={verification.variant}>
                           {verification.label}
                         </Badge>
                       </div>
-                      <p className="mt-1 text-xs text-ink-muted">
+                      <p className="mt-1 text-xs text-body">
                         {[achievement.sport, achievement.competition, achievement.result]
                           .filter(Boolean)
                           .join(' · ')}
                       </p>
                       {achievement.date ? (
-                        <p className="mt-1 text-xs text-ink-subtle">
+                        <p className="mt-1 text-xs text-slate">
                           {formatDate(achievement.date)}
                         </p>
                       ) : null}
@@ -259,7 +259,7 @@ export default function AchievementsManager({ achievements, setAchievements }) {
                       <button
                         type="button"
                         onClick={() => openEdit(achievement)}
-                        className="rounded-lg p-2 text-ink-subtle transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                        className="rounded-tile p-2 text-slate transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                         aria-label={`Edit ${achievement.title}`}
                       >
                         <FiEdit2 className="h-4 w-4" aria-hidden="true" />
@@ -267,7 +267,7 @@ export default function AchievementsManager({ achievements, setAchievements }) {
                       <button
                         type="button"
                         onClick={() => setDeleteTarget(achievement)}
-                        className="rounded-lg p-2 text-ink-subtle transition-colors hover:bg-danger-50 hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                        className="rounded-tile p-2 text-slate transition-colors hover:bg-danger-50 hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                         aria-label={`Delete ${achievement.title}`}
                       >
                         <FiTrash2 className="h-4 w-4" aria-hidden="true" />
@@ -276,14 +276,14 @@ export default function AchievementsManager({ achievements, setAchievements }) {
                   </div>
 
                   {achievement.description ? (
-                    <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+                    <p className="mt-3 text-sm leading-relaxed text-body">
                       {achievement.description}
                     </p>
                   ) : null}
 
                   {achievement.evidenceRefs && achievement.evidenceRefs.length > 0 ? (
                     <div className="mt-3 border-t border-line pt-3">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate">
                         Private evidence
                       </p>
                       <div className="mt-1.5 flex flex-wrap gap-2">
@@ -293,7 +293,7 @@ export default function AchievementsManager({ achievements, setAchievements }) {
                             href={evidence.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 text-xs font-medium text-brand-700 underline-offset-4 hover:underline"
+                            className="inline-flex items-center gap-1 text-xs font-medium text-track underline-offset-4 hover:underline"
                           >
                             {evidence.label || `Evidence ${index + 1}`}
                             <FiExternalLink className="h-3 w-3" aria-hidden="true" />
@@ -392,11 +392,11 @@ export default function AchievementsManager({ achievements, setAchievements }) {
             maxLength={2000}
           />
 
-          <div className="rounded-lg border border-line p-3.5">
+          <div className="rounded-tile border border-line p-3.5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-medium text-ink">Private evidence links</p>
-                <p className="mt-0.5 text-xs text-ink-muted">
+                <p className="text-sm font-medium text-navy">Private evidence links</p>
+                <p className="mt-0.5 text-xs text-body">
                   Add links to certificates, results, or other supporting material.
                 </p>
               </div>
@@ -431,7 +431,7 @@ export default function AchievementsManager({ achievements, setAchievements }) {
                   <button
                     type="button"
                     onClick={() => removeEvidence(index)}
-                    className="self-start rounded-lg p-2.5 text-ink-subtle transition-colors hover:bg-danger-50 hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                    className="self-start rounded-tile p-2.5 text-slate transition-colors hover:bg-danger-50 hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                     aria-label={`Remove evidence ${index + 1}`}
                   >
                     <FiTrash2 className="h-4 w-4" aria-hidden="true" />
@@ -473,7 +473,7 @@ export default function AchievementsManager({ achievements, setAchievements }) {
           </>
         }
       >
-        <p className="text-sm leading-relaxed text-ink-muted">
+        <p className="text-sm leading-relaxed text-body">
           Private evidence links are removed with the achievement record. This cannot be undone.
         </p>
       </Modal>

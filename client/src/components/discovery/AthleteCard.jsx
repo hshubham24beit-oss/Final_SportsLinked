@@ -38,7 +38,7 @@ export default function AthleteCard({
   const sports = athlete.sports || [];
 
   return (
-    <article className="group flex h-full flex-col rounded-xl border border-line bg-white p-5 shadow-card transition-shadow hover:shadow-lift">
+    <article className="group flex h-full flex-col rounded-card border border-line bg-white p-5 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-track/25 hover:shadow-lift">
       <div className="flex items-start gap-3">
         <Avatar name={athlete.name} src={athlete.avatarUrl} size="lg" />
 
@@ -47,11 +47,11 @@ export default function AthleteCard({
             <div className="min-w-0">
               <Link
                 to={`/p/${athlete.slug}`}
-                className="block truncate text-base font-semibold text-ink underline-offset-4 hover:text-brand-800 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                className="block truncate font-display text-lg font-semibold text-navy underline-offset-4 hover:text-track hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
               >
                 {athlete.name}
               </Link>
-              <p className="mt-0.5 line-clamp-2 text-sm leading-relaxed text-ink-muted">
+              <p className="mt-0.5 line-clamp-2 text-sm leading-relaxed text-slate">
                 {athlete.headline || 'Athlete profile'}
               </p>
             </div>
@@ -65,10 +65,10 @@ export default function AthleteCard({
                 aria-label={
                   athlete.saved ? `Remove ${athlete.name} from saved` : `Save ${athlete.name}`
                 }
-                className={`shrink-0 rounded-lg border p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 disabled:cursor-wait disabled:opacity-60 ${
+                className={`shrink-0 rounded-full border p-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track disabled:cursor-wait disabled:opacity-60 ${
                   athlete.saved
-                    ? 'border-brand-200 bg-brand-50 text-brand-700'
-                    : 'border-line-strong bg-white text-ink-subtle hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700'
+                    ? 'border-track/20 bg-track/10 text-track'
+                    : 'border-line-strong bg-white text-slate hover:border-track/30 hover:bg-sand hover:text-track'
                 }`}
               >
                 <FiBookmark
@@ -105,14 +105,14 @@ export default function AthleteCard({
         </div>
       </div>
 
-      <div className="mt-4 space-y-2 text-sm text-ink-muted">
+      <div className="mt-4 space-y-2 text-sm text-slate">
         {sports.length > 0 ? (
           <p className="flex items-start gap-2">
-            <FiTarget className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <FiTarget className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
             <span className="min-w-0">
-              <span className="font-medium text-ink">{sports.slice(0, 3).join(' · ')}</span>
+              <span className="font-bold text-navy">{sports.slice(0, 3).join(' · ')}</span>
               {athlete.positions?.length ? (
-                <span className="text-ink-muted"> — {athlete.positions.slice(0, 3).join(', ')}</span>
+                <span className="text-slate"> — {athlete.positions.slice(0, 3).join(', ')}</span>
               ) : null}
             </span>
           </p>
@@ -120,21 +120,21 @@ export default function AthleteCard({
 
         {athlete.currentTeam ? (
           <p className="flex items-center gap-2">
-            <FiBriefcase className="h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <FiBriefcase className="h-4 w-4 shrink-0 text-track" aria-hidden="true" />
             <span className="truncate">{athlete.currentTeam}</span>
           </p>
         ) : null}
 
         {location ? (
           <p className="flex items-center gap-2">
-            <FiMapPin className="h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <FiMapPin className="h-4 w-4 shrink-0 text-track" aria-hidden="true" />
             <span className="truncate">{location}</span>
           </p>
         ) : null}
 
         {athlete.experienceYears !== null ? (
           <p className="flex items-center gap-2">
-            <FiAward className="h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+            <FiAward className="h-4 w-4 shrink-0 text-track" aria-hidden="true" />
             <span>
               {athlete.experienceYears === 0
                 ? 'Early career'
@@ -152,7 +152,7 @@ export default function AthleteCard({
             </Badge>
           ))}
           {athlete.skills.length > 3 ? (
-            <span className="self-center text-[11px] text-ink-subtle">
+            <span className="self-center text-[11px] font-semibold text-slate">
               +{athlete.skills.length - 3} more
             </span>
           ) : null}
@@ -160,7 +160,7 @@ export default function AthleteCard({
       ) : null}
 
       {athlete.verifiedAchievements > 0 ? (
-        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-success-700">
+        <p className="mt-3 inline-flex items-center gap-1.5 self-start rounded-full bg-verified-soft px-2.5 py-1 text-[11px] font-extrabold text-verified">
           <FiShield className="h-3.5 w-3.5" aria-hidden="true" />
           {athlete.verifiedAchievements} verified achievement
           {athlete.verifiedAchievements === 1 ? '' : 's'}
@@ -171,13 +171,13 @@ export default function AthleteCard({
         <button
           type="button"
           onClick={() => onPreview(athlete)}
-          className="inline-flex h-9 flex-1 items-center justify-center rounded-lg border border-line-strong bg-white px-3 text-sm font-semibold text-ink transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="inline-flex h-10 flex-1 items-center justify-center rounded-full border border-line-strong bg-white px-3 text-sm font-bold text-navy transition-colors hover:bg-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
         >
           Quick view
         </button>
         <Link
           to={`/p/${athlete.slug}`}
-          className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-3 text-sm font-semibold text-white transition-colors hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+          className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-track px-4 text-sm font-extrabold text-white transition-colors hover:bg-track/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track focus-visible:ring-offset-2"
         >
           Profile
           <FiExternalLink className="h-3.5 w-3.5" aria-hidden="true" />

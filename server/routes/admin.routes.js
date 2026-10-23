@@ -11,6 +11,7 @@ const {
   reportUpdateSchema,
   adminUserListQuerySchema,
   adminUserStatusSchema,
+  adminOrganizationListQuerySchema,
   adminActivityQuerySchema,
 } = require('../validators/verification.validator');
 const { ROLES } = require('../config/constants');
@@ -51,6 +52,13 @@ router.patch(
   validate(reportUpdateSchema),
   asyncHandler(reportController.adminUpdateReport),
 );
+
+router.get(
+  '/organisations',
+  validate(adminOrganizationListQuerySchema, 'query'),
+  asyncHandler(adminController.listOrganizations),
+);
+router.get('/organisations/:id', asyncHandler(adminController.getOrganization));
 
 router.get('/users', validate(adminUserListQuerySchema, 'query'), asyncHandler(adminController.listUsers));
 router.get('/users/:id', asyncHandler(adminController.getUser));

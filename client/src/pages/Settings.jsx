@@ -263,10 +263,11 @@ export default function Settings() {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Account settings
+        <p className="eyebrow">Account</p>
+        <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+          Account <span className="display-emphasis">settings.</span>
         </h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-body">
           Manage your account details, email verification, security, and session.
         </p>
       </div>
@@ -284,8 +285,8 @@ export default function Settings() {
               <div className="flex items-start gap-4">
                 <Avatar name={user.name} src={user.avatarUrl} size="xl" />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-base font-semibold text-ink">{user.name}</p>
-                  <p className="truncate text-sm text-ink-muted">{user.email}</p>
+                  <p className="truncate font-display text-xl">{user.name}</p>
+                  <p className="truncate text-sm text-body">{user.email}</p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     <Badge variant="brand">{getRoleLabel(user.role)}</Badge>
                     <Badge variant={status.variant} dot>
@@ -303,23 +304,23 @@ export default function Settings() {
 
               <dl className="mt-5 space-y-2.5 border-t border-line pt-4 text-sm">
                 <div className="flex items-center justify-between gap-3">
-                  <dt className="text-ink-muted">Member since</dt>
-                  <dd className="font-medium text-ink">{formatDate(user.createdAt)}</dd>
+                  <dt className="text-body">Member since</dt>
+                  <dd className="font-medium text-navy">{formatDate(user.createdAt)}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <dt className="text-ink-muted">Last sign-in</dt>
-                  <dd className="font-medium text-ink">{formatDate(user.lastLoginAt)}</dd>
+                  <dt className="text-body">Last sign-in</dt>
+                  <dd className="font-medium text-navy">{formatDate(user.lastLoginAt)}</dd>
                 </div>
               </dl>
 
               {user.role === 'admin' ? (
-                <p className="mt-4 rounded-lg bg-slate-50 px-3.5 py-3 text-xs leading-relaxed text-ink-muted">
+                <p className="mt-4 rounded-tile bg-sand/60 px-3.5 py-3 text-xs leading-relaxed text-body">
                   Administrator accounts do not have a public SportLinked profile. Account
                   verification and security settings remain available here.
                 </p>
               ) : (
-                <div className="mt-4 flex flex-col gap-3 rounded-lg bg-slate-50 px-3.5 py-3 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-xs leading-relaxed text-ink-muted">
+                <div className="mt-4 flex flex-col gap-3 rounded-tile bg-sand/60 px-3.5 py-3 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-xs leading-relaxed text-body">
                     Profile details, photos, achievements, and visibility are managed separately
                     from your account settings.
                   </p>
@@ -344,21 +345,21 @@ export default function Settings() {
                     Confirm that you own the email address on your account.
                   </CardDescription>
                 </div>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-tile bg-sand text-track">
                   <FiMail className="h-4 w-4" aria-hidden="true" />
                 </span>
               </div>
             </CardHeader>
             <CardContent>
               {user.isEmailVerified ? (
-                <div className="flex items-start gap-3 rounded-lg border border-success-100 bg-success-50 px-3.5 py-3">
+                <div className="flex items-start gap-3 rounded-tile border border-verified/20 bg-verified-soft px-3.5 py-3">
                   <FiCheckCircle
-                    className="mt-0.5 h-4 w-4 shrink-0 text-success-600"
+                    className="mt-0.5 h-4 w-4 shrink-0 text-verified"
                     aria-hidden="true"
                   />
                   <div>
-                    <p className="text-sm font-semibold text-success-700">Your email is verified</p>
-                    <p className="mt-0.5 text-xs leading-relaxed text-success-700">
+                    <p className="text-sm font-semibold text-verified">Your email is verified</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-verified">
                       {user.email} has confirmed email status. This does not verify identity,
                       qualifications, or achievements.
                     </p>
@@ -393,7 +394,7 @@ export default function Settings() {
                     are always available.
                   </CardDescription>
                 </div>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-tile bg-sand text-track">
                   <FiBell className="h-4 w-4" aria-hidden="true" />
                 </span>
               </div>
@@ -406,7 +407,7 @@ export default function Settings() {
               ) : null}
 
               {isLoadingPreferences ? (
-                <p className="text-sm text-ink-muted">Loading preferences...</p>
+                <p className="text-sm text-body">Loading preferences...</p>
               ) : (
                 <div className="space-y-2.5">
                   {EMAIL_PREFERENCE_OPTIONS.map((option) => (
@@ -434,12 +435,12 @@ export default function Settings() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col gap-3 rounded-lg border border-line px-3.5 py-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-3 rounded-tile border border-line px-3.5 py-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-start gap-2.5">
-                  <FiKey className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+                  <FiKey className="mt-0.5 h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
                   <div>
-                    <p className="text-sm font-medium text-ink">Password</p>
-                    <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">
+                    <p className="text-sm font-medium text-navy">Password</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-body">
                       Send a single-use reset link to your email. Resetting signs out other
                       sessions.
                     </p>
@@ -467,7 +468,7 @@ export default function Settings() {
                   <CardTitle>Current session</CardTitle>
                   <CardDescription>You are signed in on this device.</CardDescription>
                 </div>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-ink-muted">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-tile bg-sand text-body">
                   <FiShield className="h-4 w-4" aria-hidden="true" />
                 </span>
               </div>
@@ -475,15 +476,15 @@ export default function Settings() {
             <CardContent>
               <dl className="space-y-2.5 text-sm">
                 <div className="flex items-center justify-between gap-3">
-                  <dt className="text-ink-muted">Account</dt>
-                  <dd className="max-w-[60%] truncate font-medium text-ink">{user.email}</dd>
+                  <dt className="text-body">Account</dt>
+                  <dd className="max-w-[60%] truncate font-medium text-navy">{user.email}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <dt className="text-ink-muted">Last sign-in</dt>
-                  <dd className="font-medium text-ink">{formatDate(user.lastLoginAt)}</dd>
+                  <dt className="text-body">Last sign-in</dt>
+                  <dd className="font-medium text-navy">{formatDate(user.lastLoginAt)}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <dt className="text-ink-muted">Refresh session</dt>
+                  <dt className="text-body">Refresh session</dt>
                   <dd>
                     <Badge size="sm" variant="success" dot>
                       Active
@@ -513,15 +514,15 @@ export default function Settings() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <p className="text-sm font-semibold text-ink">Deactivate account</p>
-                <p className="mt-1 text-xs leading-relaxed text-ink-muted">
+                <p className="text-sm font-semibold text-navy">Deactivate account</p>
+                <p className="mt-1 text-xs leading-relaxed text-body">
                   Your account can no longer be used to sign in. Reactivation is not available in
                   this release.
                 </p>
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="mt-3 border-amber-200 text-warning-700 hover:bg-warning-50"
+                  className="mt-3 border-pending/25 text-pending hover:bg-pending-soft"
                   onClick={openDeactivate}
                 >
                   Deactivate account
@@ -529,8 +530,8 @@ export default function Settings() {
               </div>
 
               <div className="border-t border-line pt-4">
-                <p className="text-sm font-semibold text-ink">Delete account</p>
-                <p className="mt-1 text-xs leading-relaxed text-ink-muted">
+                <p className="text-sm font-semibold text-navy">Delete account</p>
+                <p className="mt-1 text-xs leading-relaxed text-body">
                   Permanently removes your account and associated data. This cannot be undone.
                 </p>
                 <Button
@@ -544,7 +545,7 @@ export default function Settings() {
                 </Button>
               </div>
 
-              <div className="flex items-start gap-2 rounded-lg bg-danger-50 px-3 py-2.5 text-xs leading-relaxed text-danger-700">
+              <div className="flex items-start gap-2 rounded-tile bg-danger-50 px-3 py-2.5 text-xs leading-relaxed text-danger-700">
                 <FiAlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                 Both actions require your current password. Deactivated accounts cannot sign in.
               </div>
@@ -596,7 +597,7 @@ export default function Settings() {
             required
             autoFocus
           />
-          <p className="text-xs leading-relaxed text-ink-muted">
+          <p className="text-xs leading-relaxed text-body">
             Your refresh session will be revoked immediately. Any short-lived access token expires
             shortly after.
           </p>

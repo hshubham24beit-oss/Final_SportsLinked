@@ -138,8 +138,8 @@ export default function GalleryManager({ profile, setProfile, user }) {
   return (
     <div>
       <div className="border-b border-line pb-4">
-        <h2 className="text-base font-semibold text-ink">Profile photos</h2>
-        <p className="mt-1 max-w-xl text-xs leading-relaxed text-ink-muted">
+        <h2 className="text-base font-semibold text-navy">Profile photos</h2>
+        <p className="mt-1 max-w-xl text-xs leading-relaxed text-body">
           Upload a profile photo and cover image, then build a gallery. Images are stored through
           the configured media provider.
         </p>
@@ -173,12 +173,12 @@ export default function GalleryManager({ profile, setProfile, user }) {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-semibold text-ink">Gallery</h3>
-              <span className="text-xs text-ink-subtle">
+              <h3 className="text-sm font-semibold text-navy">Gallery</h3>
+              <span className="text-xs text-slate">
                 {gallery.length}/12
               </span>
             </div>
-            <p className="mt-1 text-xs leading-relaxed text-ink-muted">
+            <p className="mt-1 text-xs leading-relaxed text-body">
               Add training, competition, or team photos. Captions are not required.
             </p>
           </div>
@@ -224,23 +224,24 @@ export default function GalleryManager({ profile, setProfile, user }) {
               {gallery.map((item) => (
                 <div
                   key={item.id}
-                  className="group relative aspect-square overflow-hidden rounded-xl border border-line bg-slate-100"
+                  className="group relative aspect-square overflow-hidden rounded-card border border-line bg-sand"
                 >
                   <img
                     src={item.url}
                     alt={item.caption || 'Profile gallery image'}
+                    loading="lazy"
                     className="h-full w-full object-cover"
                   />
                   <button
                     type="button"
                     onClick={() => setDeleteTarget(item)}
-                    className="absolute right-2 top-2 rounded-full bg-white/95 p-2 text-ink-muted shadow-sm transition-colors hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                    className="absolute right-2 top-2 rounded-full bg-white/95 p-2 text-body shadow-sm transition-colors hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                     aria-label="Remove gallery photo"
                   >
                     <FiTrash2 className="h-4 w-4" aria-hidden="true" />
                   </button>
                   {item.caption ? (
-                    <p className="absolute inset-x-0 bottom-0 truncate bg-ink/60 px-2.5 py-1.5 text-[11px] text-white">
+                    <p className="absolute inset-x-0 bottom-0 truncate bg-navy/60 px-2.5 py-1.5 text-[11px] text-white">
                       {item.caption}
                     </p>
                   ) : null}
@@ -272,7 +273,7 @@ export default function GalleryManager({ profile, setProfile, user }) {
           </>
         }
       >
-        <p className="text-sm leading-relaxed text-ink-muted">This cannot be undone.</p>
+        <p className="text-sm leading-relaxed text-body">This cannot be undone.</p>
       </Modal>
       <Modal
         open={Boolean(clearTarget)}
@@ -299,7 +300,7 @@ export default function GalleryManager({ profile, setProfile, user }) {
           </>
         }
       >
-        <p className="text-sm leading-relaxed text-ink-muted">
+        <p className="text-sm leading-relaxed text-body">
           The image will be deleted permanently. You can upload a new one at any time.
         </p>
       </Modal>

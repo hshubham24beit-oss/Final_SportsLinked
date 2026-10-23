@@ -202,7 +202,7 @@ export default function TeamDetail() {
   if (error || !team) {
     return (
       <div>
-        <Link to="/teams" className="text-sm font-medium text-ink-muted hover:text-ink">
+        <Link to="/teams" className="text-sm font-medium text-body hover:text-navy">
           Back to teams
         </Link>
         <Alert variant="error" title="Team could not be loaded" className="mt-4">
@@ -220,7 +220,7 @@ export default function TeamDetail() {
     <div className="mx-auto max-w-5xl">
       <Link
         to={team.isOwner || team.membership ? '/teams/mine' : '/teams'}
-        className="text-sm font-medium text-ink-muted hover:text-ink"
+        className="text-sm font-medium text-body hover:text-navy"
       >
         Back
       </Link>
@@ -244,10 +244,10 @@ export default function TeamDetail() {
             ) : null}
             {isInvited ? <Badge variant="warning">Invitation pending</Badge> : null}
           </div>
-          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+          <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">
             {team.name}
           </h1>
-          <p className="mt-1.5 text-sm text-ink-muted">
+          <p className="mt-1.5 text-sm text-body">
             Led by {team.ownerName} - {team.memberCount} {team.memberCount === 1 ? 'member' : 'members'}
             {location ? ` - ${location}` : ''}
           </p>
@@ -273,11 +273,11 @@ export default function TeamDetail() {
       </div>
 
       {isInvited ? (
-        <Card className="mt-6 border-warning-200 bg-warning-50/50">
+        <Card className="mt-6 border-pending/20 bg-pending-soft/50">
           <CardContent className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-sm font-semibold text-ink">You have been invited to join</p>
-              <p className="mt-0.5 text-sm text-ink-muted">
+              <p className="text-sm font-semibold text-navy">You have been invited to join</p>
+              <p className="mt-0.5 text-sm text-body">
                 {team.ownerName} invited you as a {teamRoleLabel(team.membership?.role)}.
               </p>
             </div>
@@ -309,10 +309,10 @@ export default function TeamDetail() {
               <CardTitle>About</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="whitespace-pre-line text-sm leading-relaxed text-ink-muted">
+              <p className="whitespace-pre-line text-sm leading-relaxed text-body">
                 {team.description}
               </p>
-              <p className="mt-4 text-sm text-ink-subtle">Sport: {team.sport}</p>
+              <p className="mt-4 text-sm text-slate">Sport: {team.sport}</p>
             </CardContent>
           </Card>
 
@@ -348,24 +348,24 @@ export default function TeamDetail() {
                 {updates.length ? (
                   <ul className="space-y-3">
                     {updates.map((update) => (
-                      <li key={update.id} className="rounded-lg border border-line p-3.5">
+                      <li key={update.id} className="rounded-tile border border-line p-3.5">
                         <div className="flex items-center justify-between gap-2">
-                          <p className="text-sm font-medium text-ink">{update.authorName}</p>
+                          <p className="text-sm font-medium text-navy">{update.authorName}</p>
                           <Badge size="sm" variant="neutral">
                             {teamRoleLabel(update.authorRole)}
                           </Badge>
                         </div>
-                        <p className="mt-1.5 whitespace-pre-line text-sm text-ink-muted">
+                        <p className="mt-1.5 whitespace-pre-line text-sm text-body">
                           {update.text}
                         </p>
-                        <p className="mt-2 text-xs text-ink-subtle">
+                        <p className="mt-2 text-xs text-slate">
                           {formatRelativeTime(update.createdAt)}
                         </p>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-sm text-ink-muted">No updates have been posted yet.</p>
+                  <p className="text-sm text-body">No updates have been posted yet.</p>
                 )}
               </CardContent>
             </Card>
@@ -417,13 +417,13 @@ export default function TeamDetail() {
                   {members.map((entry) => (
                     <li
                       key={entry.id}
-                      className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-line px-3.5 py-3"
+                      className="flex flex-wrap items-center justify-between gap-2 rounded-tile border border-line px-3.5 py-3"
                     >
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-medium text-ink">
+                        <p className="truncate text-sm font-medium text-navy">
                           {entry.user.name}
                         </p>
-                        <p className="truncate text-xs text-ink-subtle">
+                        <p className="truncate text-xs text-slate">
                           {teamRoleLabel(entry.role)}
                           {entry.status === 'invited' ? ' - invited' : ''}
                         </p>
@@ -433,7 +433,7 @@ export default function TeamDetail() {
                           <select
                             value={entry.role}
                             onChange={(event) => handleRoleChange(entry, event.target.value)}
-                            className="h-9 rounded-lg border border-line-strong bg-white px-2 text-xs text-ink focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
+                            className="h-9 rounded-tile border border-line-strong bg-white px-2 text-xs text-navy focus:border-track focus:outline-none focus:ring-2 focus:ring-track/20"
                             aria-label={`Role for ${entry.user.name}`}
                           >
                             {TEAM_MEMBER_ROLE_OPTIONS.map((option) => (
@@ -463,7 +463,7 @@ export default function TeamDetail() {
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-ink-muted">
+                <p className="text-sm text-body">
                   Member details are not available to you.
                 </p>
               )}
@@ -499,7 +499,7 @@ export default function TeamDetail() {
           </div>
         }
       >
-        <p className="text-sm text-ink-muted">
+        <p className="text-sm text-body">
           You are about to leave {team.name}.
         </p>
       </Modal>
@@ -520,7 +520,7 @@ export default function TeamDetail() {
           </div>
         }
       >
-        <p className="text-sm text-ink-muted">
+        <p className="text-sm text-body">
           Are you sure you want to delete {team.name}?
         </p>
       </Modal>

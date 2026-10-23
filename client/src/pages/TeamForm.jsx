@@ -87,14 +87,14 @@ export default function TeamForm() {
     <div className="mx-auto max-w-3xl">
       <Link
         to={isEdit ? `/teams/${id}` : '/teams/mine'}
-        className="text-sm font-medium text-ink-muted hover:text-ink"
+        className="text-sm font-medium text-body hover:text-navy"
       >
         Back
       </Link>
-      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+      <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">
         {isEdit ? 'Edit team' : 'Create a team or group'}
       </h1>
-      <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+      <p className="mt-1.5 text-sm leading-relaxed text-body">
         Public teams appear in local discovery. Private teams are invite-only and hidden from
         discovery.
       </p>
@@ -106,8 +106,8 @@ export default function TeamForm() {
       ) : null}
 
       <form onSubmit={submit} className="mt-6 space-y-6">
-        <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-          <h2 className="text-base font-semibold text-ink">Team details</h2>
+        <section className="rounded-card border border-line bg-white p-5 shadow-card">
+          <h2 className="font-display text-xl">Team details</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Input
               label="Name"
@@ -149,8 +149,8 @@ export default function TeamForm() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-          <h2 className="text-base font-semibold text-ink">Location</h2>
+        <section className="rounded-card border border-line bg-white p-5 shadow-card">
+          <h2 className="font-display text-xl">Location</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             <Input
               label="City"

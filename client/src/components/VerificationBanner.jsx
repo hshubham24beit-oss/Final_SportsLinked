@@ -31,13 +31,13 @@ export default function VerificationBanner() {
   };
 
   return (
-    <div className="mb-6 flex flex-col gap-3 rounded-xl border border-amber-200 bg-warning-50 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
+    <div className="mb-6 flex flex-col gap-3 rounded-tile border border-pending/25 bg-pending-soft px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-start gap-3">
-        <FiMail className="mt-0.5 h-5 w-5 shrink-0 text-warning-700" aria-hidden="true" />
+        <FiMail className="mt-0.5 h-5 w-5 shrink-0 text-pending" aria-hidden="true" />
         <div>
-          <p className="text-sm font-semibold text-warning-700">Verify your email address</p>
-          <p className="mt-0.5 text-sm leading-relaxed text-warning-700">
-            We sent a link to <span className="font-medium">{user.email}</span>. Verified email is
+          <p className="text-sm font-extrabold text-pending">Verify your email address</p>
+          <p className="mt-0.5 text-sm leading-relaxed text-pending/90">
+            We sent a link to <span className="font-extrabold">{user.email}</span>. Verified email is
             required for trusted actions on SportLinked.
           </p>
         </div>
@@ -47,7 +47,7 @@ export default function VerificationBanner() {
         size="sm"
         onClick={handleResend}
         isLoading={isSending}
-        className="shrink-0 self-stretch border-amber-300 bg-white text-warning-700 hover:bg-warning-50 sm:self-auto"
+        className="shrink-0 self-stretch border-pending/25 bg-white hover:bg-white/70 sm:self-auto"
       >
         Resend email
       </Button>

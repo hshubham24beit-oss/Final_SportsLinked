@@ -38,14 +38,14 @@ function setNested(form, section, key, value) {
 function MultiSelect({ label, value, options, onChange, hint }) {
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-medium text-ink">{label}</label>
+      <label className="mb-1.5 block text-sm font-medium text-navy">{label}</label>
       <select
         multiple
         value={value}
         onChange={(event) =>
           onChange(Array.from(event.target.selectedOptions, (option) => option.value))
         }
-        className="h-32 w-full rounded-lg border border-line-strong bg-white px-3 py-2 text-sm text-ink shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
+        className="h-32 w-full rounded-tile border border-line-strong bg-white px-3 py-2 text-sm text-navy shadow-sm focus:border-track focus:outline-none focus:ring-2 focus:ring-track/20"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -53,7 +53,7 @@ function MultiSelect({ label, value, options, onChange, hint }) {
           </option>
         ))}
       </select>
-      <p className="mt-1.5 text-xs text-ink-subtle">{hint}</p>
+      <p className="mt-1.5 text-xs text-slate">{hint}</p>
     </div>
   );
 }
@@ -145,14 +145,14 @@ export default function OpportunityForm() {
     <div className="mx-auto max-w-4xl">
       <Link
         to={isEdit ? `/opportunities/${id}` : '/opportunities/mine'}
-        className="text-sm font-medium text-ink-muted hover:text-ink"
+        className="text-sm font-medium text-body hover:text-navy"
       >
         Back
       </Link>
-      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+      <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">
         {isEdit ? 'Edit opportunity' : 'Create an opportunity'}
       </h1>
-      <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+      <p className="mt-1.5 text-sm leading-relaxed text-body">
         Publish clear, accurate requirements. Athletes see the deadline, eligibility, and required
         documents before applying.
       </p>
@@ -175,8 +175,8 @@ export default function OpportunityForm() {
           submit(false);
         }}
       >
-        <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-          <h2 className="text-base font-semibold text-ink">Opportunity details</h2>
+        <section className="rounded-card border border-line bg-white p-5 shadow-card">
+          <h2 className="font-display text-xl">Opportunity details</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Select
               label="Type"
@@ -228,8 +228,8 @@ export default function OpportunityForm() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-          <h2 className="text-base font-semibold text-ink">Dates and location</h2>
+        <section className="rounded-card border border-line bg-white p-5 shadow-card">
+          <h2 className="font-display text-xl">Dates and location</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <Input
               label="Application deadline"
@@ -274,8 +274,8 @@ export default function OpportunityForm() {
           </div>
         </section>
 
-        <section className="rounded-xl border border-line bg-white p-5 shadow-card">
-          <h2 className="text-base font-semibold text-ink">Eligibility and documents</h2>
+        <section className="rounded-card border border-line bg-white p-5 shadow-card">
+          <h2 className="font-display text-xl">Eligibility and documents</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             <MultiSelect
               label="Athlete levels"

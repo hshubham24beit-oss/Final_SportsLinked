@@ -26,6 +26,7 @@ import {
 import EmptyState from '../components/ui/EmptyState';
 import PageLoader from '../components/PageLoader';
 import ProgressBar from '../components/ui/ProgressBar';
+import ProgressRing from '../components/ui/ProgressRing';
 import UpcomingEventsCard from '../components/dashboard/UpcomingEventsCard';
 import { dashboardApi } from '../api/dashboard.api';
 import { useAuth } from '../hooks/useAuth';
@@ -43,15 +44,19 @@ import {
 
 function StatCard({ label, value, icon: Icon, hint }) {
   return (
-    <div className="rounded-xl border border-line bg-white p-4 shadow-card">
-      <div className="flex items-start justify-between gap-2">
-        <p className="text-xs font-medium uppercase tracking-wide text-ink-subtle">{label}</p>
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+    <div className="rounded-card border border-line bg-white p-5 shadow-card">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.12em] text-slate">
+            {label}
+          </p>
+          <p className="stat-number mt-2">{value}</p>
+        </div>
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-track/10 text-track">
           <Icon className="h-4 w-4" aria-hidden="true" />
         </span>
       </div>
-      <p className="mt-2 text-2xl font-semibold text-ink">{value}</p>
-      {hint ? <p className="mt-0.5 text-xs text-ink-subtle">{hint}</p> : null}
+      {hint ? <p className="mt-3 text-xs leading-relaxed text-slate">{hint}</p> : null}
     </div>
   );
 }
@@ -63,16 +68,17 @@ function DashboardHeader({ user, dashboard }) {
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <div className="flex flex-wrap items-center gap-2">
+        <p className="eyebrow">Your workspace</p>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           <Badge variant="brand">{getRoleLabel(user.role)}</Badge>
           <Badge variant={user.isEmailVerified ? 'success' : 'warning'} dot>
             {user.isEmailVerified ? 'Email verified' : 'Email unverified'}
           </Badge>
         </div>
-        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-          Welcome back, {getFirstName(displayName)}.
+        <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">
+          Welcome back, <span className="display-emphasis">{getFirstName(displayName)}.</span>
         </h1>
-        <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-body">
           {user.role === 'athlete'
             ? 'Applications, saved opportunities, and recommended listings at a glance.'
             : user.role === 'admin'
@@ -133,7 +139,7 @@ function AthleteDashboard({ dashboard }) {
                 <CardTitle>Recent applications</CardTitle>
                 <CardDescription>Your latest submissions and decisions.</CardDescription>
               </div>
-              <Link to="/applications" className="text-xs font-semibold text-brand-700 hover:underline">
+              <Link to="/applications" className="text-xs font-semibold text-track hover:underline">
                 View all
               </Link>
             </div>
@@ -145,13 +151,13 @@ function AthleteDashboard({ dashboard }) {
                   <Link
                     key={application.id}
                     to={`/applications/${application.id}`}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-line p-3 hover:bg-slate-50"
+                    className="flex items-center justify-between gap-3 rounded-tile border border-line p-3 hover:bg-sand/60"
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-ink">
+                      <p className="truncate text-sm font-medium text-navy">
                         {application.opportunity.title}
                       </p>
-                      <p className="truncate text-xs text-ink-subtle">
+                      <p className="truncate text-xs text-slate">
                         {application.opportunity.publisherName} - applied{' '}
                         {formatDate(application.createdAt)}
                       </p>
@@ -184,16 +190,23 @@ function AthleteDashboard({ dashboard }) {
               <CardDescription>Keep your profile accurate and current.</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center justify-between text-sm">
-                <span className="font-medium text-ink">Profile completion</span>
-                <span className="font-semibold text-brand-700">
-                  {dashboard.profile?.completion || 0}%
-                </span>
+              <div className="flex flex-col items-center gap-5 sm:flex-row">
+                <ProgressRing value={dashboard.profile?.completion || 0} size={104} strokeWidth={7} />
+                <div className="min-w-0 flex-1">
+                  <p className="font-display text-lg">Profile completion</p>
+                  <p className="mt-1 text-sm leading-relaxed text-slate">
+                    Keep your profile accurate and current so the right people can find you.
+                  </p>
+                  <ProgressBar
+                    value={dashboard.profile?.completion || 0}
+                    showValue={false}
+                    className="mt-3"
+                  />
+                </div>
               </div>
-              <ProgressBar value={dashboard.profile?.completion || 0} className="mt-2" />
               <Link
                 to="/profile/edit"
-                className={`${buttonClasses({ variant: 'secondary', size: 'sm', fullWidth: true })} mt-4`}
+                className={`${buttonClasses({ variant: 'secondary', size: 'sm', fullWidth: true })} mt-5`}
               >
                 Improve your profile
               </Link>
@@ -204,7 +217,7 @@ function AthleteDashboard({ dashboard }) {
             <CardHeader>
               <div className="flex items-center justify-between gap-2">
                 <CardTitle>Recommended</CardTitle>
-                <Link to="/opportunities" className="text-xs font-semibold text-brand-700 hover:underline">
+                <Link to="/opportunities" className="text-xs font-semibold text-track hover:underline">
                   Browse all
                 </Link>
               </div>
@@ -217,10 +230,10 @@ function AthleteDashboard({ dashboard }) {
                     <Link
                       key={opportunity.id}
                       to={`/opportunities/${opportunity.id}`}
-                      className="block rounded-lg border border-line p-3 hover:bg-slate-50"
+                      className="block rounded-tile border border-line p-3 hover:bg-sand/60"
                     >
-                      <p className="truncate text-sm font-medium text-ink">{opportunity.title}</p>
-                      <p className="mt-0.5 truncate text-xs text-ink-subtle">
+                      <p className="truncate text-sm font-medium text-navy">{opportunity.title}</p>
+                      <p className="mt-0.5 truncate text-xs text-slate">
                         {opportunityTypeLabel(opportunity.type)} - closes{' '}
                         {formatDeadline(opportunity.deadline)}
                       </p>
@@ -228,7 +241,7 @@ function AthleteDashboard({ dashboard }) {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-ink-muted">No matching active opportunities right now.</p>
+                <p className="text-sm text-body">No matching active opportunities right now.</p>
               )}
             </CardContent>
           </Card>
@@ -270,7 +283,7 @@ function PublisherDashboard({ dashboard }) {
               </div>
               <Link
                 to="/opportunities/mine"
-                className="text-xs font-semibold text-brand-700 hover:underline"
+                className="text-xs font-semibold text-track hover:underline"
               >
                 Manage listings
               </Link>
@@ -283,13 +296,13 @@ function PublisherDashboard({ dashboard }) {
                   <Link
                     key={application.id}
                     to={`/applications/${application.id}`}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-line p-3 hover:bg-slate-50"
+                    className="flex items-center justify-between gap-3 rounded-tile border border-line p-3 hover:bg-sand/60"
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-ink">
+                      <p className="truncate text-sm font-medium text-navy">
                         {application.athlete?.name || 'Athlete'}
                       </p>
-                      <p className="truncate text-xs text-ink-subtle">
+                      <p className="truncate text-xs text-slate">
                         {application.opportunity.title} - applied{' '}
                         {formatDate(application.createdAt)}
                       </p>
@@ -324,11 +337,11 @@ function PublisherDashboard({ dashboard }) {
             {['published', 'draft', 'closed', 'expired'].map((status) => (
               <div
                 key={status}
-                className="flex items-center justify-between gap-3 rounded-lg border border-line px-3.5 py-3"
+                className="flex items-center justify-between gap-3 rounded-tile border border-line px-3.5 py-3"
               >
                 <div className="flex items-center gap-2.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-brand-500" aria-hidden="true" />
-                  <span className="text-sm text-ink">{opportunityStatusLabel(status)}</span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-track" aria-hidden="true" />
+                  <span className="text-sm text-navy">{opportunityStatusLabel(status)}</span>
                 </div>
                 <Badge size="sm" variant="neutral">
                   {dashboard.opportunityCounts?.[status] || 0}
@@ -411,16 +424,16 @@ function AdminDashboard({ dashboard }) {
                 <Link
                   key={shortcut.to}
                   to={shortcut.to}
-                  className="flex items-center gap-3 rounded-lg border border-line p-3 hover:bg-slate-50"
+                  className="flex items-center gap-3 rounded-tile border border-line p-3 hover:bg-sand/60"
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-tile bg-sand text-track">
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-medium text-ink">{shortcut.label}</span>
-                    <span className="block text-xs text-ink-subtle">{shortcut.description}</span>
+                    <span className="block text-sm font-medium text-navy">{shortcut.label}</span>
+                    <span className="block text-xs text-slate">{shortcut.description}</span>
                   </span>
-                  <FiArrowRight className="h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+                  <FiArrowRight className="h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
                 </Link>
               );
             })}
@@ -437,11 +450,11 @@ function AdminDashboard({ dashboard }) {
               {dashboard.recentUsers?.map((entry) => (
                 <div
                   key={entry.id}
-                  className="flex items-center justify-between gap-3 rounded-lg border border-line px-3.5 py-3"
+                  className="flex items-center justify-between gap-3 rounded-tile border border-line px-3.5 py-3"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-ink">{entry.name}</p>
-                    <p className="truncate text-xs text-ink-subtle">{entry.email}</p>
+                    <p className="truncate text-sm font-medium text-navy">{entry.name}</p>
+                    <p className="truncate text-xs text-slate">{entry.email}</p>
                   </div>
                   <Badge size="sm" variant="brand">
                     {entry.role}

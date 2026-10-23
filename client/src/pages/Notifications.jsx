@@ -93,10 +93,11 @@ export default function Notifications() {
     <div className="mx-auto max-w-3xl">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Notifications
+          <p className="eyebrow">Activity</p>
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+            <span className="display-emphasis">Notifications.</span>
           </h1>
-          <p className="mt-1.5 text-sm text-ink-muted">
+          <p className="mt-1.5 text-sm text-body">
             Network activity, application updates, and recruitment news relevant to you.
           </p>
         </div>
@@ -119,7 +120,7 @@ export default function Notifications() {
       ) : null}
 
       {isLoading ? (
-        <p className="mt-6 text-sm text-ink-muted">Loading notifications...</p>
+        <p className="mt-6 text-sm text-body">Loading notifications...</p>
       ) : null}
 
       {!isLoading && notifications.length === 0 ? (
@@ -132,44 +133,44 @@ export default function Notifications() {
       ) : null}
 
       {!isLoading && notifications.length > 0 ? (
-        <div className="mt-5 overflow-hidden rounded-xl border border-line bg-white shadow-card">
+        <div className="mt-5 overflow-hidden rounded-card border border-line bg-white shadow-card">
           {notifications.map((notification) => (
             <div
               key={notification.id}
               className={`flex gap-3 border-b border-line p-4 last:border-b-0 ${
-                notification.readAt ? 'bg-white' : 'bg-brand-50/40'
+                notification.readAt ? 'bg-white' : 'bg-sand/40'
               }`}
             >
               <span
                 className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
                   notification.readAt
-                    ? 'bg-slate-100 text-ink-subtle'
-                    : 'bg-brand-100 text-brand-700'
+                    ? 'bg-sand text-slate'
+                    : 'bg-sand-deep text-track'
                 }`}
               >
                 <FiBell className="h-4 w-4" aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <p className="text-sm font-semibold text-ink">{notification.title}</p>
+                  <p className="text-sm font-semibold text-navy">{notification.title}</p>
                   {!notification.readAt ? (
                     <Badge size="sm" variant="brand">
                       New
                     </Badge>
                   ) : null}
                 </div>
-                <p className="mt-0.5 text-sm leading-relaxed text-ink-muted">
+                <p className="mt-0.5 text-sm leading-relaxed text-body">
                   {notification.message}
                 </p>
                 <div className="mt-2 flex flex-wrap items-center gap-3">
-                  <span className="text-xs text-ink-subtle">
+                  <span className="text-xs text-slate">
                     {formatDate(notification.createdAt)}
                   </span>
                   {notification.link ? (
                     <Link
                       to={notification.link}
                       onClick={() => handleMarkRead(notification)}
-                      className="text-xs font-semibold text-brand-700 underline-offset-4 hover:underline"
+                      className="text-xs font-semibold text-track underline-offset-4 hover:underline"
                     >
                       Open
                     </Link>
@@ -178,7 +179,7 @@ export default function Notifications() {
                     <button
                       type="button"
                       onClick={() => handleMarkRead(notification)}
-                      className="text-xs font-medium text-ink-muted underline-offset-4 hover:text-ink hover:underline"
+                      className="text-xs font-medium text-body underline-offset-4 hover:text-navy hover:underline"
                     >
                       Mark as read
                     </button>

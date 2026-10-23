@@ -24,7 +24,7 @@ export default function UpcomingEventsCard({ events = [] }) {
           </div>
           <Link
             to="/events"
-            className="text-xs font-semibold text-brand-700 hover:underline"
+            className="text-xs font-semibold text-track hover:underline"
           >
             Browse events
           </Link>
@@ -37,11 +37,11 @@ export default function UpcomingEventsCard({ events = [] }) {
               <Link
                 key={event.id}
                 to={`/events/${event.id}`}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-line p-3 hover:bg-slate-50"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-tile border border-line p-3 hover:bg-sand/60"
               >
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-ink">{event.title}</p>
-                  <p className="truncate text-xs text-ink-subtle">
+                  <p className="truncate text-sm font-medium text-navy">{event.title}</p>
+                  <p className="truncate text-xs text-slate">
                     {formatDateTime(event.startAt)}
                     {event.city ? ` - ${event.city}` : ''} - by {event.organizerName}
                   </p>
@@ -70,10 +70,10 @@ export default function UpcomingEventsCard({ events = [] }) {
             ))}
           </div>
         ) : (
-          <div className="rounded-lg border border-dashed border-line-strong bg-slate-50/60 px-5 py-8 text-center">
-            <FiCalendar className="mx-auto h-5 w-5 text-brand-700" aria-hidden="true" />
-            <p className="mt-3 text-sm font-medium text-ink">No upcoming events</p>
-            <p className="mt-1 text-sm text-ink-muted">
+          <div className="rounded-tile border border-dashed border-line-strong bg-sand/60 px-5 py-8 text-center">
+            <FiCalendar className="mx-auto h-5 w-5 text-track" aria-hidden="true" />
+            <p className="mt-3 text-sm font-medium text-navy">No upcoming events</p>
+            <p className="mt-1 text-sm text-body">
               Register for an event or create your own to see it here.
             </p>
             <Link to="/events" className={`${buttonClasses({ size: 'sm' })} mt-4`}>

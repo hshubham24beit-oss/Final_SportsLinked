@@ -16,4 +16,10 @@ export const adminApi = {
   updateUserStatus(userId, payload) {
     return api.patch(`/admin/users/${encodeURIComponent(userId)}/status`, payload);
   },
+  listOrganizations(params = {}) {
+    return api.get('/admin/organisations', { params });
+  },
+  getOrganization(organizationId) {
+    return api.get(`/admin/organisations/${encodeURIComponent(organizationId)}`);
+  },
 };

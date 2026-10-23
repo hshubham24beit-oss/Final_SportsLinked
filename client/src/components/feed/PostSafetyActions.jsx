@@ -82,18 +82,18 @@ export default function PostSafetyActions({ post, onBlocked }) {
         <button
           type="button"
           onClick={() => setMenuOpen((current) => !current)}
-          className="rounded-lg p-2 text-ink-subtle transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="rounded-tile p-2 text-slate transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
           aria-label="Post actions"
           aria-expanded={menuOpen}
         >
           <FiMoreHorizontal className="h-5 w-5" aria-hidden="true" />
         </button>
         {menuOpen ? (
-          <div className="absolute right-0 top-full z-10 mt-1 w-48 overflow-hidden rounded-lg border border-line bg-white py-1 shadow-lift">
+          <div className="absolute right-0 top-full z-10 mt-1 w-48 overflow-hidden rounded-tile border border-line bg-white py-1 shadow-lift">
             <button
               type="button"
               onClick={() => openMode('report')}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-ink-muted transition-colors hover:bg-slate-50 hover:text-ink"
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-body transition-colors hover:bg-sand/60 hover:text-navy"
             >
               <FiFlag className="h-4 w-4" aria-hidden="true" />
               Report post
@@ -133,7 +133,7 @@ export default function PostSafetyActions({ post, onBlocked }) {
       >
         <form id={reportFormId} onSubmit={submitReport} className="space-y-4">
           {error ? (
-            <p className="rounded-lg border border-red-200 bg-danger-50 p-3 text-sm text-danger-700" role="alert">
+            <p className="rounded-tile border border-red-200 bg-danger-50 p-3 text-sm text-danger-700" role="alert">
               {error}
             </p>
           ) : null}
@@ -178,7 +178,7 @@ export default function PostSafetyActions({ post, onBlocked }) {
       >
         <form id={blockFormId} onSubmit={submitBlock} className="space-y-4">
           {error ? (
-            <p className="rounded-lg border border-red-200 bg-danger-50 p-3 text-sm text-danger-700" role="alert">
+            <p className="rounded-tile border border-red-200 bg-danger-50 p-3 text-sm text-danger-700" role="alert">
               {error}
             </p>
           ) : null}

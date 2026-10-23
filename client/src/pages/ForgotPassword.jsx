@@ -47,15 +47,15 @@ export default function ForgotPassword() {
   if (sent) {
     return (
       <div>
-        <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-brand-100 bg-brand-50 text-brand-700">
+        <span className="flex h-12 w-12 items-center justify-center rounded-card border border-line bg-sand text-track">
           <FiMail className="h-6 w-6" aria-hidden="true" />
         </span>
-        <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+        <h1 className="mt-5 font-display text-3xl font-semibold leading-tight text-navy sm:text-[2rem]">
           Check your email
         </h1>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+        <p className="mt-2 text-sm leading-relaxed text-body">
           If an account exists for{' '}
-          <span className="font-medium text-ink">{email.trim()}</span>, we sent a password reset
+          <span className="font-medium text-navy">{email.trim()}</span>, we sent a password reset
           link. It expires after one hour and can be used once.
         </p>
 
@@ -77,7 +77,7 @@ export default function ForgotPassword() {
             setSent(false);
             setEmail('');
           }}
-          className="mt-4 w-full rounded-lg px-3 py-2 text-sm font-medium text-ink-muted transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="mt-4 w-full rounded-tile px-3 py-2 text-sm font-medium text-body transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
         >
           Try a different email
         </button>
@@ -122,11 +122,11 @@ export default function ForgotPassword() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-ink-muted">
+      <p className="mt-6 text-center text-sm text-body">
         Remembered your password?{' '}
         <Link
           to="/login"
-          className="font-semibold text-brand-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="font-semibold text-track underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
         >
           Sign in
         </Link>

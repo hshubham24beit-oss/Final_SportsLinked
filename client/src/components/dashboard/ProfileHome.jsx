@@ -27,6 +27,7 @@ import {
 } from '../ui/Card';
 import PageLoader from '../PageLoader';
 import ProgressBar from '../ui/ProgressBar';
+import ProgressRing from '../ui/ProgressRing';
 import { profileApi } from '../../api/profile.api';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../hooks/useToast';
@@ -38,12 +39,12 @@ import { getRoleLabel, getRoleMeta } from '../../utils/roles';
 
 function ChecklistItem({ done, title, description, action = null }) {
   return (
-    <div className="flex items-start gap-3 rounded-lg border border-line px-3.5 py-3">
+    <div className="flex items-start gap-3 rounded-tile border border-line px-3.5 py-3">
       <span
         className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${
           done
-            ? 'border-success-100 bg-success-50 text-success-600'
-            : 'border-amber-200 bg-warning-50 text-warning-700'
+            ? 'border-verified/20 bg-verified-soft text-verified'
+            : 'border-pending/25 bg-pending-soft text-pending'
         }`}
       >
         {done ? (
@@ -53,8 +54,8 @@ function ChecklistItem({ done, title, description, action = null }) {
         )}
       </span>
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium text-ink">{title}</p>
-        <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">{description}</p>
+        <p className="text-sm font-medium text-navy">{title}</p>
+        <p className="mt-0.5 text-xs leading-relaxed text-body">{description}</p>
       </div>
       {action}
     </div>
@@ -161,7 +162,8 @@ export default function ProfileHome() {
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="flex flex-wrap items-center gap-2">
+          <p className="eyebrow">{today}</p>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
             <Badge variant="brand">{getRoleLabel(user.role)}</Badge>
             <Badge variant={user.isEmailVerified ? 'success' : 'warning'} dot>
               {user.isEmailVerified ? 'Email verified' : 'Email unverified'}
@@ -170,13 +172,12 @@ export default function ProfileHome() {
               {status.label}
             </Badge>
           </div>
-          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Welcome back, {getFirstName(displayName)}.
+          <h1 className="mt-3 text-3xl leading-tight sm:text-4xl">
+            Welcome back, <span className="display-emphasis">{getFirstName(displayName)}.</span>
           </h1>
-          <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-body">
             Keep your profile current so the right people can find and understand your work.
           </p>
-          <p className="mt-1 text-xs text-ink-subtle">{today}</p>
         </div>
 
         <div className="flex shrink-0 flex-wrap items-center gap-2">
@@ -204,7 +205,7 @@ export default function ProfileHome() {
                 <Avatar name={displayName} src={avatarUrl} size="xl" />
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="truncate text-lg font-semibold text-ink">{displayName}</h2>
+                    <h2 className="truncate font-display text-xl">{displayName}</h2>
                     <Badge size="sm" variant="neutral">
                       {profile.role === 'recruiter'
                         ? 'Organisation'
@@ -212,11 +213,11 @@ export default function ProfileHome() {
                     </Badge>
                   </div>
                   {profile.headline ? (
-                    <p className="mt-1 text-sm font-medium text-ink-muted">{profile.headline}</p>
+                    <p className="mt-1 text-sm font-medium text-body">{profile.headline}</p>
                   ) : (
-                    <p className="mt-1 text-sm text-ink-subtle">Add a headline to introduce yourself.</p>
+                    <p className="mt-1 text-sm text-slate">Add a headline to introduce yourself.</p>
                   )}
-                  <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-subtle">
+                  <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate">
                     {location ? (
                       <span className="inline-flex items-center gap-1.5">
                         <FiMapPin className="h-3.5 w-3.5" aria-hidden="true" />
@@ -283,7 +284,7 @@ export default function ProfileHome() {
                   !user.isEmailVerified ? (
                     <Link
                       to="/verify-email"
-                      className="shrink-0 text-xs font-semibold text-brand-700 underline-offset-4 hover:underline"
+                      className="shrink-0 text-xs font-semibold text-track underline-offset-4 hover:underline"
                     >
                       Verify
                     </Link>
@@ -302,7 +303,7 @@ export default function ProfileHome() {
                   publicPath ? (
                     <Link
                       to={publicPath}
-                      className="shrink-0 text-xs font-semibold text-brand-700 underline-offset-4 hover:underline"
+                      className="shrink-0 text-xs font-semibold text-track underline-offset-4 hover:underline"
                     >
                       View
                     </Link>
@@ -320,7 +321,7 @@ export default function ProfileHome() {
                 action={
                   <Link
                     to="/profile/edit"
-                    className="shrink-0 text-xs font-semibold text-brand-700 underline-offset-4 hover:underline"
+                    className="shrink-0 text-xs font-semibold text-track underline-offset-4 hover:underline"
                   >
                     {completion.score >= 100 ? 'Review' : 'Complete'}
                   </Link>
@@ -340,9 +341,9 @@ export default function ProfileHome() {
                   {missing.map((key) => (
                     <li
                       key={key}
-                      className="flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2 text-xs text-ink-muted"
+                      className="flex items-center gap-2 rounded-tile bg-sand/60 px-3 py-2 text-xs text-body"
                     >
-                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-warning-500" />
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-pending-soft0" />
                       {getCompletionLabel(key)}
                     </li>
                   ))}
@@ -367,11 +368,11 @@ export default function ProfileHome() {
               {meta.nextUp.map((item) => (
                 <div
                   key={item}
-                  className="flex items-center justify-between gap-3 rounded-lg border border-line px-3.5 py-3"
+                  className="flex items-center justify-between gap-3 rounded-tile border border-line px-3.5 py-3"
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" aria-hidden="true" />
-                    <p className="text-sm text-ink">{item}</p>
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-sand0" aria-hidden="true" />
+                    <p className="text-sm text-navy">{item}</p>
                   </div>
                   <Badge size="sm" variant="neutral">
                     Planned
@@ -398,16 +399,18 @@ export default function ProfileHome() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center gap-2">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                  <RoleIcon className="h-4 w-4" aria-hidden="true" />
-                </span>
+              <div className="flex items-center gap-4">
+                <ProgressRing value={completion.score} size={84} strokeWidth={7} showLabel={false} />
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-ink">{getRoleLabel(user.role)} profile</p>
-                  <p className="text-xs text-ink-subtle">
+                  <p className="font-display text-lg">{getRoleLabel(user.role)} profile</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-slate">
                     {profile.visibility?.contact === 'public'
                       ? 'Contact details are public'
                       : 'Some sections are restricted'}
+                  </p>
+                  <p className="mt-2 flex items-center gap-1.5 text-xs font-bold text-track">
+                    <RoleIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                    {completion.score}% complete
                   </p>
                 </div>
               </div>
@@ -428,7 +431,7 @@ export default function ProfileHome() {
                 <CardDescription>Share your profile with the sporting community.</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="truncate rounded-lg border border-line bg-slate-50 px-3 py-2 text-xs text-ink-muted">
+                <p className="truncate rounded-tile border border-line bg-sand/60 px-3 py-2 text-xs text-body">
                   /p/{profile.slug}
                 </p>
                 <div className="mt-3 grid grid-cols-2 gap-2">
@@ -457,19 +460,19 @@ export default function ProfileHome() {
               <div className="flex items-center gap-3">
                 <Avatar name={displayName} src={avatarUrl} size="lg" />
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-ink">{displayName}</p>
-                  <p className="truncate text-sm text-ink-muted">{user.email}</p>
+                  <p className="truncate text-sm font-semibold text-navy">{displayName}</p>
+                  <p className="truncate text-sm text-body">{user.email}</p>
                 </div>
               </div>
 
               <dl className="mt-4 space-y-2.5 border-t border-line pt-4 text-sm">
                 <div className="flex items-center justify-between gap-3">
-                  <dt className="text-ink-muted">Member since</dt>
-                  <dd className="font-medium text-ink">{formatDate(user.createdAt)}</dd>
+                  <dt className="text-body">Member since</dt>
+                  <dd className="font-medium text-navy">{formatDate(user.createdAt)}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <dt className="text-ink-muted">Last sign-in</dt>
-                  <dd className="font-medium text-ink">{formatDate(user.lastLoginAt)}</dd>
+                  <dt className="text-body">Last sign-in</dt>
+                  <dd className="font-medium text-navy">{formatDate(user.lastLoginAt)}</dd>
                 </div>
               </dl>
 
@@ -483,18 +486,18 @@ export default function ProfileHome() {
             </CardContent>
           </Card>
 
-          <div className="rounded-xl border border-brand-100 bg-brand-50/60 p-5">
+          <div className="rounded-card border border-line bg-sand/70 p-5">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-700">
+              <span className="flex h-8 w-8 items-center justify-center rounded-tile bg-white text-track">
                 <FiShield className="h-4 w-4" aria-hidden="true" />
               </span>
-              <p className="text-sm font-semibold text-brand-900">Verification is specific</p>
+              <p className="text-sm font-semibold text-navy">Verification is specific</p>
             </div>
-            <p className="mt-2.5 text-xs leading-relaxed text-brand-800">
+            <p className="mt-2.5 text-xs leading-relaxed text-track">
               Email verification is separate from identity, qualification, or achievement
               verification. Only badges explicitly marked verified should be treated as reviewed.
             </p>
-            <div className="mt-3 flex items-center gap-2 text-xs text-brand-800">
+            <div className="mt-3 flex items-center gap-2 text-xs text-track">
               <FiAward className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Manage achievements from your profile editor.</span>
             </div>

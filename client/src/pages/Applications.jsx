@@ -60,10 +60,11 @@ export default function Applications() {
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            My applications
+          <p className="eyebrow">Application tracker</p>
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+            My <span className="display-emphasis">applications.</span>
           </h1>
-          <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+          <p className="mt-1.5 text-sm leading-relaxed text-body">
             Track submitted applications, reviewer updates, and decisions.
           </p>
         </div>
@@ -119,7 +120,7 @@ export default function Applications() {
             {applications.map((application) => (
               <article
                 key={application.id}
-                className="flex flex-col gap-4 rounded-xl border border-line bg-white p-5 shadow-card sm:flex-row sm:items-center sm:justify-between"
+                className="flex flex-col gap-4 rounded-card border border-line bg-white p-5 shadow-card sm:flex-row sm:items-center sm:justify-between"
               >
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
@@ -130,10 +131,10 @@ export default function Applications() {
                       {applicationStatusLabel(application.status)}
                     </Badge>
                   </div>
-                  <h2 className="mt-2 truncate text-base font-semibold text-ink">
+                  <h2 className="mt-2 truncate font-display text-xl">
                     {application.opportunity?.title || 'Opportunity unavailable'}
                   </h2>
-                  <p className="mt-1 text-xs text-ink-muted">
+                  <p className="mt-1 text-xs text-body">
                     {application.opportunity?.publisherName} - applied{' '}
                     {formatDate(application.createdAt)}
                     {application.opportunity?.deadline

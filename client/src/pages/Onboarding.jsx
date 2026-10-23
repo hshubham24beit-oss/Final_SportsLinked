@@ -52,8 +52,8 @@ function setByPath(object, path, value) {
 function ReviewSection({ title, children }) {
   return (
     <div className="border-t border-line py-4 first:border-t-0 first:pt-0">
-      <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">{title}</p>
-      <div className="mt-2 text-sm leading-relaxed text-ink">{children}</div>
+      <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">{title}</p>
+      <div className="mt-2 text-sm leading-relaxed text-navy">{children}</div>
     </div>
   );
 }
@@ -213,7 +213,7 @@ export default function Onboarding() {
     .join(', ');
 
   return (
-    <div className="min-h-screen bg-canvas">
+    <div className="min-h-screen bg-ivory">
       <header className="border-b border-line bg-white">
         <div className="mx-auto flex h-16 max-w-4xl items-center justify-between gap-4 px-4 sm:px-6">
           <div className="flex items-center gap-3">
@@ -238,13 +238,13 @@ export default function Onboarding() {
         <div className="mb-6">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-track">
                 Step {step + 1} of {steps.length}
               </p>
-              <h1 className="mt-1.5 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+              <h1 className="mt-1.5 text-3xl leading-tight sm:text-4xl">
                 {currentStep.title}
               </h1>
-              <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
+              <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-body">
                 {currentStep.description}
               </p>
             </div>
@@ -268,10 +268,10 @@ export default function Onboarding() {
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${
                     active
-                      ? 'border-brand-200 bg-brand-50 text-brand-800'
+                      ? 'border-track/20 bg-sand text-track'
                       : complete
-                        ? 'border-success-100 bg-success-50 text-success-700'
-                        : 'border-line bg-white text-ink-subtle'
+                        ? 'border-verified/20 bg-verified-soft text-verified'
+                        : 'border-line bg-white text-slate'
                   }`}
                 >
                   {complete ? <FiCheck className="h-3 w-3" aria-hidden="true" /> : null}
@@ -321,10 +321,10 @@ export default function Onboarding() {
                 <div className="space-y-8">
                   <div>
                     <div className="flex items-center gap-2 border-b border-line pb-4">
-                      <FiMapPin className="h-4 w-4 text-ink-subtle" aria-hidden="true" />
+                      <FiMapPin className="h-4 w-4 text-slate" aria-hidden="true" />
                       <div>
-                        <h3 className="text-sm font-semibold text-ink">Contact details</h3>
-                        <p className="mt-0.5 text-xs text-ink-muted">
+                        <h3 className="text-sm font-semibold text-navy">Contact details</h3>
+                        <p className="mt-0.5 text-xs text-body">
                           These are optional, but they help the right people reach you.
                         </p>
                       </div>
@@ -336,12 +336,12 @@ export default function Onboarding() {
 
                   <div>
                     <div className="flex items-center gap-2 border-b border-line pb-4">
-                      <FiShield className="h-4 w-4 text-ink-subtle" aria-hidden="true" />
+                      <FiShield className="h-4 w-4 text-slate" aria-hidden="true" />
                       <div>
-                        <h3 className="text-sm font-semibold text-ink">
+                        <h3 className="text-sm font-semibold text-navy">
                           Section visibility
                         </h3>
-                        <p className="mt-0.5 text-xs text-ink-muted">
+                        <p className="mt-0.5 text-xs text-body">
                           You can change every section later from your profile editor.
                         </p>
                       </div>
@@ -355,14 +355,14 @@ export default function Onboarding() {
 
               {currentStep.key === 'review' ? (
                 <div>
-                  <div className="rounded-xl border border-brand-100 bg-brand-50/60 p-5">
+                  <div className="rounded-card border border-line bg-sand/70 p-5">
                     <Badge variant="brand">{getRoleLabel(user.role)} profile</Badge>
-                    <h2 className="mt-3 text-xl font-semibold tracking-tight text-ink">
+                    <h2 className="mt-3 text-xl font-semibold tracking-tight text-navy">
                       {displayName}
                     </h2>
-                    <p className="mt-1 text-sm font-medium text-brand-800">{form.headline}</p>
+                    <p className="mt-1 text-sm font-medium text-track">{form.headline}</p>
                     {location ? (
-                      <p className="mt-2 flex items-center gap-1.5 text-xs text-brand-800">
+                      <p className="mt-2 flex items-center gap-1.5 text-xs text-track">
                         <FiMapPin className="h-3.5 w-3.5" aria-hidden="true" />
                         {location}
                       </p>

@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import AuthLayout from '../layouts/AuthLayout';
 import DashboardLayout from '../layouts/DashboardLayout';
+import PublicLayout from '../layouts/PublicLayout';
 import GuestRoute from './GuestRoute';
 import OnboardingGate from './OnboardingGate';
 import ProtectedRoute from './ProtectedRoute';
@@ -41,8 +42,10 @@ import Safety from '../pages/Safety';
 import AdminVerifications from '../pages/AdminVerifications';
 import AdminUsers from '../pages/AdminUsers';
 import AdminReports from '../pages/AdminReports';
+import AdminOrganisations from '../pages/AdminOrganisations';
 import Unauthorized from '../pages/Unauthorized';
 import NotFound from '../pages/NotFound';
+import DesignSystem from '../pages/DesignSystem';
 
 export default function AppRoutes() {
   return (
@@ -246,6 +249,14 @@ export default function AppRoutes() {
               }
             />
             <Route
+              path="/admin/organisations"
+              element={
+                <RoleRoute allowedRoles={['admin']}>
+                  <AdminOrganisations />
+                </RoleRoute>
+              }
+            />
+            <Route
               path="/admin/users"
               element={
                 <RoleRoute allowedRoles={['admin']}>
@@ -262,6 +273,14 @@ export default function AppRoutes() {
               }
             />
             <Route
+              path="/discovery/saved"
+              element={
+                <RoleRoute allowedRoles={['coach', 'recruiter']}>
+                  <Discovery savedOnly />
+                </RoleRoute>
+              }
+            />
+            <Route
               path="/discovery"
               element={
                 <RoleRoute allowedRoles={['coach', 'recruiter', 'admin']}>
@@ -274,7 +293,11 @@ export default function AppRoutes() {
         </Route>
       </Route>
 
-      <Route path="/p/:slug" element={<PublicProfile />} />
+      <Route element={<PublicLayout />}>
+        <Route path="/p/:slug" element={<PublicProfile />} />
+      </Route>
+
+      <Route path="/design-system" element={<DesignSystem />} />
 
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="*" element={<NotFound />} />

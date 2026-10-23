@@ -45,7 +45,7 @@ function PersonRow({ person, children, note = null, reasons = [] }) {
       <div className="flex min-w-0 items-start gap-3">
         <Link
           to={person.slug ? `/p/${person.slug}` : '/network'}
-          className="shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
           aria-label={`View ${person.name} profile`}
         >
           <Avatar name={person.name} src={person.avatarUrl} size="md" />
@@ -54,21 +54,21 @@ function PersonRow({ person, children, note = null, reasons = [] }) {
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <Link
               to={person.slug ? `/p/${person.slug}` : '/network'}
-              className="truncate text-sm font-semibold text-ink hover:text-brand-800"
+              className="truncate text-sm font-semibold text-navy hover:text-track"
             >
               {person.name}
             </Link>
-            <span className="text-[11px] font-medium text-ink-subtle">
+            <span className="text-[11px] font-medium text-slate">
               {getRoleLabel(person.role)}
             </span>
           </div>
           {person.headline ? (
-            <p className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-ink-muted">
+            <p className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-body">
               {person.headline}
             </p>
           ) : null}
           {!person.headline && location ? (
-            <p className="mt-0.5 text-xs text-ink-muted">{location}</p>
+            <p className="mt-0.5 text-xs text-body">{location}</p>
           ) : null}
           {person.sports?.length > 0 ? (
             <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -89,12 +89,12 @@ function PersonRow({ person, children, note = null, reasons = [] }) {
             </div>
           ) : null}
           {note ? (
-            <p className="mt-2 rounded-lg bg-slate-50 px-2.5 py-1.5 text-xs italic text-ink-muted">
+            <p className="mt-2 rounded-tile bg-sand/60 px-2.5 py-1.5 text-xs italic text-body">
               “{note}”
             </p>
           ) : null}
           {person.followedAt ? (
-            <p className="mt-1.5 text-[11px] text-ink-subtle">
+            <p className="mt-1.5 text-[11px] text-slate">
               Followed {formatRelativeTime(person.followedAt)}
             </p>
           ) : null}
@@ -105,7 +105,7 @@ function PersonRow({ person, children, note = null, reasons = [] }) {
         {person.slug ? (
           <Link
             to={`/p/${person.slug}`}
-            className="inline-flex h-9 items-center rounded-lg px-3 text-sm font-semibold text-ink-muted transition-colors hover:bg-slate-100 hover:text-ink"
+            className="inline-flex h-9 items-center rounded-tile px-3 text-sm font-semibold text-body transition-colors hover:bg-sand hover:text-navy"
           >
             View profile
           </Link>
@@ -274,10 +274,11 @@ export default function MyNetwork() {
     <div className="mx-auto max-w-4xl">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            My network
+          <p className="eyebrow">Connections</p>
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+            My <span className="display-emphasis">network.</span>
           </h1>
-          <p className="mt-1.5 text-sm text-ink-muted">
+          <p className="mt-1.5 text-sm text-body">
             Build connections for private updates, and follow people whose public posts interest you.
           </p>
         </div>
@@ -292,7 +293,7 @@ export default function MyNetwork() {
         </Button>
       </div>
 
-      <div className="mt-5 overflow-x-auto rounded-xl border border-line bg-white p-1.5 shadow-card">
+      <div className="mt-5 overflow-x-auto rounded-card border border-line bg-white p-1.5 shadow-card">
         <div className="flex min-w-max gap-1" role="tablist" aria-label="Network sections">
           {TABS.map((tab) => {
             const Icon = tab.icon;
@@ -305,10 +306,10 @@ export default function MyNetwork() {
                 aria-selected={isActive}
                 aria-controls={`network-panel-${tab.id}`}
                 onClick={() => setActiveTab(tab.id)}
-                className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 ${
+                className={`inline-flex items-center gap-2 rounded-tile px-3 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track ${
                   isActive
-                    ? 'bg-brand-50 text-brand-800'
-                    : 'text-ink-muted hover:bg-slate-50 hover:text-ink'
+                    ? 'bg-sand text-track'
+                    : 'text-body hover:bg-sand/60 hover:text-navy'
                 }`}
               >
                 <Icon className="h-4 w-4" aria-hidden="true" />
@@ -341,7 +342,7 @@ export default function MyNetwork() {
         aria-busy={isLoading}
       >
         {isLoading && !data ? (
-          <p className="rounded-xl border border-line bg-white p-8 text-center text-sm text-ink-muted shadow-card">
+          <p className="rounded-card border border-line bg-white p-8 text-center text-sm text-body shadow-card">
             Loading {activeTab}...
           </p>
         ) : null}
@@ -350,12 +351,12 @@ export default function MyNetwork() {
           <>
             {activeTab === 'connections' ? (
               data?.connections?.length ? (
-                <div className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-white shadow-card">
-                  <div className="flex items-center justify-between border-b border-line bg-slate-50/60 px-4 py-2.5">
-                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                <div className="divide-y divide-line overflow-hidden rounded-card border border-line bg-white shadow-card">
+                  <div className="flex items-center justify-between border-b border-line bg-sand/60 px-4 py-2.5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">
                       Mutual connections
                     </p>
-                    <span className="text-xs text-ink-subtle">{data.total}</span>
+                    <span className="text-xs text-slate">{data.total}</span>
                   </div>
                   {data.connections.map((connection) => (
                     <PersonRow key={connection.id} person={connection.user}>
@@ -381,12 +382,12 @@ export default function MyNetwork() {
 
             {activeTab === 'requests' ? (
               <div className="space-y-5">
-                <div className="overflow-hidden rounded-xl border border-line bg-white shadow-card">
-                  <div className="flex items-center justify-between border-b border-line bg-slate-50/60 px-4 py-2.5">
-                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                <div className="overflow-hidden rounded-card border border-line bg-white shadow-card">
+                  <div className="flex items-center justify-between border-b border-line bg-sand/60 px-4 py-2.5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">
                       Incoming requests
                     </p>
-                    <span className="text-xs text-ink-subtle">
+                    <span className="text-xs text-slate">
                       {data?.incoming?.length || 0}
                     </span>
                   </div>
@@ -419,18 +420,18 @@ export default function MyNetwork() {
                       ))}
                     </div>
                   ) : (
-                    <p className="p-5 text-center text-sm text-ink-muted">
+                    <p className="p-5 text-center text-sm text-body">
                       No incoming requests.
                     </p>
                   )}
                 </div>
 
-                <div className="overflow-hidden rounded-xl border border-line bg-white shadow-card">
-                  <div className="flex items-center justify-between border-b border-line bg-slate-50/60 px-4 py-2.5">
-                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                <div className="overflow-hidden rounded-card border border-line bg-white shadow-card">
+                  <div className="flex items-center justify-between border-b border-line bg-sand/60 px-4 py-2.5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">
                       Sent requests
                     </p>
-                    <span className="text-xs text-ink-subtle">
+                    <span className="text-xs text-slate">
                       {data?.outgoing?.length || 0}
                     </span>
                   </div>
@@ -454,7 +455,7 @@ export default function MyNetwork() {
                       ))}
                     </div>
                   ) : (
-                    <p className="p-5 text-center text-sm text-ink-muted">
+                    <p className="p-5 text-center text-sm text-body">
                       You have no pending sent requests.
                     </p>
                   )}
@@ -464,9 +465,9 @@ export default function MyNetwork() {
 
             {activeTab === 'suggestions' ? (
               data?.suggestions?.length ? (
-                <div className="overflow-hidden rounded-xl border border-line bg-white shadow-card">
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-slate-50/60 px-4 py-2.5">
-                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                <div className="overflow-hidden rounded-card border border-line bg-white shadow-card">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-sand/60 px-4 py-2.5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">
                       People you may know
                     </p>
                     <div className="flex flex-wrap gap-1.5">
@@ -523,12 +524,12 @@ export default function MyNetwork() {
 
             {(activeTab === 'followers' || activeTab === 'following') ? (
               data?.users?.length ? (
-                <div className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-white shadow-card">
-                  <div className="flex items-center justify-between border-b border-line bg-slate-50/60 px-4 py-2.5">
-                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                <div className="divide-y divide-line overflow-hidden rounded-card border border-line bg-white shadow-card">
+                  <div className="flex items-center justify-between border-b border-line bg-sand/60 px-4 py-2.5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">
                       {activeTab === 'followers' ? 'People following you' : 'People you follow'}
                     </p>
-                    <span className="text-xs text-ink-subtle">{data.total}</span>
+                    <span className="text-xs text-slate">{data.total}</span>
                   </div>
                   {data.users.map((person) => (
                     <PersonRow key={person.id} person={person} />

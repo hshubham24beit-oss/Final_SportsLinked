@@ -37,7 +37,7 @@ export default function Pagination({ page, totalPages, onChange, className = '' 
         type="button"
         onClick={() => goTo(page - 1)}
         disabled={page <= 1}
-        className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-line-strong bg-white px-3 text-sm font-medium text-ink-muted transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+        className="inline-flex h-10 items-center gap-1.5 rounded-full border border-line-strong bg-white px-4 text-sm font-bold text-body transition-colors hover:bg-sand hover:text-navy disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
       >
         <FiChevronLeft className="h-4 w-4" aria-hidden="true" />
         Previous
@@ -48,7 +48,7 @@ export default function Pagination({ page, totalPages, onChange, className = '' 
           item === 'ellipsis' ? (
             <span
               key={`ellipsis-${index}`}
-              className="px-1.5 text-sm text-ink-subtle"
+              className="px-1.5 text-sm text-slate"
               aria-hidden="true"
             >
               …
@@ -60,10 +60,8 @@ export default function Pagination({ page, totalPages, onChange, className = '' 
               onClick={() => goTo(item)}
               aria-current={item === page ? 'page' : undefined}
               aria-label={`Page ${item}`}
-              className={`h-9 min-w-9 rounded-lg px-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 ${
-                item === page
-                  ? 'bg-ink text-white'
-                  : 'text-ink-muted hover:bg-slate-100 hover:text-ink'
+              className={`h-10 min-w-10 rounded-full px-2 text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track ${
+                item === page ? 'bg-navy text-ivory' : 'text-slate hover:bg-sand hover:text-navy'
               }`}
             >
               {item}
@@ -76,7 +74,7 @@ export default function Pagination({ page, totalPages, onChange, className = '' 
         type="button"
         onClick={() => goTo(page + 1)}
         disabled={page >= totalPages}
-        className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-line-strong bg-white px-3 text-sm font-medium text-ink-muted transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+        className="inline-flex h-10 items-center gap-1.5 rounded-full border border-line-strong bg-white px-4 text-sm font-bold text-body transition-colors hover:bg-sand hover:text-navy disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
       >
         Next
         <FiChevronRight className="h-4 w-4" aria-hidden="true" />

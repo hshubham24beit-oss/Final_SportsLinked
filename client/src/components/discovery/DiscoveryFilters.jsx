@@ -31,7 +31,7 @@ export const INITIAL_DISCOVERY_FILTERS = {
 function FilterSection({ title, children }) {
   return (
     <section className="space-y-3 border-t border-line pt-4 first:border-t-0 first:pt-0">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+      <h3 className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-track">
         {title}
       </h3>
       {children}
@@ -50,12 +50,12 @@ export default function DiscoveryFilters({
     <div className="space-y-5">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-track/10 text-track">
             <FiFilter className="h-4 w-4" aria-hidden="true" />
           </span>
           <div>
-            <p className="text-sm font-semibold text-ink">Filters</p>
-            <p className="text-[11px] text-ink-subtle">
+            <p className="font-display text-base font-semibold text-navy">Filters</p>
+            <p className="text-[11px] font-semibold text-slate">
               {activeCount > 0 ? `${activeCount} active` : 'Refine the athlete pool'}
             </p>
           </div>
@@ -214,7 +214,7 @@ export default function DiscoveryFilters({
             onChange={(event) => onChange('statMax', event.target.value)}
           />
         </div>
-        <p className="text-[11px] leading-relaxed text-ink-subtle">
+        <p className="text-[11px] leading-relaxed text-slate">
           Statistic filters only match statistics the athlete has made visible.
         </p>
       </FilterSection>

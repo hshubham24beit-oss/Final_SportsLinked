@@ -30,16 +30,16 @@ export default function ImageUploader({
     <div>
       <div className="mb-2 flex items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-medium text-ink">{label}</p>
+          <p className="text-sm font-medium text-navy">{label}</p>
           {description ? (
-            <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">{description}</p>
+            <p className="mt-0.5 text-xs leading-relaxed text-body">{description}</p>
           ) : null}
         </div>
         <button
           type="button"
           onClick={() => inputRef.current && inputRef.current.click()}
           disabled={isUploading || isClearing}
-          className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-line-strong bg-white px-2.5 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-tile border border-line-strong bg-white px-2.5 py-1.5 text-xs font-semibold text-navy transition-colors hover:bg-sand/60 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
         >
           {isUploading ? <Spinner size="sm" /> : <FiCamera className="h-3.5 w-3.5" aria-hidden="true" />}
           {imageUrl ? 'Change' : 'Upload'}
@@ -50,8 +50,8 @@ export default function ImageUploader({
         type="button"
         onClick={() => inputRef.current && inputRef.current.click()}
         disabled={isUploading || isClearing}
-        className={`group relative flex w-full items-center justify-center overflow-hidden border border-line bg-slate-50 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 disabled:cursor-not-allowed ${
-          isCover ? 'h-36 rounded-xl sm:h-44' : 'h-24 w-24 rounded-full'
+        className={`group relative flex w-full items-center justify-center overflow-hidden border border-line bg-sand/60 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track disabled:cursor-not-allowed ${
+          isCover ? 'h-36 rounded-card sm:h-44' : 'h-24 w-24 rounded-full'
         }`}
         aria-label={`${label}: ${imageUrl ? 'change image' : 'upload image'}`}
       >
@@ -62,7 +62,7 @@ export default function ImageUploader({
             className="h-full w-full object-cover"
           />
         ) : isCover ? (
-          <span className="flex flex-col items-center gap-1.5 text-ink-subtle">
+          <span className="flex flex-col items-center gap-1.5 text-slate">
             <FiImage className="h-5 w-5" aria-hidden="true" />
             <span className="text-xs font-medium">Add a cover image</span>
           </span>
@@ -70,8 +70,8 @@ export default function ImageUploader({
           <Avatar name={name} size="xl" />
         )}
 
-        <span className="absolute inset-0 flex items-center justify-center bg-ink/35 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-          <span className="rounded-full bg-white/95 p-2 text-ink shadow-sm">
+        <span className="absolute inset-0 flex items-center justify-center bg-navy/35 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+          <span className="rounded-full bg-white/95 p-2 text-navy shadow-sm">
             {isUploading ? <Spinner size="sm" /> : <FiCamera className="h-4 w-4" aria-hidden="true" />}
           </span>
         </span>
@@ -96,7 +96,7 @@ export default function ImageUploader({
           {isCover ? 'Remove cover' : 'Remove photo'}
         </button>
       ) : null}
-      <p className="mt-1.5 text-[11px] text-ink-subtle">JPEG, PNG or WebP · max 5 MB</p>
+      <p className="mt-1.5 text-[11px] text-slate">JPEG, PNG or WebP · max 5 MB</p>
     </div>
   );
 }

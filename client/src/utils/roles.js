@@ -1,5 +1,6 @@
 import {
   FiActivity,
+  FiBookmark,
   FiBriefcase,
   FiCalendar,
   FiCompass,
@@ -87,7 +88,9 @@ export const ROLE_META = {
       { label: 'My profile', to: '/profile/edit', icon: FiUser },
       { label: 'Verification', to: '/verification', icon: FiShield },
       { label: 'Discover athletes', to: '/discovery', icon: FiSearch },
+      { label: 'Saved candidates', to: '/discovery/saved', icon: FiBookmark },
       { label: 'Opportunities', to: '/opportunities', icon: FiBriefcase },
+      { label: 'Saved opportunities', to: '/opportunities/saved', icon: FiCompass },
       { label: 'Events', to: '/events', icon: FiCalendar },
       { label: 'Teams', to: '/teams', icon: FiUsers },
       { label: 'My opportunities', to: '/opportunities/mine', icon: FiFilter },
@@ -113,7 +116,9 @@ export const ROLE_META = {
       { label: 'Organisation profile', to: '/profile/edit', icon: FiUser },
       { label: 'Verification', to: '/verification', icon: FiShield },
       { label: 'Talent search', to: '/discovery', icon: FiSearch },
+      { label: 'Saved candidates', to: '/discovery/saved', icon: FiBookmark },
       { label: 'Opportunities', to: '/opportunities', icon: FiBriefcase },
+      { label: 'Saved opportunities', to: '/opportunities/saved', icon: FiCompass },
       { label: 'Events', to: '/events', icon: FiCalendar },
       { label: 'Teams', to: '/teams', icon: FiUsers },
       { label: 'Recruitment pipeline', to: '/opportunities/mine', icon: FiFilter },
@@ -137,9 +142,9 @@ export const ROLE_META = {
       { label: 'Verification queue', to: '/admin/verifications', icon: FiShield },
       { label: 'Reports', to: '/admin/reports', icon: FiFlag },
       { label: 'Users', to: '/admin/users', icon: FiUsers },
+      { label: 'Organisations', to: '/admin/organisations', icon: FiBriefcase },
       { label: 'Events', to: '/events', icon: FiCalendar },
       { label: 'Discover athletes', to: '/discovery', icon: FiSearch },
-      { label: 'Organisations', icon: FiBriefcase, soon: true },
     ],
   },
 };
@@ -150,4 +155,43 @@ export function getRoleMeta(role) {
 
 export function getRoleLabel(role) {
   return getRoleMeta(role).label;
+}
+
+function normalizePath(value = '') {
+  const path = value.split(/[?#]/)[0];
+  return path.length > 1 ? path.replace(/\/+$/, '') : path;
+}
+
+export function isNavItemActive(pathname, item, nav = []) {
+  if (!item?.to || !pathname) {
+    return false;
+  }
+
+  const target = normalizePath(item.to);
+  const currentPath = normalizePath(pathname);
+
+  if (target === '/dashboard') {
+    return currentPath === target;
+  }
+
+  if (currentPath === target) {
+    return true;
+  }
+
+  if (!currentPath.startsWith(`${target}/`)) {
+    return false;
+  }
+
+  return !nav.some((candidate) => {
+    if (!candidate?.to || candidate.to === item.to) {
+      return false;
+    }
+
+    const candidateTarget = normalizePath(candidate.to);
+    if (!candidateTarget.startsWith(`${target}/`)) {
+      return false;
+    }
+
+    return currentPath === candidateTarget || currentPath.startsWith(`${candidateTarget}/`);
+  });
 }

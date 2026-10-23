@@ -1,4 +1,4 @@
-export default function Spinner({ className = '', size = 'md' }) {
+export default function Spinner({ className = '', size = 'md', label = 'Loading' }) {
   const sizes = {
     sm: 'h-4 w-4 border-2',
     md: 'h-5 w-5 border-2',
@@ -7,7 +7,8 @@ export default function Spinner({ className = '', size = 'md' }) {
 
   return (
     <span
-      aria-hidden="true"
+      role="status"
+      aria-label={label}
       className={`inline-block animate-spin rounded-full border-current border-t-transparent ${sizes[size] || sizes.md} ${className}`}
     />
   );

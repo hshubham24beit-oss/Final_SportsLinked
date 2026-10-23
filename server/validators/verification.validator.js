@@ -6,6 +6,7 @@ const {
   REPORT_REASONS,
   REPORT_STATUSES,
   USER_STATUS,
+  ORGANIZATION_TYPES,
 } = require('../config/constants');
 
 const optionalText = (max) => z.string().trim().max(max).optional();
@@ -108,6 +109,14 @@ const adminUserStatusSchema = z.object({
   reason: z.string().trim().min(3, 'Add a moderation reason.').max(2000),
 });
 
+const adminOrganizationListQuerySchema = z.object({
+  organizationType: z.enum(ORGANIZATION_TYPES).optional(),
+  status: z.enum(Object.values(USER_STATUS)).optional(),
+  q: optionalText(120),
+  page: z.coerce.number().int().min(1).max(10000).default(1),
+  limit: z.coerce.number().int().min(1).max(48).default(20),
+});
+
 const adminActivityQuerySchema = z.object({
   page: z.coerce.number().int().min(1).max(10000).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(25),
@@ -124,5 +133,6 @@ module.exports = {
   blockCreateSchema,
   adminUserListQuerySchema,
   adminUserStatusSchema,
+  adminOrganizationListQuerySchema,
   adminActivityQuerySchema,
 };

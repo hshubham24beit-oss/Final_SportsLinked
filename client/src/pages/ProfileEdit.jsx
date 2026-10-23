@@ -266,7 +266,7 @@ export default function ProfileEdit() {
     setErrors({});
 
     try {
-      const response = await profileApi.update(buildProfilePayload(form, role));
+      const response = await profileApi.updateProfile(buildProfilePayload(form, role));
       const updated = response.data.data.profile;
 
       setProfile(updated);
@@ -297,13 +297,13 @@ export default function ProfileEdit() {
     <div className="mx-auto max-w-5xl">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-track">
             Profile
           </p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+          <h1 className="mt-1 text-3xl leading-tight sm:text-4xl">
             Edit your profile
           </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-muted">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-body">
             Keep your details current. Only the sections you mark visible are shared on your public
             profile.
           </p>
@@ -312,7 +312,7 @@ export default function ProfileEdit() {
           {profile.slug ? (
             <Link
               to={`/p/${profile.slug}`}
-              className="inline-flex h-10 items-center gap-2 rounded-lg border border-line-strong bg-white px-3.5 text-sm font-semibold text-ink shadow-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+              className="inline-flex h-10 items-center gap-2 rounded-tile border border-line-strong bg-white px-3.5 text-sm font-semibold text-navy shadow-sm transition-colors hover:bg-sand/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track focus-visible:ring-offset-2"
             >
               View public profile
               <FiExternalLink className="h-4 w-4" aria-hidden="true" />
@@ -330,7 +330,7 @@ export default function ProfileEdit() {
 
       <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px]">
         <div>
-          <div className="overflow-x-auto rounded-xl border border-line bg-white p-1.5 shadow-card">
+          <div className="overflow-x-auto rounded-card border border-line bg-white p-1.5 shadow-card">
             <div className="flex min-w-max gap-1" role="tablist" aria-label="Profile editor sections">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
@@ -342,10 +342,10 @@ export default function ProfileEdit() {
                     role="tab"
                     aria-selected={selected}
                     onClick={() => setActiveTab(tab.key)}
-                    className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    className={`inline-flex items-center gap-2 rounded-tile px-3 py-2 text-sm font-medium transition-colors ${
                       selected
-                        ? 'bg-brand-50 text-brand-800'
-                        : 'text-ink-muted hover:bg-slate-50 hover:text-ink'
+                        ? 'bg-sand text-track'
+                        : 'text-body hover:bg-sand/60 hover:text-navy'
                     }`}
                   >
                     <Icon className="h-4 w-4" aria-hidden="true" />
@@ -353,7 +353,7 @@ export default function ProfileEdit() {
                     {tab.count !== undefined ? (
                       <span
                         className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
-                          selected ? 'bg-brand-100 text-brand-800' : 'bg-slate-100 text-ink-muted'
+                          selected ? 'bg-sand-deep text-track' : 'bg-sand text-body'
                         }`}
                       >
                         {tab.count}
@@ -365,7 +365,7 @@ export default function ProfileEdit() {
             </div>
           </div>
 
-          <div className="mt-4 rounded-xl border border-line bg-white p-5 shadow-card sm:p-6">
+          <div className="mt-4 rounded-card border border-line bg-white p-5 shadow-card sm:p-6">
             {serverError ? (
               <Alert variant="error" className="mb-5" title="Profile not saved">
                 {serverError}
@@ -395,12 +395,12 @@ export default function ProfileEdit() {
               <form onSubmit={saveProfile}>
                 {activeTab === 'profile' ? (
                   <div className="space-y-7">
-                    <div className="flex flex-col gap-3 rounded-lg border border-brand-100 bg-brand-50 p-3.5 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-3 rounded-tile border border-line bg-sand p-3.5 sm:flex-row sm:items-center sm:justify-between">
                       <div className="flex items-start gap-2.5">
-                        <FiCpu className="mt-0.5 h-4 w-4 shrink-0 text-brand-700" aria-hidden="true" />
+                        <FiCpu className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
                         <div>
-                          <p className="text-sm font-semibold text-brand-900">Need a clearer profile?</p>
-                          <p className="mt-0.5 text-xs leading-relaxed text-brand-800">
+                          <p className="text-sm font-semibold text-navy">Need a clearer profile?</p>
+                          <p className="mt-0.5 text-xs leading-relaxed text-track">
                             Generate an editable headline and bio, then review it before saving.
                           </p>
                         </div>
@@ -450,8 +450,8 @@ export default function ProfileEdit() {
                 {activeTab === 'privacy' ? (
                   <div className="space-y-5">
                     <div>
-                      <h2 className="text-base font-semibold text-ink">Profile visibility</h2>
-                      <p className="mt-1 max-w-2xl text-xs leading-relaxed text-ink-muted">
+                      <h2 className="font-display text-xl">Profile visibility</h2>
+                      <p className="mt-1 max-w-2xl text-xs leading-relaxed text-body">
                         Choose who can see each section. Private sections are visible only to you,
                         and restricted sections require a signed-in account.
                       </p>
@@ -465,7 +465,7 @@ export default function ProfileEdit() {
                 ) : null}
 
                 <div className="mt-7 flex flex-col-reverse gap-3 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-xs text-ink-subtle">
+                  <p className="text-xs text-slate">
                     {activeTab === 'privacy'
                       ? 'Visibility changes apply as soon as you save.'
                       : 'Changes are applied to your public profile after saving.'}
@@ -485,9 +485,9 @@ export default function ProfileEdit() {
         </div>
 
         <aside className="space-y-4">
-          <div className="rounded-xl border border-line bg-white p-5 shadow-card">
+          <div className="rounded-card border border-line bg-white p-5 shadow-card">
             <div className="flex items-center justify-between gap-2">
-              <h2 className="text-sm font-semibold text-ink">Profile completion</h2>
+              <h2 className="text-sm font-semibold text-navy">Profile completion</h2>
               <Badge
                 size="sm"
                 variant={completion.score >= 100 ? 'success' : 'brand'}
@@ -502,24 +502,24 @@ export default function ProfileEdit() {
               tone={completion.score >= 100 ? 'success' : 'brand'}
             />
             {missing.length === 0 ? (
-              <div className="mt-4 flex items-start gap-2 rounded-lg bg-success-50 p-3 text-xs leading-relaxed text-success-700">
+              <div className="mt-4 flex items-start gap-2 rounded-tile bg-verified-soft p-3 text-xs leading-relaxed text-verified">
                 <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
                 <p>Your profile has all the recommended details.</p>
               </div>
             ) : (
               <div className="mt-4">
-                <p className="text-xs font-medium text-ink-muted">Still missing</p>
+                <p className="text-xs font-medium text-body">Still missing</p>
                 <ul className="mt-2 space-y-1.5">
                   {missing.slice(0, 6).map((key) => (
                     <li key={key}>
                       <button
                         type="button"
                         onClick={() => goToCompletionItem(key)}
-                        className="group flex w-full items-center justify-between gap-2 rounded-md px-1 py-1 text-left text-xs text-ink-muted transition-colors hover:text-brand-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                        className="group flex w-full items-center justify-between gap-2 rounded-tile px-1 py-1 text-left text-xs text-body transition-colors hover:text-track focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                       >
                         <span className="inline-flex items-center gap-2">
                           <FiAlertTriangle
-                            className="h-3.5 w-3.5 shrink-0 text-warning-600"
+                            className="h-3.5 w-3.5 shrink-0 text-pending"
                             aria-hidden="true"
                           />
                           {getCompletionLabel(key)}
@@ -533,7 +533,7 @@ export default function ProfileEdit() {
                   ))}
                 </ul>
                 {missing.length > 6 ? (
-                  <p className="mt-2 px-1 text-[11px] text-ink-subtle">
+                  <p className="mt-2 px-1 text-[11px] text-slate">
                     +{missing.length - 6} more
                   </p>
                 ) : null}
@@ -541,20 +541,20 @@ export default function ProfileEdit() {
             )}
           </div>
 
-          <div className="rounded-xl border border-line bg-slate-50 p-4">
-            <p className="text-xs font-semibold text-ink">Your public link</p>
+          <div className="rounded-card border border-line bg-sand/60 p-4">
+            <p className="text-xs font-semibold text-navy">Your public link</p>
             {profile.slug ? (
               <Link
                 to={`/p/${profile.slug}`}
-                className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-brand-700 underline-offset-4 hover:underline"
+                className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-track underline-offset-4 hover:underline"
               >
                 /p/{profile.slug}
                 <FiExternalLink className="h-3 w-3" aria-hidden="true" />
               </Link>
             ) : (
-              <p className="mt-1.5 text-xs text-ink-muted">Available after onboarding.</p>
+              <p className="mt-1.5 text-xs text-body">Available after onboarding.</p>
             )}
-            <p className="mt-3 text-[11px] leading-relaxed text-ink-subtle">
+            <p className="mt-3 text-[11px] leading-relaxed text-slate">
               Share this link with coaches, teams, or organizations. Private sections stay hidden
               from visitors.
             </p>

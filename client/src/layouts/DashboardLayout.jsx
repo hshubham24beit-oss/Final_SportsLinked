@@ -8,14 +8,14 @@ import VerificationBanner from '../components/VerificationBanner';
 import { useNotifications } from '../context/NotificationContext';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/useToast';
-import { getRoleMeta, getRoleLabel } from '../utils/roles';
+import { getRoleMeta, getRoleLabel, isNavItemActive } from '../utils/roles';
 
 function navLinkClasses({ isActive }) {
   return [
-    'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600',
+    'group flex min-h-11 items-center gap-3 rounded-tile border px-3 py-2.5 text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track',
     isActive
-      ? 'bg-brand-50 text-brand-800'
-      : 'text-ink-muted hover:bg-slate-100 hover:text-ink',
+      ? 'border-line bg-white text-navy shadow-card'
+      : 'border-transparent text-body hover:bg-sand hover:text-navy',
   ].join(' ');
 }
 
@@ -28,17 +28,19 @@ function SidebarContent({
   unreadCount,
   onClose = null,
 }) {
+  const { pathname } = useLocation();
+
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center justify-between border-b border-line px-5 py-4">
-        <Link to="/dashboard" onClick={onNavigate} className="focus-ring rounded-lg">
+      <div className="flex h-[72px] items-center justify-between border-b border-line px-5">
+        <Link to="/dashboard" onClick={onNavigate} className="focus-ring rounded-tile">
           <Logo size="md" />
         </Link>
         {onClose ? (
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-ink-subtle transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+            className="rounded-full p-2 text-slate transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
             aria-label="Close navigation"
           >
             <FiX className="h-5 w-5" aria-hidden="true" />
@@ -47,14 +49,12 @@ function SidebarContent({
       </div>
 
       <div className="flex-1 overflow-y-auto px-3 py-5">
-        <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-subtle">
-          Workspace
-        </p>
+        <p className="eyebrow px-3">Workspace</p>
         <div className="mt-2 px-3">
           <Badge variant="brand">{getRoleLabel(user.role)}</Badge>
         </div>
 
-        <nav aria-label="Main navigation" className="mt-6 space-y-1">
+        <nav aria-label="Main navigation" className="mt-6 space-y-1.5">
           {meta.nav.map((item) => {
             const Icon = item.icon;
 
@@ -63,7 +63,7 @@ function SidebarContent({
                 <span
                   key={item.label}
                   aria-disabled="true"
-                  className="flex cursor-not-allowed items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-subtle"
+                  className="flex min-h-11 cursor-not-allowed items-center gap-3 rounded-tile px-3 py-2.5 text-sm font-bold text-slate/70"
                 >
                   <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
                   <span className="flex-1">{item.label}</span>
@@ -74,60 +74,68 @@ function SidebarContent({
               );
             }
 
+            const isActive = isNavItemActive(pathname, item, meta.nav);
+
             return (
-              <NavLink
+              <Link
                 key={item.label}
                 to={item.to}
-                end={item.to === '/dashboard'}
                 onClick={onNavigate}
-                className={navLinkClasses}
+                className={navLinkClasses({ isActive })}
+                aria-current={isActive ? 'page' : undefined}
               >
-                {({ isActive }) => (
-                  <>
-                    <Icon
-                      className={`h-5 w-5 shrink-0 ${isActive ? 'text-brand-700' : ''}`}
-                      aria-hidden="true"
-                    />
-                    <span>{item.label}</span>
-                  </>
-                )}
-              </NavLink>
+                <Icon
+                  className={`h-5 w-5 shrink-0 ${isActive ? 'text-track' : 'text-slate'}`}
+                  aria-hidden="true"
+                />
+                <span>{item.label}</span>
+              </Link>
             );
           })}
 
-          <NavLink
-            to="/notifications"
-            onClick={onNavigate}
-            className={navLinkClasses}
-          >
-            <FiBell className="h-5 w-5 shrink-0" aria-hidden="true" />
-            <span className="flex-1">Notifications</span>
-            {unreadCount > 0 ? (
-              <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-brand-600 px-1.5 py-0.5 text-[10px] font-semibold text-white">
-                {unreadCount > 99 ? '99+' : unreadCount}
-              </span>
-            ) : null}
+          <NavLink to="/notifications" onClick={onNavigate} className={navLinkClasses}>
+            {({ isActive }) => (
+              <>
+                <FiBell
+                  className={`h-5 w-5 shrink-0 ${isActive ? 'text-track' : 'text-slate'}`}
+                  aria-hidden="true"
+                />
+                <span className="flex-1">Notifications</span>
+                {unreadCount > 0 ? (
+                  <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-track px-1.5 py-0.5 text-[10px] font-extrabold text-white">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                ) : null}
+              </>
+            )}
           </NavLink>
         </nav>
       </div>
 
       <div className="border-t border-line p-3">
         <NavLink to="/settings" onClick={onNavigate} className={navLinkClasses}>
-          <FiSettings className="h-5 w-5 shrink-0" aria-hidden="true" />
-          <span>Account settings</span>
+          {({ isActive }) => (
+            <>
+              <FiSettings
+                className={`h-5 w-5 shrink-0 ${isActive ? 'text-track' : 'text-slate'}`}
+                aria-hidden="true"
+              />
+              <span>Account settings</span>
+            </>
+          )}
         </NavLink>
 
-        <div className="mt-2 flex items-center gap-2.5 rounded-lg border border-line bg-slate-50 px-2.5 py-2">
+        <div className="mt-2 flex items-center gap-2.5 rounded-tile border border-line bg-white p-2.5 shadow-card">
           <Avatar name={user.name} src={user.avatarUrl} size="sm" />
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-ink">{user.name}</p>
-            <p className="truncate text-xs text-ink-subtle">{user.email}</p>
+            <p className="truncate text-sm font-extrabold text-navy">{user.name}</p>
+            <p className="truncate text-xs text-slate">{user.email}</p>
           </div>
           <button
             type="button"
             onClick={onLogout}
             disabled={isLoggingOut}
-            className="rounded-lg p-1.5 text-ink-subtle transition-colors hover:bg-white hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 disabled:opacity-50"
+            className="rounded-full p-2 text-slate transition-colors hover:bg-sand hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track disabled:opacity-50"
             aria-label="Sign out"
             title="Sign out"
           >
@@ -189,8 +197,8 @@ export default function DashboardLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-canvas">
-      <aside className="fixed inset-y-0 left-0 z-20 hidden w-72 border-r border-line bg-white lg:block">
+    <div className="min-h-screen bg-ivory">
+      <aside className="fixed inset-y-0 left-0 z-20 hidden w-72 border-r border-line bg-ivory lg:block">
         <SidebarContent
           user={user}
           meta={meta}
@@ -201,30 +209,30 @@ export default function DashboardLayout() {
       </aside>
 
       <div className="lg:pl-72">
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-line bg-white/95 px-4 backdrop-blur lg:hidden">
+        <header className="sticky top-0 z-30 flex h-[72px] items-center justify-between border-b border-line bg-ivory/95 px-4 backdrop-blur lg:hidden">
           <button
             type="button"
             onClick={() => setIsDrawerOpen(true)}
-            className="rounded-lg p-2 text-ink-muted transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+            className="rounded-full p-2 text-body transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
             aria-label="Open navigation"
             aria-expanded={isDrawerOpen}
           >
             <FiMenu className="h-5 w-5" aria-hidden="true" />
           </button>
 
-          <Link to="/dashboard" className="focus-ring rounded-lg">
+          <Link to="/dashboard" className="focus-ring rounded-tile">
             <Logo size="sm" />
           </Link>
 
           <div className="flex items-center gap-2">
             <Link
               to="/notifications"
-              className="relative rounded-lg p-2 text-ink-muted hover:bg-slate-100 hover:text-ink"
+              className="relative rounded-full p-2 text-body hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
               aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
             >
               <FiBell className="h-5 w-5" aria-hidden="true" />
               {unreadCount > 0 ? (
-                <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-semibold text-white">
+                <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-track px-1 text-[10px] font-extrabold text-white">
                   {unreadCount > 99 ? '99+' : unreadCount}
                 </span>
               ) : null}
@@ -239,7 +247,7 @@ export default function DashboardLayout() {
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <main className="mx-auto w-full max-w-container px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
           <VerificationBanner />
           <Outlet />
         </main>
@@ -248,7 +256,7 @@ export default function DashboardLayout() {
       {isDrawerOpen ? (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div
-            className="absolute inset-0 bg-ink/40 animate-fade-in"
+            className="absolute inset-0 animate-fade-in bg-navy/45"
             onClick={() => setIsDrawerOpen(false)}
             aria-hidden="true"
           />
@@ -256,7 +264,7 @@ export default function DashboardLayout() {
             role="dialog"
             aria-modal="true"
             aria-label="Navigation"
-            className="absolute inset-y-0 left-0 w-72 max-w-[85vw] border-r border-line bg-white shadow-lift animate-slide-up"
+            className="absolute inset-y-0 left-0 w-72 max-w-[85vw] border-r border-line bg-ivory shadow-lift"
           >
             <SidebarContent
               user={user}

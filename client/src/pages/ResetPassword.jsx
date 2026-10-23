@@ -69,13 +69,13 @@ export default function ResetPassword() {
   if (!token) {
     return (
       <div>
-        <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-danger-100 bg-danger-50 text-danger-600">
+        <span className="flex h-12 w-12 items-center justify-center rounded-card border border-danger-100 bg-danger-50 text-danger-600">
           <FiKey className="h-6 w-6" aria-hidden="true" />
         </span>
-        <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+        <h1 className="mt-5 font-display text-3xl font-semibold leading-tight text-navy sm:text-[2rem]">
           This reset link is incomplete
         </h1>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+        <p className="mt-2 text-sm leading-relaxed text-body">
           Open the full link from your password reset email, or request a new one.
         </p>
         <Link
@@ -102,13 +102,13 @@ export default function ResetPassword() {
   if (resetComplete) {
     return (
       <div>
-        <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-success-100 bg-success-50 text-success-600">
+        <span className="flex h-12 w-12 items-center justify-center rounded-card border border-verified/20 bg-verified-soft text-verified">
           <FiCheckCircle className="h-6 w-6" aria-hidden="true" />
         </span>
-        <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+        <h1 className="mt-5 font-display text-3xl font-semibold leading-tight text-navy sm:text-[2rem]">
           Password updated
         </h1>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+        <p className="mt-2 text-sm leading-relaxed text-body">
           Your password has been changed and other sessions have been invalidated. Sign in with
           your new password.
         </p>
@@ -118,8 +118,8 @@ export default function ResetPassword() {
         >
           Sign in
         </Link>
-        <div className="mt-6 flex items-start gap-2 rounded-lg bg-slate-50 px-3.5 py-3 text-xs leading-relaxed text-ink-muted">
-          <FiKey className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
+        <div className="mt-6 flex items-start gap-2 rounded-tile bg-sand/60 px-3.5 py-3 text-xs leading-relaxed text-body">
+          <FiKey className="mt-0.5 h-4 w-4 shrink-0 text-track" aria-hidden="true" />
           For security, all refresh sessions were revoked. Any existing access token expires within
           minutes.
         </div>
@@ -171,10 +171,10 @@ export default function ResetPassword() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-ink-muted">
+      <p className="mt-6 text-center text-sm text-body">
         <Link
           to="/login"
-          className="font-semibold text-brand-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="font-semibold text-track underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
         >
           Back to sign in
         </Link>

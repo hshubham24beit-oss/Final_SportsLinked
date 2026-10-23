@@ -79,19 +79,19 @@ export default function CommentSection({ post, onCountChange, readOnly = false }
   };
 
   return (
-    <div className="border-t border-line bg-slate-50/40 px-4 py-3 sm:px-5">
+    <div className="border-t border-line bg-sand/60/40 px-4 py-3 sm:px-5">
       {error ? (
-        <p className="mb-3 rounded-lg border border-red-200 bg-danger-50 p-2.5 text-xs text-danger-700" role="alert">
+        <p className="mb-3 rounded-tile border border-red-200 bg-danger-50 p-2.5 text-xs text-danger-700" role="alert">
           {error}
         </p>
       ) : null}
 
       {isLoading && page === 1 ? (
-        <p className="py-2 text-xs text-ink-subtle">Loading comments...</p>
+        <p className="py-2 text-xs text-slate">Loading comments...</p>
       ) : null}
 
       {!isLoading && comments.length === 0 ? (
-        <p className="py-2 text-xs text-ink-subtle">
+        <p className="py-2 text-xs text-slate">
           No comments yet. Start the conversation.
         </p>
       ) : null}
@@ -105,16 +105,16 @@ export default function CommentSection({ post, onCountChange, readOnly = false }
                 src={comment.author?.avatarUrl}
                 size="xs"
               />
-              <div className="min-w-0 flex-1 rounded-lg border border-line bg-white px-3 py-2">
+              <div className="min-w-0 flex-1 rounded-tile border border-line bg-white px-3 py-2">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-                  <p className="text-xs font-semibold text-ink">
+                  <p className="text-xs font-semibold text-navy">
                     {comment.author?.name || 'Member'}
                   </p>
-                  <span className="text-[11px] text-ink-subtle">
+                  <span className="text-[11px] text-slate">
                     {formatRelativeTime(comment.createdAt)}
                   </span>
                 </div>
-                <p className="mt-0.5 whitespace-pre-line text-sm leading-relaxed text-ink-muted">
+                <p className="mt-0.5 whitespace-pre-line text-sm leading-relaxed text-body">
                   {comment.text}
                 </p>
               </div>
@@ -123,7 +123,7 @@ export default function CommentSection({ post, onCountChange, readOnly = false }
                   type="button"
                   onClick={() => remove(comment)}
                   disabled={deletingId === comment.id}
-                  className="mt-1 rounded-md p-1.5 text-ink-subtle transition-colors hover:bg-danger-50 hover:text-danger-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 disabled:opacity-50"
+                  className="mt-1 rounded-md p-1.5 text-slate transition-colors hover:bg-danger-50 hover:text-danger-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track disabled:opacity-50"
                   aria-label="Delete comment"
                 >
                   <FiTrash2 className="h-3.5 w-3.5" aria-hidden="true" />
@@ -148,7 +148,7 @@ export default function CommentSection({ post, onCountChange, readOnly = false }
 
       {readOnly ? null : (
         <form onSubmit={submit} className="mt-3 flex items-start gap-2">
-          <span className="mt-2.5 text-ink-subtle" aria-hidden="true">
+          <span className="mt-2.5 text-slate" aria-hidden="true">
             <FiCornerDownRight className="h-4 w-4" />
           </span>
           <Textarea

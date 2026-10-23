@@ -22,8 +22,13 @@ export default function Modal({
   closeLabel = 'Close dialog',
 }) {
   const panelRef = useRef(null);
+  const onCloseRef = useRef(onClose);
   const titleId = useId();
   const descriptionId = useId();
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!open) {
@@ -37,14 +42,18 @@ export default function Modal({
     const panel = panelRef.current;
     if (panel) {
       const focusTarget =
-        panel.querySelector(FOCUSABLE) || panel;
+        panel.querySelector('[data-autofocus]') ||
+        panel.querySelector(
+          'input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled])',
+        ) ||
+        panel;
       window.requestAnimationFrame(() => focusTarget.focus());
     }
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        onClose();
+        onCloseRef.current();
         return;
       }
 
@@ -83,7 +92,7 @@ export default function Modal({
         previousFocus.focus();
       }
     };
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open) {
     return null;
@@ -91,7 +100,7 @@ export default function Modal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-0 animate-fade-in sm:items-center sm:p-4"
+      className="fixed inset-0 z-50 flex animate-fade-in items-end justify-center bg-navy/50 p-0 backdrop-blur-[2px] sm:items-center sm:p-4"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           onClose();
@@ -106,15 +115,15 @@ export default function Modal({
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
         tabIndex={-1}
-        className={`w-full ${sizeStyles[size] || sizeStyles.md} animate-slide-up rounded-t-2xl border border-line bg-white shadow-lift focus:outline-none sm:rounded-2xl`}
+        className={`w-full ${sizeStyles[size] || sizeStyles.md} animate-slide-up rounded-t-card border border-line bg-white shadow-lift focus:outline-none sm:rounded-card`}
       >
         <div className="flex items-start justify-between gap-4 border-b border-line px-5 py-4 sm:px-6">
           <div>
-            <h2 id={titleId} className="text-base font-semibold text-ink">
+            <h2 id={titleId} className="font-display text-xl font-semibold text-navy">
               {title}
             </h2>
             {description ? (
-              <p id={descriptionId} className="mt-1 text-sm leading-relaxed text-ink-muted">
+              <p id={descriptionId} className="mt-1 text-sm leading-relaxed text-slate">
                 {description}
               </p>
             ) : null}
@@ -122,7 +131,7 @@ export default function Modal({
           <button
             type="button"
             onClick={onClose}
-            className="-mr-1 rounded-lg p-1.5 text-ink-subtle transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+            className="-mr-1 rounded-full p-2 text-slate transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
             aria-label={closeLabel}
           >
             <FiX className="h-5 w-5" aria-hidden="true" />
@@ -132,7 +141,7 @@ export default function Modal({
         <div className="max-h-[70vh] overflow-y-auto px-5 py-5 sm:px-6">{children}</div>
 
         {footer ? (
-          <div className="flex flex-col-reverse gap-2 border-t border-line bg-slate-50/60 px-5 py-4 sm:flex-row sm:justify-end sm:px-6">
+          <div className="flex flex-col-reverse gap-2 border-t border-line bg-sand px-5 py-4 sm:flex-row sm:justify-end sm:px-6">
             {footer}
           </div>
         ) : null}

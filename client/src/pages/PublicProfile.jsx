@@ -19,7 +19,6 @@ import {
   FiUserCheck,
   FiUsers,
 } from 'react-icons/fi';
-import Logo from '../components/Logo';
 import Alert from '../components/ui/Alert';
 import Avatar from '../components/ui/Avatar';
 import Badge from '../components/ui/Badge';
@@ -56,11 +55,11 @@ function formatMonthYear(value) {
 
 function Section({ title, count, children, className = '' }) {
   return (
-    <section className={`rounded-xl border border-line bg-white p-5 shadow-card sm:p-6 ${className}`}>
+    <section className={`rounded-card border border-line bg-white p-5 shadow-card sm:p-6 ${className}`}>
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-base font-semibold text-ink">{title}</h2>
+        <h2 className="font-display text-xl">{title}</h2>
         {count !== undefined ? (
-          <span className="text-xs font-medium text-ink-subtle">{count}</span>
+          <span className="rounded-full bg-sand px-2.5 py-1 text-[11px] font-extrabold text-slate">{count}</span>
         ) : null}
       </div>
       <div className="mt-4">{children}</div>
@@ -80,20 +79,20 @@ function ActivityItem({ post }) {
           : 'Posted an update';
 
   return (
-    <article className="rounded-lg border border-line p-3.5">
+    <article className="rounded-tile border border-line p-3.5">
       <div className="flex items-start justify-between gap-3">
-        <p className="text-xs font-semibold text-ink">{label}</p>
-        <span className="shrink-0 text-[11px] text-ink-subtle">
+        <p className="text-xs font-semibold text-navy">{label}</p>
+        <span className="shrink-0 text-[11px] text-slate">
           {formatRelativeTime(post.createdAt)}
         </span>
       </div>
       {post.text ? (
-        <p className="mt-1.5 line-clamp-3 whitespace-pre-line text-sm leading-relaxed text-ink-muted">
+        <p className="mt-1.5 line-clamp-3 whitespace-pre-line text-sm leading-relaxed text-body">
           {post.text}
         </p>
       ) : null}
       {post.type === 'share' && post.sharedPost?.text ? (
-        <p className="mt-1.5 line-clamp-2 rounded-lg bg-slate-50 p-2.5 text-xs leading-relaxed text-ink-muted">
+        <p className="mt-1.5 line-clamp-2 rounded-tile bg-sand/60 p-2.5 text-xs leading-relaxed text-body">
           {post.sharedPost.text}
         </p>
       ) : null}
@@ -102,7 +101,7 @@ function ActivityItem({ post }) {
           href={preview.url}
           target="_blank"
           rel="noreferrer"
-          className="mt-2 block aspect-video max-w-xs overflow-hidden rounded-lg border border-line bg-slate-100"
+          className="mt-2 block aspect-video max-w-xs overflow-hidden rounded-tile border border-line bg-sand"
         >
           <img
             src={preview.url}
@@ -112,7 +111,7 @@ function ActivityItem({ post }) {
           />
         </a>
       ) : null}
-      <div className="mt-2 flex items-center gap-4 text-[11px] font-medium text-ink-subtle">
+      <div className="mt-2 flex items-center gap-4 text-[11px] font-medium text-slate">
         <span className="inline-flex items-center gap-1">
           <FiHeart className="h-3.5 w-3.5" aria-hidden="true" />
           {post.likeCount || 0}
@@ -127,82 +126,19 @@ function ActivityItem({ post }) {
   );
 }
 
-function PublicHeader({ user }) {
-  return (
-    <header className="border-b border-line bg-white/95 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link to={user ? '/dashboard' : '/'} className="shrink-0">
-          <Logo size="md" />
-        </Link>
-        <div className="flex items-center gap-2">
-          {user ? (
-            <>
-              <span className="hidden max-w-[180px] truncate text-sm text-ink-muted sm:inline">
-                {user.name}
-              </span>
-              <Link
-                to="/dashboard"
-                className={buttonClasses({
-                  variant: 'secondary',
-                  size: 'sm',
-                  className: 'whitespace-nowrap',
-                })}
-              >
-                Dashboard
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className={buttonClasses({
-                  variant: 'ghost',
-                  size: 'sm',
-                  className: 'hidden whitespace-nowrap sm:inline-flex',
-                })}
-              >
-                Sign in
-              </Link>
-              <Link
-                to="/register"
-                className={buttonClasses({ size: 'sm', className: 'whitespace-nowrap' })}
-              >
-                <span className="sm:hidden">Join</span>
-                <span className="hidden sm:inline">Join SportLinked</span>
-              </Link>
-            </>
-          )}
-        </div>
-      </div>
-    </header>
-  );
-}
-
 function NotFound() {
   return (
-    <div className="min-h-screen bg-canvas">
-      <header className="border-b border-line bg-white">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link to="/">
-            <Logo />
-          </Link>
-          <Link to="/login" className={buttonClasses({ variant: 'secondary', size: 'sm' })}>
-            Sign in
-          </Link>
-        </div>
-      </header>
-      <div className="mx-auto flex max-w-xl flex-col items-center px-4 py-24 text-center">
-        <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-ink-muted">
-          <FiAlertCircle className="h-6 w-6" aria-hidden="true" />
-        </span>
-        <h1 className="mt-4 text-2xl font-semibold tracking-tight text-ink">Profile not found</h1>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-          This profile may have been removed, or the link may be incorrect.
-        </p>
-        <Link to="/" className={`${buttonClasses({ size: 'md' })} mt-6`}>
-          Back to SportLinked
-        </Link>
-      </div>
+    <div className="page-shell flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
+      <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-track/10 text-track">
+        <FiAlertCircle className="h-6 w-6" aria-hidden="true" />
+      </span>
+      <h1 className="mt-4 text-3xl">Profile not found</h1>
+      <p className="mt-2 max-w-md text-sm leading-relaxed text-body">
+        This profile may have been removed, or the link may be incorrect.
+      </p>
+      <Link to="/" className={`${buttonClasses({ size: 'md' })} mt-6`}>
+        Back to SportLinked
+      </Link>
     </div>
   );
 }
@@ -256,11 +192,7 @@ export default function PublicProfile() {
   }, [slug]);
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-canvas">
-        <PageLoader message="Loading profile…" />
-      </div>
-    );
+    return <PageLoader message="Loading profile…" />;
   }
 
   if (notFound) {
@@ -269,22 +201,10 @@ export default function PublicProfile() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-canvas">
-        <header className="border-b border-line bg-white">
-          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-            <Link to="/">
-              <Logo />
-            </Link>
-            <Link to="/login" className={buttonClasses({ variant: 'secondary', size: 'sm' })}>
-              Sign in
-            </Link>
-          </div>
-        </header>
-        <div className="mx-auto max-w-xl px-4 py-20">
-          <Alert variant="error" title="Profile could not be loaded">
-            {error}
-          </Alert>
-        </div>
+      <div className="page-shell max-w-xl py-20">
+        <Alert variant="error" title="Profile could not be loaded">
+          {error}
+        </Alert>
       </div>
     );
   }
@@ -325,10 +245,9 @@ export default function PublicProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-canvas pb-16">
-      <PublicHeader user={user} />
-
-      <div className="relative h-44 overflow-hidden bg-ink sm:h-64">
+    <div className="pb-16">
+      <div className="relative h-52 overflow-hidden bg-navy sm:h-72">
+        <div className="lane-circles-gold absolute -right-32 -top-40 h-[560px] w-[560px] rounded-full opacity-80" />
         {coverUrl && !imageFailed ? (
           <img
             src={coverUrl}
@@ -336,27 +255,21 @@ export default function PublicProfile() {
             className="h-full w-full object-cover"
             onError={() => setImageFailed(true)}
           />
-        ) : (
-          <div className="h-full w-full bg-[linear-gradient(135deg,#0f172a_0%,#134e4a_55%,#0f766e_100%)]">
-            <div className="absolute -right-16 top-6 h-48 w-48 rounded-full border border-white/10" />
-            <div className="absolute -right-4 top-24 h-64 w-64 rounded-full border border-white/10" />
-            <div className="absolute right-24 top-10 h-32 w-32 rounded-full border border-white/10" />
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/45 to-transparent" />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent" />
       </div>
 
-      <main className="mx-auto max-w-6xl px-4 sm:px-6">
-        <section className="relative -mt-6 rounded-2xl border border-line bg-white p-5 pt-8 shadow-card sm:-mt-8 sm:p-6 sm:pt-10">
+      <main className="page-shell">
+        <section className="relative -mt-14 rounded-card border border-line bg-white p-5 pt-20 shadow-card sm:p-6 sm:pt-6">
           <Avatar
             name={displayName}
             src={avatarUrl}
-            size="xl"
-            className="absolute left-5 top-0 -translate-y-1/2 border-4 border-white bg-white text-2xl shadow-lg sm:left-6"
+            size="2xl"
+            className="absolute left-5 top-0 -translate-y-1/2 !border-[5px] bg-white shadow-lg sm:left-6"
           />
 
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div className="min-w-0 pl-24">
+            <div className="min-w-0 sm:pl-36">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="brand" size="sm">
                   {isRecruiter ? 'Organisation' : getRoleLabel(profile.role)}
@@ -388,11 +301,11 @@ export default function PublicProfile() {
                   </Badge>
                 ) : null}
               </div>
-              <h1 className="mt-2 break-words text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+              <h1 className="mt-2 break-words text-3xl sm:text-4xl">
                 {displayName}
               </h1>
               {profile.headline ? (
-                <p className="mt-1 max-w-2xl text-sm font-medium leading-6 text-ink-muted">
+                <p className="mt-1 max-w-2xl text-sm font-medium leading-6 text-body">
                   {profile.headline}
                 </p>
               ) : null}
@@ -432,13 +345,13 @@ export default function PublicProfile() {
 
           <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-4">
             {location ? (
-              <span className="inline-flex items-center gap-1.5 text-sm text-ink-muted">
+              <span className="inline-flex items-center gap-1.5 text-sm text-body">
                 <FiMapPin className="h-4 w-4" aria-hidden="true" />
                 {location}
               </span>
             ) : null}
             {profile.experienceYears !== null && profile.experienceYears !== undefined ? (
-              <span className="inline-flex items-center gap-1.5 text-sm text-ink-muted">
+              <span className="inline-flex items-center gap-1.5 text-sm text-body">
                 <FiBriefcase className="h-4 w-4" aria-hidden="true" />
                 {profile.experienceYears} years experience
               </span>
@@ -454,7 +367,7 @@ export default function PublicProfile() {
               </Badge>
             ) : null}
             {profile.foundedYear ? (
-              <span className="inline-flex items-center gap-1.5 text-sm text-ink-muted">
+              <span className="inline-flex items-center gap-1.5 text-sm text-body">
                 <FiCalendar className="h-4 w-4" aria-hidden="true" />
                 Founded {profile.foundedYear}
               </span>
@@ -466,7 +379,7 @@ export default function PublicProfile() {
           <div className="space-y-5">
             {profile.bio ? (
               <Section title="About">
-                <p className="whitespace-pre-line text-sm leading-7 text-ink-muted">{profile.bio}</p>
+                <p className="whitespace-pre-line text-sm leading-7 text-body">{profile.bio}</p>
               </Section>
             ) : null}
 
@@ -481,7 +394,7 @@ export default function PublicProfile() {
                 </div>
                 {profile.positions && profile.positions.length > 0 ? (
                   <div className="mt-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">
                       Positions and events
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
@@ -495,7 +408,7 @@ export default function PublicProfile() {
                 ) : null}
                 {profile.skills && profile.skills.length > 0 ? (
                   <div className="mt-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">
                       Skills and qualifications
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
@@ -509,7 +422,7 @@ export default function PublicProfile() {
                 ) : null}
                 {profile.specializations && profile.specializations.length > 0 ? (
                   <div className="mt-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">
                       Specialisations
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
@@ -523,7 +436,7 @@ export default function PublicProfile() {
                 ) : null}
                 {profile.activities && profile.activities.length > 0 ? (
                   <div className="mt-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                    <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate">
                       Programmes and activities
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
@@ -552,20 +465,20 @@ export default function PublicProfile() {
               <Section title="Statistics" count={`${statistics.length}`}>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {statistics.map((statistic) => (
-                    <div key={statistic.id} className="rounded-lg border border-line bg-slate-50/70 p-4">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-subtle">
+                    <div key={statistic.id} className="rounded-tile border border-line bg-sand/70 p-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate">
                         {statistic.metric}
                       </p>
-                      <p className="mt-1.5 text-2xl font-semibold tracking-tight text-ink">
+                      <p className="mt-1.5 text-2xl font-semibold tracking-tight text-navy">
                         {statistic.value}
                         {statistic.unit ? (
-                          <span className="ml-1 text-sm font-medium text-ink-muted">
+                          <span className="ml-1 text-sm font-medium text-body">
                             {statistic.unit}
                           </span>
                         ) : null}
                       </p>
                       {statistic.date ? (
-                        <p className="mt-1 text-xs text-ink-subtle">{formatDate(statistic.date)}</p>
+                        <p className="mt-1 text-xs text-slate">{formatDate(statistic.date)}</p>
                       ) : null}
                     </div>
                   ))}
@@ -577,10 +490,10 @@ export default function PublicProfile() {
               <Section title="Verifications">
                 <div className="space-y-2.5">
                   {verifications.identity ? (
-                    <div className="flex items-center justify-between gap-3 rounded-lg border border-line p-3">
+                    <div className="flex items-center justify-between gap-3 rounded-tile border border-line p-3">
                       <div>
-                        <p className="text-sm font-semibold text-ink">Identity</p>
-                        <p className="text-xs text-ink-subtle">
+                        <p className="text-sm font-semibold text-navy">Identity</p>
+                        <p className="text-xs text-slate">
                           Verified {formatDate(verifications.identity.verifiedAt)}
                         </p>
                       </div>
@@ -593,13 +506,13 @@ export default function PublicProfile() {
                   {approvedQualifications.map((qualification) => (
                     <div
                       key={qualification.requestId}
-                      className="flex items-center justify-between gap-3 rounded-lg border border-line p-3"
+                      className="flex items-center justify-between gap-3 rounded-tile border border-line p-3"
                     >
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-ink">
+                        <p className="truncate text-sm font-semibold text-navy">
                           {qualification.name}
                         </p>
-                        <p className="text-xs text-ink-subtle">
+                        <p className="text-xs text-slate">
                           {[qualification.issuer, qualification.year].filter(Boolean).join(' - ')}
                         </p>
                       </div>
@@ -617,9 +530,9 @@ export default function PublicProfile() {
               <Section title="Achievements" count={`${achievements.length}`}>
                 <div className="space-y-3">
                   {achievements.map((achievement) => (
-                    <article key={achievement.id} className="rounded-lg border border-line p-4">
+                    <article key={achievement.id} className="rounded-tile border border-line p-4">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="text-sm font-semibold text-ink">{achievement.title}</h3>
+                        <h3 className="text-sm font-semibold text-navy">{achievement.title}</h3>
                         {achievement.verified ? (
                           <Badge variant="success" size="sm">
                             <FiCheckCircle className="h-3 w-3" aria-hidden="true" />
@@ -627,16 +540,16 @@ export default function PublicProfile() {
                           </Badge>
                         ) : null}
                       </div>
-                      <p className="mt-1 text-xs text-ink-muted">
+                      <p className="mt-1 text-xs text-body">
                         {[achievement.sport, achievement.competition, achievement.result]
                           .filter(Boolean)
                           .join(' · ')}
                       </p>
                       {achievement.date ? (
-                        <p className="mt-1 text-xs text-ink-subtle">{formatDate(achievement.date)}</p>
+                        <p className="mt-1 text-xs text-slate">{formatDate(achievement.date)}</p>
                       ) : null}
                       {achievement.description ? (
-                        <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+                        <p className="mt-2 text-sm leading-relaxed text-body">
                           {achievement.description}
                         </p>
                       ) : null}
@@ -652,14 +565,14 @@ export default function PublicProfile() {
                   {personalBests.map((entry) => (
                     <div key={entry.id} className="flex items-baseline justify-between gap-4 py-2.5 first:pt-0 last:pb-0">
                       <div>
-                        <p className="text-sm font-medium text-ink">{entry.event || 'Event'}</p>
-                        <p className="text-xs text-ink-subtle">
+                        <p className="text-sm font-medium text-navy">{entry.event || 'Event'}</p>
+                        <p className="text-xs text-slate">
                           {[entry.competition, entry.date ? formatDate(entry.date) : '']
                             .filter(Boolean)
                             .join(' · ')}
                         </p>
                       </div>
-                      <p className="shrink-0 text-sm font-semibold text-brand-800">
+                      <p className="shrink-0 text-sm font-semibold text-track">
                         {entry.result}
                         {entry.unit ? ` ${entry.unit}` : ''}
                       </p>
@@ -671,28 +584,28 @@ export default function PublicProfile() {
 
             {careerHistory.length > 0 ? (
               <Section title="Career history">
-                <ol className="relative space-y-4 border-l border-line pl-5">
+                <ol className="relative space-y-4 border-l-2 border-gold/50 pl-5">
                   {careerHistory.map((entry) => {
                     const start = formatMonthYear(entry.startDate);
                     const end = entry.current ? 'Present' : formatMonthYear(entry.endDate);
                     return (
                       <li key={entry.id} className="relative">
-                        <span className="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-brand-600 ring-1 ring-brand-200" />
+                        <span className="absolute -left-[27px] top-1.5 h-3 w-3 rounded-full border-2 border-white bg-track ring-1 ring-gold/50" />
                         <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                          <p className="text-sm font-semibold text-ink">
+                          <p className="text-sm font-semibold text-navy">
                             {entry.role || 'Role'}
                             {entry.organization ? (
-                              <span className="font-normal text-ink-muted"> · {entry.organization}</span>
+                              <span className="font-normal text-body"> · {entry.organization}</span>
                             ) : null}
                           </p>
                           {start || end ? (
-                            <p className="text-xs text-ink-subtle">
+                            <p className="text-xs text-slate">
                               {[start, end].filter(Boolean).join(' – ')}
                             </p>
                           ) : null}
                         </div>
                         {entry.description ? (
-                          <p className="mt-1 text-sm leading-relaxed text-ink-muted">
+                          <p className="mt-1 text-sm leading-relaxed text-body">
                             {entry.description}
                           </p>
                         ) : null}
@@ -707,9 +620,9 @@ export default function PublicProfile() {
               <Section title="Certifications" count={`${certifications.length}`}>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {certifications.map((certification) => (
-                    <div key={certification.id} className="rounded-lg border border-line p-3.5">
-                      <p className="text-sm font-medium text-ink">{certification.name || 'Certification'}</p>
-                      <p className="mt-0.5 text-xs text-ink-muted">
+                    <div key={certification.id} className="rounded-tile border border-line p-3.5">
+                      <p className="text-sm font-medium text-navy">{certification.name || 'Certification'}</p>
+                      <p className="mt-0.5 text-xs text-body">
                         {[certification.issuer, certification.year].filter(Boolean).join(' · ')}
                       </p>
                     </div>
@@ -727,7 +640,7 @@ export default function PublicProfile() {
                       href={image.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="group relative aspect-square overflow-hidden rounded-lg border border-line bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                      className="group relative aspect-square overflow-hidden rounded-tile border border-line bg-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                     >
                       <img
                         src={image.url}
@@ -736,7 +649,7 @@ export default function PublicProfile() {
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                       />
                       {image.caption ? (
-                        <span className="absolute inset-x-0 bottom-0 truncate bg-ink/60 px-2.5 py-1.5 text-[11px] text-white">
+                        <span className="absolute inset-x-0 bottom-0 truncate bg-navy/60 px-2.5 py-1.5 text-[11px] text-white">
                           {image.caption}
                         </span>
                       ) : null}
@@ -754,44 +667,44 @@ export default function PublicProfile() {
             !certifications.length &&
             !gallery.length ? (
               <Section title="About">
-                <p className="text-sm leading-relaxed text-ink-muted">
+                <p className="text-sm leading-relaxed text-body">
                   This profile is still being built. Check back for more details.
                 </p>
               </Section>
             ) : null}
           </div>
 
-          <aside className="space-y-4">
-            <div className="rounded-xl border border-line bg-white p-5 shadow-card">
-              <h2 className="text-sm font-semibold text-ink">At a glance</h2>
-              <div className="mt-3 grid grid-cols-3 gap-2 rounded-lg border border-line bg-slate-50/70 p-2.5 text-center">
+          <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+            <div className="rounded-card border border-line bg-white p-5 shadow-card">
+              <h2 className="font-display text-lg">At a glance</h2>
+              <div className="mt-3 grid grid-cols-3 gap-2 rounded-tile border border-line bg-sand/70 p-2.5 text-center">
                 <div>
-                  <p className="text-lg font-semibold tracking-tight text-ink">
+                  <p className="text-lg font-semibold tracking-tight text-navy">
                     {network.connectionCount || 0}
                   </p>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-ink-subtle">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-slate">
                     Connections
                   </p>
                 </div>
                 <div>
-                  <p className="text-lg font-semibold tracking-tight text-ink">
+                  <p className="text-lg font-semibold tracking-tight text-navy">
                     {network.followerCount || 0}
                   </p>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-ink-subtle">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-slate">
                     Followers
                   </p>
                 </div>
                 <div>
-                  <p className="text-lg font-semibold tracking-tight text-ink">
+                  <p className="text-lg font-semibold tracking-tight text-navy">
                     {network.followingCount || 0}
                   </p>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-ink-subtle">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.06em] text-slate">
                     Following
                   </p>
                 </div>
               </div>
               {network.mutualConnectionsCount > 0 ? (
-                <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-ink-muted">
+                <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-body">
                   <FiUserCheck className="h-3.5 w-3.5" aria-hidden="true" />
                   {network.mutualConnectionsCount} mutual connection
                   {network.mutualConnectionsCount === 1 ? '' : 's'}
@@ -799,20 +712,20 @@ export default function PublicProfile() {
               ) : null}
               <dl className="mt-3 space-y-3 text-sm">
                 <div className="flex items-start gap-2.5">
-                  <FiUsers className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+                  <FiUsers className="mt-0.5 h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
                   <div>
-                    <dt className="text-xs text-ink-subtle">Profile type</dt>
-                    <dd className="font-medium text-ink">
+                    <dt className="text-xs text-slate">Profile type</dt>
+                    <dd className="font-medium text-navy">
                       {isRecruiter ? 'Organisation' : getRoleLabel(profile.role)}
                     </dd>
                   </div>
                 </div>
                 {profile.level ? (
                   <div className="flex items-start gap-2.5">
-                    <FiAward className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+                    <FiAward className="mt-0.5 h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
                     <div>
-                      <dt className="text-xs text-ink-subtle">Level</dt>
-                      <dd className="font-medium text-ink">
+                      <dt className="text-xs text-slate">Level</dt>
+                      <dd className="font-medium text-navy">
                         {optionLabel(ATHLETE_LEVEL_OPTIONS, profile.level)}
                       </dd>
                     </div>
@@ -820,10 +733,10 @@ export default function PublicProfile() {
                 ) : null}
                 {profile.competitionLevel ? (
                   <div className="flex items-start gap-2.5">
-                    <FiAward className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+                    <FiAward className="mt-0.5 h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
                     <div>
-                      <dt className="text-xs text-ink-subtle">Competition level</dt>
-                      <dd className="font-medium text-ink">
+                      <dt className="text-xs text-slate">Competition level</dt>
+                      <dd className="font-medium text-navy">
                         {optionLabel(
                           ATHLETE_COMPETITION_LEVEL_OPTIONS,
                           profile.competitionLevel,
@@ -834,10 +747,10 @@ export default function PublicProfile() {
                 ) : null}
                 {profile.ageCategory ? (
                   <div className="flex items-start gap-2.5">
-                    <FiUsers className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+                    <FiUsers className="mt-0.5 h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
                     <div>
-                      <dt className="text-xs text-ink-subtle">Age group</dt>
-                      <dd className="font-medium text-ink">
+                      <dt className="text-xs text-slate">Age group</dt>
+                      <dd className="font-medium text-navy">
                         {optionLabel(ATHLETE_AGE_CATEGORY_OPTIONS, profile.ageCategory)}
                       </dd>
                     </div>
@@ -845,31 +758,31 @@ export default function PublicProfile() {
                 ) : null}
                 {profile.currentTeam ? (
                   <div className="flex items-start gap-2.5">
-                    <FiFlag className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+                    <FiFlag className="mt-0.5 h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
                     <div>
-                      <dt className="text-xs text-ink-subtle">Current team</dt>
-                      <dd className="font-medium text-ink">{profile.currentTeam}</dd>
+                      <dt className="text-xs text-slate">Current team</dt>
+                      <dd className="font-medium text-navy">{profile.currentTeam}</dd>
                     </div>
                   </div>
                 ) : null}
                 {profile.currentOrganization ? (
                   <div className="flex items-start gap-2.5">
                     <FiBriefcase
-                      className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle"
+                      className="mt-0.5 h-4 w-4 shrink-0 text-slate"
                       aria-hidden="true"
                     />
                     <div>
-                      <dt className="text-xs text-ink-subtle">Current organisation</dt>
-                      <dd className="font-medium text-ink">{profile.currentOrganization}</dd>
+                      <dt className="text-xs text-slate">Current organisation</dt>
+                      <dd className="font-medium text-navy">{profile.currentOrganization}</dd>
                     </div>
                   </div>
                 ) : null}
                 {location ? (
                   <div className="flex items-start gap-2.5">
-                    <FiMapPin className="mt-0.5 h-4 w-4 shrink-0 text-ink-subtle" aria-hidden="true" />
+                    <FiMapPin className="mt-0.5 h-4 w-4 shrink-0 text-slate" aria-hidden="true" />
                     <div>
-                      <dt className="text-xs text-ink-subtle">Location</dt>
-                      <dd className="font-medium text-ink">{location}</dd>
+                      <dt className="text-xs text-slate">Location</dt>
+                      <dd className="font-medium text-navy">{location}</dd>
                     </div>
                   </div>
                 ) : null}
@@ -877,8 +790,8 @@ export default function PublicProfile() {
             </div>
 
             {opportunities.length > 0 ? (
-              <div className="rounded-xl border border-line bg-white p-5 shadow-card">
-                <h2 className="text-sm font-semibold text-ink">Open to</h2>
+              <div className="rounded-card border border-line bg-white p-5 shadow-card">
+                <h2 className="font-display text-lg">Open to</h2>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {opportunities.map((opportunity) => (
                     <Badge key={opportunity} variant="neutral" size="sm">
@@ -890,13 +803,13 @@ export default function PublicProfile() {
             ) : null}
 
             {hasContact ? (
-              <div className="rounded-xl border border-line bg-white p-5 shadow-card">
-                <h2 className="text-sm font-semibold text-ink">Contact</h2>
+              <div className="rounded-card border border-line bg-white p-5 shadow-card">
+                <h2 className="font-display text-lg">Contact</h2>
                 <div className="mt-3 space-y-2.5 text-sm">
                   {contact.email ? (
                     <a
                       href={`mailto:${contact.email}`}
-                      className="flex items-center gap-2 text-ink-muted transition-colors hover:text-brand-800"
+                      className="flex items-center gap-2 text-body transition-colors hover:text-track"
                     >
                       <FiMail className="h-4 w-4 shrink-0" aria-hidden="true" />
                       <span className="truncate">{contact.email}</span>
@@ -905,7 +818,7 @@ export default function PublicProfile() {
                   {contact.phone ? (
                     <a
                       href={`tel:${contact.phone}`}
-                      className="flex items-center gap-2 text-ink-muted transition-colors hover:text-brand-800"
+                      className="flex items-center gap-2 text-body transition-colors hover:text-track"
                     >
                       <FiPhone className="h-4 w-4 shrink-0" aria-hidden="true" />
                       <span>{contact.phone}</span>
@@ -916,7 +829,7 @@ export default function PublicProfile() {
                       href={contact.website}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center gap-2 text-ink-muted transition-colors hover:text-brand-800"
+                      className="flex items-center gap-2 text-body transition-colors hover:text-track"
                     >
                       <FiGlobe className="h-4 w-4 shrink-0" aria-hidden="true" />
                       <span className="truncate">Website</span>
@@ -924,7 +837,7 @@ export default function PublicProfile() {
                     </a>
                   ) : null}
                   {contact.allowMessages ? (
-                    <p className="flex items-center gap-2 text-xs text-ink-subtle">
+                    <p className="flex items-center gap-2 text-xs text-slate">
                       <FiMessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
                       Open to member messages
                     </p>
@@ -933,21 +846,25 @@ export default function PublicProfile() {
               </div>
             ) : null}
 
-            <div className="rounded-xl border border-brand-100 bg-brand-50/70 p-5">
-              <FiTarget className="h-5 w-5 text-brand-700" aria-hidden="true" />
-              <h2 className="mt-2 text-sm font-semibold text-ink">
+            <div className="rounded-card border border-line bg-track/10 p-5">
+              <FiTarget className="h-5 w-5 text-track" aria-hidden="true" />
+              <h2 className="mt-2 font-display text-lg">
                 {isOwner
                   ? 'This is your public profile'
-                  : isRecruiter
-                    ? 'Looking for athletes or coaches?'
-                    : 'Build your own profile'}
+                  : user
+                    ? 'Continue your SportLinked workspace'
+                    : isRecruiter
+                      ? 'Looking for athletes or coaches?'
+                      : 'Build your own profile'}
               </h2>
-              <p className="mt-1.5 text-xs leading-relaxed text-brand-800">
+              <p className="mt-1.5 text-xs leading-relaxed text-track">
                 {isOwner
                   ? 'You are viewing the profile visitors see. Private sections remain hidden.'
-                  : isRecruiter
-                    ? 'Create an organisation profile to share programmes and opportunities.'
-                    : 'Join SportLinked to create a profile, showcase achievements, and connect with the sporting community.'}
+                  : user
+                    ? 'Head back to your dashboard to keep up with your network, messages, and opportunities.'
+                    : isRecruiter
+                      ? 'Create an organisation profile to share programmes and opportunities.'
+                      : 'Join SportLinked to create a profile, showcase achievements, and connect with the sporting community.'}
               </p>
               {isOwner ? (
                 <Link to="/profile/edit" className={`${buttonClasses({ size: 'sm' })} mt-3`}>

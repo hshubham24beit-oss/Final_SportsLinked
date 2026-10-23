@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FiBookmark,
   FiFilter,
@@ -117,7 +118,7 @@ function ActiveFilters({ filters, onClear, onClearAll }) {
           key={chip.key}
           type="button"
           onClick={() => onClear(chip.key)}
-          className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-800 transition-colors hover:border-brand-300 hover:bg-brand-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+          className="inline-flex items-center gap-1.5 rounded-full border border-track/20 bg-track/10 px-3 py-1.5 text-xs font-extrabold text-track transition-colors hover:border-track/35 hover:bg-track/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
         >
           {chip.label}
           <FiX className="h-3 w-3" aria-hidden="true" />
@@ -127,7 +128,7 @@ function ActiveFilters({ filters, onClear, onClearAll }) {
       <button
         type="button"
         onClick={onClearAll}
-        className="text-xs font-semibold text-ink-muted underline-offset-4 hover:text-ink hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+        className="text-xs font-extrabold text-slate underline-offset-4 hover:text-navy hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
       >
         Clear all
       </button>
@@ -135,13 +136,14 @@ function ActiveFilters({ filters, onClear, onClearAll }) {
   );
 }
 
-export default function Discovery() {
-  useDocumentTitle('Discover athletes');
+export default function Discovery({ savedOnly = false }) {
   const { user } = useAuth();
   const toast = useToast();
+  const navigate = useNavigate();
   const canSave = ['coach', 'recruiter'].includes(user.role);
   const canSeeSaved = canSave;
-  const [mode, setMode] = useState('discover');
+  const [mode, setMode] = useState(savedOnly ? 'saved' : 'discover');
+  useDocumentTitle(mode === 'saved' ? 'Saved candidates' : 'Discover athletes');
   const [keyword, setKeyword] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
   const [filters, setFilters] = useState(INITIAL_DISCOVERY_FILTERS);
@@ -155,6 +157,12 @@ export default function Discovery() {
   const [preview, setPreview] = useState(null);
   const [savingId, setSavingId] = useState(null);
   const [reloadToken, setReloadToken] = useState(0);
+
+  useEffect(() => {
+    setMode(savedOnly ? 'saved' : 'discover');
+    setPage(1);
+    setPreview(null);
+  }, [savedOnly]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -312,6 +320,7 @@ export default function Discovery() {
     setMode(nextMode);
     setPage(1);
     setPreview(null);
+    navigate(nextMode === 'saved' ? '/discovery/saved' : '/discovery');
   };
 
   const filterPanel = (
@@ -328,27 +337,34 @@ export default function Discovery() {
     <div>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">
-            Talent discovery
-          </p>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Discover athletes
+          <p className="eyebrow">Talent discovery</p>
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+            {mode === 'saved' ? (
+              <>
+                Saved <span className="display-emphasis">candidates.</span>
+              </>
+            ) : (
+              <>
+                Discover <span className="display-emphasis">athletes.</span>
+              </>
+            )}
           </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-muted">
-            Search real athlete profiles by sport, location, experience, performance, and verified
-            achievements. Only details an athlete has made visible are shown.
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-body">
+            {mode === 'saved'
+              ? 'Your bookmarked athletes, kept together so you can revisit potential recruits and programme targets.'
+              : 'Search real athlete profiles by sport, location, experience, performance, and verified achievements. Only details an athlete has made visible are shown.'}
           </p>
         </div>
 
         {canSeeSaved ? (
-          <div className="inline-flex self-start rounded-lg border border-line bg-white p-1 shadow-sm">
+          <div className="inline-flex self-start rounded-full border border-line bg-white p-1 shadow-card">
             <button
               type="button"
               onClick={() => changeMode('discover')}
-              className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 ${
+              className={`inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-extrabold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track ${
                 mode === 'discover'
-                  ? 'bg-brand-50 text-brand-800'
-                  : 'text-ink-muted hover:bg-slate-50 hover:text-ink'
+                  ? 'bg-navy text-ivory'
+                  : 'text-body hover:bg-sand hover:text-navy'
               }`}
             >
               <FiSearch className="h-4 w-4" aria-hidden="true" />
@@ -357,10 +373,10 @@ export default function Discovery() {
             <button
               type="button"
               onClick={() => changeMode('saved')}
-              className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 ${
+              className={`inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-sm font-extrabold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track ${
                 mode === 'saved'
-                  ? 'bg-brand-50 text-brand-800'
-                  : 'text-ink-muted hover:bg-slate-50 hover:text-ink'
+                  ? 'bg-navy text-ivory'
+                  : 'text-body hover:bg-sand hover:text-navy'
               }`}
             >
               <FiBookmark className="h-4 w-4" aria-hidden="true" />
@@ -371,7 +387,7 @@ export default function Discovery() {
       </div>
 
       {mode === 'discover' ? (
-        <div className="mt-6 rounded-xl border border-line bg-white p-3 shadow-card">
+        <div className="mt-6 rounded-card border border-line bg-white p-3 shadow-card">
           <div className="flex flex-col gap-2 sm:flex-row">
             <Input
               id="athlete-search"
@@ -392,7 +408,7 @@ export default function Discovery() {
                       setKeyword('');
                       setPage(1);
                     }}
-                    className="rounded-md p-1.5 text-ink-subtle transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                    className="rounded-full p-1.5 text-slate transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                     aria-label="Clear search"
                   >
                     <FiX className="h-4 w-4" aria-hidden="true" />
@@ -429,10 +445,10 @@ export default function Discovery() {
         </div>
       ) : null}
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[270px_minmax(0,1fr)]">
         {mode === 'discover' ? (
           <aside className="hidden lg:block">
-            <div className="sticky top-24 rounded-xl border border-line bg-white p-5 shadow-card">
+            <div className="sticky top-24 rounded-card border border-line bg-white p-5 shadow-card">
               {filterPanel}
             </div>
           </aside>
@@ -441,7 +457,7 @@ export default function Discovery() {
         <div className={mode === 'saved' ? 'lg:col-span-2' : ''}>
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm font-semibold text-ink">
+              <p className="text-sm font-extrabold text-navy">
                 {isLoading
                   ? 'Loading athletes…'
                   : mode === 'saved'
@@ -449,7 +465,7 @@ export default function Discovery() {
                     : `${meta.total} athlete${meta.total === 1 ? '' : 's'} found`}
               </p>
               {mode === 'discover' && (debouncedKeyword || activeFilterCount > 0) ? (
-                <p className="mt-0.5 text-xs text-ink-subtle">
+                <p className="mt-0.5 text-xs text-slate">
                   Results reflect visible profile details and your current filters.
                 </p>
               ) : null}
@@ -490,7 +506,7 @@ export default function Discovery() {
           ) : null}
 
           {isLoading ? (
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {Array.from({ length: 6 }).map((_, index) => (
                 <SkeletonCard key={index} />
               ))}
@@ -498,7 +514,7 @@ export default function Discovery() {
           ) : null}
 
           {!isLoading && !error && athletes.length > 0 ? (
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {athletes.map((athlete) => (
                 <AthleteCard
                   key={athlete.userId}

@@ -124,12 +124,12 @@ export default function StatisticsManager({ statistics, setStatistics, visibilit
       <div className="flex flex-col gap-3 border-b border-line pb-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-base font-semibold text-ink">Statistics</h2>
+            <h2 className="text-base font-semibold text-navy">Statistics</h2>
             <Badge size="sm" variant={visibility === 'public' ? 'success' : 'neutral'}>
               {visibility === 'public' ? 'Public section' : 'Restricted section'}
             </Badge>
           </div>
-          <p className="mt-1 max-w-xl text-xs leading-relaxed text-ink-muted">
+          <p className="mt-1 max-w-xl text-xs leading-relaxed text-body">
             Add measurable performance data. Statistics are shown only when this section is visible
             to the viewer.
           </p>
@@ -160,30 +160,30 @@ export default function StatisticsManager({ statistics, setStatistics, visibilit
             {statistics.map((statistic) => (
               <article
                 key={statistic.id}
-                className="rounded-xl border border-line bg-white p-4"
+                className="rounded-card border border-line bg-white p-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="truncate text-xs font-medium uppercase tracking-[0.08em] text-ink-subtle">
+                    <p className="truncate text-xs font-medium uppercase tracking-[0.08em] text-slate">
                       {statistic.metric}
                     </p>
-                    <p className="mt-1 text-2xl font-semibold tracking-tight text-ink">
+                    <p className="mt-1 text-2xl font-semibold tracking-tight text-navy">
                       {statistic.value}
                       {statistic.unit ? (
-                        <span className="ml-1 text-sm font-medium text-ink-muted">
+                        <span className="ml-1 text-sm font-medium text-body">
                           {statistic.unit}
                         </span>
                       ) : null}
                     </p>
                     {statistic.date ? (
-                      <p className="mt-1 text-xs text-ink-subtle">{formatDate(statistic.date)}</p>
+                      <p className="mt-1 text-xs text-slate">{formatDate(statistic.date)}</p>
                     ) : null}
                   </div>
                   <div className="flex shrink-0 items-center gap-1">
                     <button
                       type="button"
                       onClick={() => openEdit(statistic)}
-                      className="rounded-lg p-2 text-ink-subtle transition-colors hover:bg-slate-100 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                      className="rounded-tile p-2 text-slate transition-colors hover:bg-sand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                       aria-label={`Edit ${statistic.metric}`}
                     >
                       <FiEdit2 className="h-4 w-4" aria-hidden="true" />
@@ -191,7 +191,7 @@ export default function StatisticsManager({ statistics, setStatistics, visibilit
                     <button
                       type="button"
                       onClick={() => setDeleteTarget(statistic)}
-                      className="rounded-lg p-2 text-ink-subtle transition-colors hover:bg-danger-50 hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                      className="rounded-tile p-2 text-slate transition-colors hover:bg-danger-50 hover:text-danger-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-track"
                       aria-label={`Delete ${statistic.metric}`}
                     >
                       <FiTrash2 className="h-4 w-4" aria-hidden="true" />
@@ -285,7 +285,7 @@ export default function StatisticsManager({ statistics, setStatistics, visibilit
           </>
         }
       >
-        <p className="text-sm leading-relaxed text-ink-muted">This cannot be undone.</p>
+        <p className="text-sm leading-relaxed text-body">This cannot be undone.</p>
       </Modal>
     </div>
   );

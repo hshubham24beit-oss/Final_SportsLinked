@@ -174,7 +174,10 @@ function decorateForViewer(events, viewer, registrationByEvent = new Map()) {
         startsLater &&
         !activeRegistration,
       canCancelRegistration: canParticipate && activeRegistration,
-      canEdit: isOwner && ['draft', 'published'].includes(raw.status),
+      canEdit:
+        isOwner &&
+        (raw.status === 'draft' ||
+          (raw.status === 'published' && deadlineOpen && startsLater)),
     };
   });
 }
@@ -447,7 +450,7 @@ async function deleteEvent(user, eventId) {
   const { event } = await findEvent(eventId, user, { ownerOnly: true });
   const activeRegistrations = await EventRegistration.countDocuments({
     event: event._id,
-    status: { $in: ACTIVE_REGISTRATION_STATUSES },
+    status: { $in: ATTENDEE_STATUSES },
   });
   if (activeRegistrations > 0) {
     throw ApiError.conflict(

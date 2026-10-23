@@ -52,33 +52,33 @@ function ConversationRow({ conversation, active, onSelect }) {
       type="button"
       onClick={() => onSelect(conversation.id)}
       className={`flex w-full items-start gap-3 border-b border-line px-4 py-3.5 text-left transition-colors ${
-        active ? 'bg-brand-50' : 'hover:bg-slate-50'
+        active ? 'bg-sand' : 'hover:bg-sand/60'
       }`}
     >
       <Avatar name={participant.name} src={participant.avatarUrl} size="md" />
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-2">
-          <span className="truncate text-sm font-semibold text-ink">
+          <span className="truncate text-sm font-semibold text-navy">
             {participant.name}
           </span>
           {conversation.unreadCount > 0 ? (
-            <span className="ml-auto inline-flex min-w-5 items-center justify-center rounded-full bg-brand-600 px-1.5 py-0.5 text-[10px] font-semibold text-white">
+            <span className="ml-auto inline-flex min-w-5 items-center justify-center rounded-full bg-track px-1.5 py-0.5 text-[10px] font-semibold text-white">
               {conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}
             </span>
           ) : null}
         </span>
         <span className="mt-0.5 flex items-center gap-1.5">
-          <span className="truncate text-xs text-ink-subtle">
+          <span className="truncate text-xs text-slate">
             {getRoleLabel(participant.role)}
           </span>
-          <span className="text-[10px] text-ink-subtle">·</span>
-          <span className="truncate text-xs text-ink-subtle">
+          <span className="text-[10px] text-slate">·</span>
+          <span className="truncate text-xs text-slate">
             {conversation.lastMessageAt
               ? formatRelativeTime(conversation.lastMessageAt)
               : 'New conversation'}
           </span>
         </span>
-        <span className="mt-1 block truncate text-xs text-ink-muted">
+        <span className="mt-1 block truncate text-xs text-body">
           {conversation.lastMessage?.text || 'Start the conversation.'}
         </span>
       </span>
@@ -90,16 +90,16 @@ function MessageBubble({ message, isMine }) {
   return (
     <div className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
       <div
-        className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm ${
+        className={`max-w-[85%] rounded-card px-3.5 py-2.5 text-sm leading-relaxed shadow-sm ${
           isMine
-            ? 'rounded-br-md bg-brand-600 text-white'
-            : 'rounded-bl-md border border-line bg-white text-ink'
+            ? 'rounded-br-md bg-track text-white'
+            : 'rounded-bl-md border border-line bg-white text-navy'
         }`}
       >
         <p className="whitespace-pre-wrap break-words">{message.text}</p>
         <p
           className={`mt-1 text-right text-[10px] ${
-            isMine ? 'text-brand-100' : 'text-ink-subtle'
+            isMine ? 'text-ivory/70' : 'text-slate'
           }`}
         >
           {formatRelativeTime(message.createdAt)}
@@ -486,10 +486,11 @@ export default function Messages() {
     <div>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Messages
+          <p className="eyebrow">Inbox</p>
+          <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">
+            <span className="display-emphasis">Messages.</span>
           </h1>
-          <p className="mt-1.5 text-sm text-ink-muted">
+          <p className="mt-1.5 text-sm text-body">
             Private conversations with your connections and applicant contacts.
           </p>
         </div>
@@ -513,7 +514,7 @@ export default function Messages() {
         </Alert>
       ) : null}
 
-      <div className="mt-5 overflow-hidden rounded-xl border border-line bg-white shadow-card">
+      <div className="mt-5 overflow-hidden rounded-card border border-line bg-white shadow-card">
         <div className="grid h-[calc(100vh-14rem)] min-h-[32rem] lg:grid-cols-[20rem_minmax(0,1fr)]">
           <aside
             aria-label="Conversations"
@@ -522,14 +523,14 @@ export default function Messages() {
             }`}
           >
             <div className="border-b border-line px-4 py-3">
-              <p className="text-sm font-semibold text-ink">Conversations</p>
-              <p className="mt-0.5 text-xs text-ink-subtle">
+              <p className="text-sm font-semibold text-navy">Conversations</p>
+              <p className="mt-0.5 text-xs text-slate">
                 {conversations.length} active
               </p>
             </div>
             <div className="h-[calc(100%-4.25rem)] overflow-y-auto">
               {isLoadingConversations ? (
-                <p className="px-4 py-5 text-sm text-ink-muted">Loading conversations...</p>
+                <p className="px-4 py-5 text-sm text-body">Loading conversations...</p>
               ) : null}
               {!isLoadingConversations && conversations.length === 0 ? (
                 <div className="px-4 py-6">
@@ -586,7 +587,7 @@ export default function Messages() {
                       setSelectedId(null);
                       setSearchParams({}, { replace: true });
                     }}
-                    className="rounded-lg p-1.5 text-ink-muted hover:bg-slate-100 lg:hidden"
+                    className="rounded-tile p-1.5 text-body hover:bg-sand lg:hidden"
                     aria-label="Back to conversations"
                   >
                     <FiArrowLeft className="h-5 w-5" aria-hidden="true" />
@@ -602,23 +603,23 @@ export default function Messages() {
                         {participant.slug ? (
                           <Link
                             to={`/p/${participant.slug}`}
-                            className="truncate text-sm font-semibold text-ink hover:text-brand-800"
+                            className="truncate text-sm font-semibold text-navy hover:text-track"
                           >
                             {participant.name}
                           </Link>
                         ) : (
-                          <p className="truncate text-sm font-semibold text-ink">
+                          <p className="truncate text-sm font-semibold text-navy">
                             {participant.name}
                           </p>
                         )}
-                        <p className="truncate text-xs text-ink-subtle">
+                        <p className="truncate text-xs text-slate">
                           {getRoleLabel(participant.role)}
                           {participant.headline ? ` · ${participant.headline}` : ''}
                         </p>
                       </div>
                     </>
                   ) : (
-                    <p className="flex-1 text-sm text-ink-muted">Loading conversation...</p>
+                    <p className="flex-1 text-sm text-body">Loading conversation...</p>
                   )}
                   <Button
                     variant="ghost"
@@ -631,10 +632,10 @@ export default function Messages() {
                   </Button>
                 </div>
 
-                <div className="min-h-0 flex-1 space-y-3 overflow-y-auto bg-slate-50/60 px-4 py-4">
+                <div className="min-h-0 flex-1 space-y-3 overflow-y-auto bg-sand/60 px-4 py-4">
                   {threadError ? <Alert variant="error">{threadError}</Alert> : null}
                   {isLoadingThread ? (
-                    <p className="text-center text-sm text-ink-muted">Loading messages...</p>
+                    <p className="text-center text-sm text-body">Loading messages...</p>
                   ) : null}
                   {!isLoadingThread && hasMore ? (
                     <div className="text-center">
@@ -649,7 +650,7 @@ export default function Messages() {
                     </div>
                   ) : null}
                   {!isLoadingThread && !threadError && messages.length === 0 ? (
-                    <p className="py-8 text-center text-sm text-ink-muted">
+                    <p className="py-8 text-center text-sm text-body">
                       No messages yet. Say hello.
                     </p>
                   ) : null}
@@ -661,7 +662,7 @@ export default function Messages() {
                     />
                   ))}
                   {typingUser ? (
-                    <p className="text-xs italic text-ink-subtle">
+                    <p className="text-xs italic text-slate">
                       {participant?.name || 'They'} is typing...
                     </p>
                   ) : null}
@@ -689,7 +690,7 @@ export default function Messages() {
                       }}
                       placeholder="Write a message..."
                       maxLength={4000}
-                      className="max-h-32 min-h-[2.75rem] flex-1 resize-y rounded-lg border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink shadow-sm transition placeholder:text-ink-subtle focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
+                      className="max-h-32 min-h-[2.75rem] flex-1 resize-y rounded-tile border border-line-strong bg-white px-3.5 py-2.5 text-sm text-navy shadow-sm transition placeholder:text-slate focus:border-track focus:outline-none focus:ring-2 focus:ring-track/20"
                     />
                     <Button
                       type="submit"
@@ -701,7 +702,7 @@ export default function Messages() {
                       Send
                     </Button>
                   </div>
-                  <p className="mt-1.5 text-[11px] text-ink-subtle">
+                  <p className="mt-1.5 text-[11px] text-slate">
                     Enter to send · Shift + Enter for a new line
                   </p>
                 </form>
@@ -727,14 +728,14 @@ export default function Messages() {
           value={connectionSearch}
           onChange={(event) => setConnectionSearch(event.target.value)}
           placeholder="Search connections"
-          className="w-full rounded-lg border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
+          className="w-full rounded-tile border border-line-strong bg-white px-3.5 py-2.5 text-sm text-navy shadow-sm focus:border-track focus:outline-none focus:ring-2 focus:ring-track/20"
         />
         <div className="mt-3 max-h-80 space-y-1 overflow-y-auto">
           {isLoadingConnections ? (
-            <p className="py-4 text-sm text-ink-muted">Loading connections...</p>
+            <p className="py-4 text-sm text-body">Loading connections...</p>
           ) : null}
           {!isLoadingConnections && filteredConnections.length === 0 ? (
-            <p className="py-4 text-sm text-ink-muted">
+            <p className="py-4 text-sm text-body">
               No matching connections. Connect with members from My network first.
             </p>
           ) : null}
@@ -744,7 +745,7 @@ export default function Messages() {
               type="button"
               onClick={() => startConversation(connection.user)}
               disabled={Boolean(startingUserId)}
-              className="flex w-full items-center gap-3 rounded-lg px-2.5 py-2.5 text-left transition-colors hover:bg-slate-50 disabled:opacity-60"
+              className="flex w-full items-center gap-3 rounded-tile px-2.5 py-2.5 text-left transition-colors hover:bg-sand/60 disabled:opacity-60"
             >
               <Avatar
                 name={connection.user.name}
@@ -752,17 +753,17 @@ export default function Messages() {
                 size="sm"
               />
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-medium text-ink">
+                <span className="block truncate text-sm font-medium text-navy">
                   {connection.user.name}
                 </span>
-                <span className="block truncate text-xs text-ink-subtle">
+                <span className="block truncate text-xs text-slate">
                   {getRoleLabel(connection.user.role)}
                 </span>
               </span>
               {startingUserId === connection.user.id ? (
-                <span className="text-xs text-ink-subtle">Starting...</span>
+                <span className="text-xs text-slate">Starting...</span>
               ) : (
-                <FiMessageCircle className="h-4 w-4 text-ink-subtle" aria-hidden="true" />
+                <FiMessageCircle className="h-4 w-4 text-slate" aria-hidden="true" />
               )}
             </button>
           ))}
